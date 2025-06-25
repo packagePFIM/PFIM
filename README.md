@@ -29,16 +29,6 @@ Nguyen TT (2021) <doi:10.1016/j.cmpb.2021.106126>
 
 Version: 7.0
 
-Depends: R (≥ 4.0.0)
-
-Imports: methods, rmarkdown, stats, scales, deSolve, kableExtra, gtable,
-Deriv, grid, knitr, markdown, Matrix, ggplot2, ggbreak, pracma, Rcpp,
-filesstrings
-
-Suggests: testthat, inline, utils, devtools, htmltools
-
-Published:	2024-10-23
-
 Author and creator: Romain Leroux \[aut, cre\]
 
 Author: France Mentré ORCID <https://orcid.org/0000-0002-7045-1275>
