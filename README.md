@@ -42,6 +42,8 @@ Contributors: Jérémy Seurat \[ctb]
 
 Maintainer: Romain Leroux \<romainlerouxPFIM@gmail.com\>
 
+PFIM logo: Lucie Fayette
+
 License: GPL-2 \| GPL-3 \[expanded from: GPL (≥ 2)\]
 
 ## Vignettes
