@@ -40,6 +40,7 @@ Suggests: testthat, inline, utils, devtools, htmltools
 Published:	2024-10-23
 
 Author and creator: Romain Leroux \[aut, cre\]
+
 Author: France Mentré ORCID <https://orcid.org/0000-0002-7045-1275>
 \[aut\]
 
