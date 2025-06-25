@@ -1,5 +1,5 @@
 
-# PFIM <a href="http://www.pfim.biostat.fr/"><img src="hex-PFIM.png" align="right" height="138" alt="PFIM website" /></a>
+# PFIM 
 
 [![CRAN](http://www.r-pkg.org/badges/version/PFIM)](http://cran.r-project.org/package=PFIM)
 
@@ -27,9 +27,7 @@ Methods used in the package refer to Mentré F, Mallet A, Baccar D (1997)
 (2013) <doi:10.1007/s11095-013-1079-3> and Seurat J, Tang Y, Mentré F,
 Nguyen TT (2021) <doi:10.1016/j.cmpb.2021.106126>
 
-Version: 6.1
-
-This version 6.1 of PFIM is optimized for computational efficiency, delivering enhanced performance and faster processing times.
+Version: 7.0
 
 Depends: R (≥ 4.0.0)
 
@@ -41,13 +39,11 @@ Suggests: testthat, inline, utils, devtools, htmltools
 
 Published:	2024-10-23
 
+Author and creator: Romain Leroux \[aut, cre\]
 Author: France Mentré ORCID <https://orcid.org/0000-0002-7045-1275>
 \[aut\]
 
-Author and creator: Romain Leroux \[aut, cre\]
-
-Contributors: Jérémy Seurat \[ctb], Lucie
-Fayette \[ctb\]
+Contributors: Jérémy Seurat \[ctb]
 
 Maintainer: Romain Leroux \<romainlerouxPFIM@gmail.com\>
 
@@ -60,7 +56,7 @@ vignettes on the CRAN.
 
 ## Examples
 
-Several examples have been implemented in PFIM 6 and the full list and
+Several examples have been implemented in PFIM 7.0 and the full list and
 reports are given in **Examples_reports.md**. Source scripts are
 available in the folder Examples/, whose sub folders are organized as
 follows:
@@ -124,11 +120,7 @@ folder Outputs/tests_evaluation/.
 # Getting help
 
 If you encounter a clear bug, please file the issue with a minimal
-reproducible example on GitHub:
-
-<https://github.com/iame-researchCenter/PFIM/issues>
+reproducible example in the folder Issues.
 
 For questions and other discussion, please use the PFIM group mailing
-list:
-
-<thepfimgroup@googlegroups.com>
+list: <thepfimgroup@googlegroups.com>
