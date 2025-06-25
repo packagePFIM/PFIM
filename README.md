@@ -3,7 +3,9 @@
 
 [![CRAN](http://www.r-pkg.org/badges/version/PFIM)](http://cran.r-project.org/package=PFIM)
 
-![Logo_PFIM](Logo_PFIM.png)
+<p align="center">
+  <img src="Logo_PFIM.png" alt="Structure de PFIM" width="200"/>
+</p>
 
 Total number of downloads for the entire history of the package
 [![CRAN RStudio mirror downloads](https://cranlogs.r-pkg.org/badges/grand-total/PFIM?color=blue)]([https://r-pkg.org/pkg/PFIM](https://cran.r-project.org/package=PFIM))
