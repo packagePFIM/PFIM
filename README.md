@@ -7,11 +7,11 @@
   <img src="Logo_PFIM.png" alt="Structure de PFIM" width="200"/>
 </p>
 
-Total number of downloads for the entire history of the package
-[![CRAN RStudio mirror downloads](https://cranlogs.r-pkg.org/badges/grand-total/PFIM?color=blue)]([https://r-pkg.org/pkg/PFIM](https://cran.r-project.org/package=PFIM))
-
-Monthly downloads
-[![CRAN RStudio mirror downloads](https://cranlogs.r-pkg.org/badges/last-month/PFIM?color=blue)]([https://r-pkg.org/pkg/PFIM](https://cran.r-project.org/package=PFIM))
+# Total number of downloads for the entire history of the package
+# [![CRAN RStudio mirror downloads](https://cranlogs.r-pkg.org/badges/grand-total/PFIM?color=blue)]([https://r-pkg.org/pkg/PFIM](https://cran.r-project.org/package=PFIM))
+# 
+# Monthly downloads
+# [![CRAN RStudio mirror downloads](https://cranlogs.r-pkg.org/badges/last-month/PFIM?color=blue)]([https://r-pkg.org/pkg/PFIM](https://cran.r-project.org/package=PFIM))
 <!--
 Weekly downloads 
 [![CRAN RStudio mirror downloads](https://cranlogs.r-pkg.org/badges/last-week/PFIM?color=blue)]([https://r-pkg.org/pkg/PFIM](https://cran.r-project.org/package=PFIM))
@@ -46,71 +46,44 @@ License: GPL-2 \| GPL-3 \[expanded from: GPL (≥ 2)\]
 
 ## Vignettes
 
-The folder vignettes/ contains the two exemples that are given as
-vignettes on the CRAN.
+The folder vignettes/ contains the two vignettes available on the CRAN.
 
-## Examples
+## Design evaluation and optimization
 
-Several examples have been implemented in PFIM 7.0 and the full list and
-reports are given in **Examples_reports.md**. Source scripts are
-available in the folder Examples/, whose sub folders are organized as
-follows:
+Design evaluation and optimization examples have been implemented in PFIM 7.0. Source scripts are available in the folder Design_Evaluation/ and Design_Optimization/
 
-- Examples/
-  - evaluation/
-    - analytic/
-    - analytic_infusion/
-    - ode/
-    - ode_infusion/
-  - optimization/
-    - AlgoMutiplicatif/
+- Design_Evaluation/
+  - library_of_models
+    - pk_analytic
+    - pk_analytic_infusion
+    - pk_analytic_infusion_pd_analytic
+    - pk_analytic_infusion_pd_ode
+    - pk_analytic_infusion_steady_state
+    - pk_analytic_pd_analytic
+    - pk_analytic_pd_ode
+    - pk_analytic_steady_state
+    - pk_analytic_steady_state_pd_analytic
+  - user_defined_model
+    - model_analytic
+    - model_analytic_infusion
+    - model_analytic_steady_state
+    - model_ode_bolus
+    - model_ode_dose_in_equations
+    - model_ode_dose_not_in_equations
+    - model_ode_infusion_dose_in_equations
+- Design_Optimization
+  - continuous/
+    - PGBO
+    - PSO
+    - Simplex
+  - discrete/
     - FedorovWynn/
-    - PGBO/
-    - PSO/
-    - Simplex/
+    - MultiplicativeAlgorithm/
 
-To execute all those scripts successively, one can run the script
-**run_Examples.R**. The reports will be created in the folder
-Outputs/Examples/.
+For each tests results have been saved in files .RDS. 
 
-## Evaluation tests
-
-Several tests are available for design evaluation with PFIM; they are
-located in the folder tests_evaluation/, whose sub-folders are organized
-as follows:
-
-- tests_evaluation/ :
-  - library_of_models/ : contains scripts that test the building of
-    models with the library
-  - models_library_of_model/ : contains scripts that perform evaluation
-    on models built with the library of models
-  - models_user_defined/ : contains scripts that perform evaluation on
-    models built manually by the user
-
-To execute one scripts from models_library_of_model/ or
-models_user_defined/, one has to define the variable `fimType` to either
-`population`, `individual` or `Bayesian`.
-
-To execute all those scripts successively, one can run the script
-**run_tests_evaluation.R**. The outputs will be displayed in the folder
-Outputs/tests_evaluation/.
-
-## Optimization tests
-
-Several tests are available for design optimization with PFIM; they are
-located in the folder tests_optimization/, whose sub-folders are
-organized by algorithm.
-
-- tests_optimization/ :
-  - FedorovWynn/
-  - MultiplicativeAlgorithm/
-  - PGBO/
-  - PSO/
-  - Simplex/
-
-To execute all those scripts successively, one can run the script
-**run_tests_optimization.R**. The outputs will be displayed in the
-folder Outputs/tests_evaluation/.
+Copy and paste these folder on your computer and execute all those scripts, one can run the script **run_examples_PFIM.R**
+where on définit le path des dossiers Design_Evaluation et Design_Optimization.
 
 # Getting help
 
