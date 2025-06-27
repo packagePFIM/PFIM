@@ -91,6 +91,9 @@ The Vignettes/ folder contains the two vignettes available on CRAN.
 To run all the scripts, simply copy these folders to your computer and execute the run_examples_PFIM.R script.
 Within this script, you need to specify the paths to the Design_Evaluation and Design_Optimization directories.
 
+The `Package documentation` folder contains the complete documentation for all methods and classes included in the package.
+
+
 ## Getting help
 
 If you encounter a clear bug, please file the issue with a minimal
