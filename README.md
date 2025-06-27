@@ -7,19 +7,7 @@
   <img src="Logo_PFIM.png" alt="Structure de PFIM" width="200"/>
 </p>
 
-# Total number of downloads for the entire history of the package [![CRAN RStudio
-# mirror
-# downloads](https://cranlogs.r-pkg.org/badges/grand-total/PFIM?color=blue)]([https://r-pkg.org/pkg/PFIM](https://cran.r-project.org/package=PFIM))
-# Monthly downloads [![CRAN RStudio mirror
-# downloads](https://cranlogs.r-pkg.org/badges/last-month/PFIM?color=blue)]([https://r-pkg.org/pkg/PFIM](https://cran.r-project.org/package=PFIM))
-<!--
-Weekly downloads 
-[![CRAN RStudio mirror downloads](https://cranlogs.r-pkg.org/badges/last-week/PFIM?color=blue)]([https://r-pkg.org/pkg/PFIM](https://cran.r-project.org/package=PFIM))
 
-Daily downloads
-[![CRAN RStudio mirror downloads](https://cranlogs.r-pkg.org/badges/last-day/PFIM?color=blue)]([https://r-pkg.org/pkg/PFIM](https://cran.r-project.org/package=PFIM))
- -->
- 
 ## Evaluate or optimize designs for nonlinear mixed effects models using the Fisher Information Matrix.
 
 PFIM is an R package for evaluating and optimizing designs for nonlinear mixed effects models using the Fisher Information Matrix approach. The package provides comprehensive tools for population pharmacokinetic/pharmacodynamic (PK/PD) study design optimization.
