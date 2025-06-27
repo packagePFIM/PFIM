@@ -46,7 +46,7 @@ Author and creator: Romain Leroux <https://orcid.org/0009-0009-5779-5303> \[aut,
 Author: France Mentré ORCID <https://orcid.org/0000-0002-7045-1275>
 \[aut\]
 
-Contributors: Jérémy Seurat <https://orcid.org/0000-0002-8127-7751> \[ctb\]
+Contributors: Jérémy Seurat \[ctb\]
 
 Maintainer: Romain Leroux \<romainlerouxPFIM@gmail.com\>
 
