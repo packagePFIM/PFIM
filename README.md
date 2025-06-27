@@ -19,6 +19,7 @@ PFIM is an R package for evaluating and optimizing designs for nonlinear mixed e
 
 ## Installation
 
+```{r global_options, echo = FALSE, include = FALSE, eval =FALSE }
 Install from CRAN:
 
 install.packages("PFIM")
@@ -26,6 +27,7 @@ install.packages("PFIM")
 Load the package:
 
 library(PFIM)
+```
 
 ## Methodology
 
