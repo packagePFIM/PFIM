@@ -1,10 +1,12 @@
 
 # =============================================================================
-# PFIM version 7.0
+# PFIM version 7.0 : examples of design evaluation and optimization
 # =============================================================================
-# This script launch all the examples for design evaluation and optimization
-# Define the path where you have copy and paste the folder Evaluation_tests and
-# Design_optimisation and Run.
+
+# =============================================================================
+# This script runs all the examples for design evaluation and optimization.
+# Specify the paths where you have copied the 'Evaluation_tests' and
+# 'Design_optimization' folders, then run the script.
 # =============================================================================
 
 # define your main path
