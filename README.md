@@ -7,12 +7,11 @@
   <img src="Logo_PFIM.png" alt="Structure de PFIM" width="200"/>
 </p>
 
-
-Total number of downloads for the entire history of the package
-[![CRAN RStudio mirror downloads](https://cranlogs.r-pkg.org/badges/grand-total/PFIM?color=blue)]([https://r-pkg.org/pkg/PFIM](https://cran.r-project.org/package=PFIM))
-
-Monthly downloads
-[![CRAN RStudio mirror downloads](https://cranlogs.r-pkg.org/badges/last-month/PFIM?color=blue)]([https://r-pkg.org/pkg/PFIM](https://cran.r-project.org/package=PFIM))
+# Total number of downloads for the entire history of the package [![CRAN RStudio
+# mirror
+# downloads](https://cranlogs.r-pkg.org/badges/grand-total/PFIM?color=blue)]([https://r-pkg.org/pkg/PFIM](https://cran.r-project.org/package=PFIM))
+# Monthly downloads [![CRAN RStudio mirror
+# downloads](https://cranlogs.r-pkg.org/badges/last-month/PFIM?color=blue)]([https://r-pkg.org/pkg/PFIM](https://cran.r-project.org/package=PFIM))
 <!--
 Weekly downloads 
 [![CRAN RStudio mirror downloads](https://cranlogs.r-pkg.org/badges/last-week/PFIM?color=blue)]([https://r-pkg.org/pkg/PFIM](https://cran.r-project.org/package=PFIM))
@@ -53,7 +52,9 @@ Contributors: Jérémy Seurat \[ctb]
 
 Maintainer: Romain Leroux \<romainlerouxPFIM@gmail.com\>
 
-License: GPL-2 \| GPL-3 \[expanded from: GPL (≥ 2)\]
+License: GPL-2 \| GPL-3 \[expanded from: GPL (≥ 3)\]
+
+PFIM logo: Lucie Fayette
 
 ## Design evaluation and optimization
 
