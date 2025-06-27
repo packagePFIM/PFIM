@@ -41,12 +41,12 @@ The methods implemented in PFIM are based on established research in optimal des
 
 Version: 7.0
 
-Author and creator: Romain Leroux \[aut, cre\]
+Author and creator: Romain Leroux <https://orcid.org/0009-0009-5779-5303> \[aut, cre\]
 
 Author: France Mentré ORCID <https://orcid.org/0000-0002-7045-1275>
 \[aut\]
 
-Contributors: Jérémy Seurat \[ctb]
+Contributors: Jérémy Seurat <https://orcid.org/0000-0002-8127-7751> \[ctb\]
 
 Maintainer: Romain Leroux \<romainlerouxPFIM@gmail.com\>
 
@@ -91,8 +91,7 @@ The Vignettes/ folder contains the two vignettes available on CRAN.
 To run all the scripts, simply copy these folders to your computer and execute the run_examples_PFIM.R script.
 Within this script, you need to specify the paths to the Design_Evaluation and Design_Optimization directories.
 
-The `Package documentation` folder contains the complete documentation for all methods and classes included in the package.
-
+The Package documentation/ folder contains the complete documentation for all methods and classes included in the package.
 
 ## Getting help
 
