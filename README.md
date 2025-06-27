@@ -7,11 +7,12 @@
   <img src="Logo_PFIM.png" alt="Structure de PFIM" width="200"/>
 </p>
 
-# Total number of downloads for the entire history of the package
-# [![CRAN RStudio mirror downloads](https://cranlogs.r-pkg.org/badges/grand-total/PFIM?color=blue)]([https://r-pkg.org/pkg/PFIM](https://cran.r-project.org/package=PFIM))
-# 
-# Monthly downloads
-# [![CRAN RStudio mirror downloads](https://cranlogs.r-pkg.org/badges/last-month/PFIM?color=blue)]([https://r-pkg.org/pkg/PFIM](https://cran.r-project.org/package=PFIM))
+
+Total number of downloads for the entire history of the package
+[![CRAN RStudio mirror downloads](https://cranlogs.r-pkg.org/badges/grand-total/PFIM?color=blue)]([https://r-pkg.org/pkg/PFIM](https://cran.r-project.org/package=PFIM))
+
+Monthly downloads
+[![CRAN RStudio mirror downloads](https://cranlogs.r-pkg.org/badges/last-month/PFIM?color=blue)]([https://r-pkg.org/pkg/PFIM](https://cran.r-project.org/package=PFIM))
 <!--
 Weekly downloads 
 [![CRAN RStudio mirror downloads](https://cranlogs.r-pkg.org/badges/last-week/PFIM?color=blue)]([https://r-pkg.org/pkg/PFIM](https://cran.r-project.org/package=PFIM))
@@ -19,9 +20,17 @@ Weekly downloads
 Daily downloads
 [![CRAN RStudio mirror downloads](https://cranlogs.r-pkg.org/badges/last-day/PFIM?color=blue)]([https://r-pkg.org/pkg/PFIM](https://cran.r-project.org/package=PFIM))
  -->
-#
-
+ 
 ## Evaluate or optimize designs for nonlinear mixed effects models using the Fisher Information Matrix.
+
+PFIM is an R package for evaluating and optimizing designs for nonlinear mixed effects models using the Fisher Information Matrix approach. The package provides comprehensive tools for population pharmacokinetic/pharmacodynamic (PK/PD) study design optimization.
+
+**Key Features**
+- **Model Library**: Pre-built PK/PD models for common scenarios.
+- **Custom Models**: Support for user-defined analytical and ODE-based models.
+- **Multiple Algorithms**: Various optimization methods (PGBO, PSO, Simplex, Fedorov-Wynn, Multiplicative Algorithm)
+
+## Methodology
 
 Methods used in the package refer to Mentré F, Mallet A, Baccar D (1997)
 <doi:10.1093/biomet/84.2.429>, Retout S, Comets E, Samson A, Mentré F
@@ -30,6 +39,8 @@ Methods used in the package refer to Mentré F, Mallet A, Baccar D (1997)
 <doi:10.1186/1471-2148-11-326>, Combes FP, Retout S, Frey N, Mentré F
 (2013) <doi:10.1007/s11095-013-1079-3> and Seurat J, Tang Y, Mentré F,
 Nguyen TT (2021) <doi:10.1016/j.cmpb.2021.106126>
+
+## Package Information
 
 Version: 7.0
 
@@ -43,10 +54,6 @@ Contributors: Jérémy Seurat \[ctb]
 Maintainer: Romain Leroux \<romainlerouxPFIM@gmail.com\>
 
 License: GPL-2 \| GPL-3 \[expanded from: GPL (≥ 2)\]
-
-## Vignettes
-
-The folder vignettes/ contains the two vignettes available on the CRAN.
 
 ## Design evaluation and optimization
 
@@ -80,12 +87,12 @@ Design evaluation and optimization examples have been implemented in PFIM 7.0. S
     - FedorovWynn/
     - MultiplicativeAlgorithm/
 
-For each tests results have been saved in files .RDS. 
+The Vignettes/ folder contains the two vignettes available on CRAN.
 
-Copy and paste these folder on your computer and execute all those scripts, one can run the script **run_examples_PFIM.R**
-where on définit le path des dossiers Design_Evaluation et Design_Optimization.
+To run all the scripts, simply copy these folders to your computer and execute the run_examples_PFIM.R script.
+Within this script, you need to specify the paths to the Design_Evaluation and Design_Optimization directories.
 
-# Getting help
+## Getting help
 
 If you encounter a clear bug, please file the issue with a minimal
 reproducible example in the folder Issues.
