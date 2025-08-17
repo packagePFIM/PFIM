@@ -55,7 +55,7 @@ Maintainer: Romain Leroux \<romainlerouxPFIM@gmail.com\>
 
 License: GPL-2 \| GPL-3 \[expanded from: GPL (≥ 3)\]
 
-PFIM logo: Lucie Fayette
+Logo designed by Lucie Fayette
 
 ## Design evaluation and optimization
 
