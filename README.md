@@ -41,6 +41,9 @@ The methods implemented in PFIM are based on established research in optimal des
 
 Version: 7.0
 
+I would like to inform you that the previous version 6.1 of the package is now deprecated and no longer maintained.  
+Please upgrade to this version 7.0 For the new features of this version, including the new user script, please consult the NEWS file.
+
 Author and creator: Romain Leroux <https://orcid.org/0009-0009-5779-5303> \[aut, cre\]
 
 Author: France Mentré ORCID <https://orcid.org/0000-0002-7045-1275>
