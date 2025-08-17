@@ -7,7 +7,6 @@
   <img src="Logo_PFIM.png" alt="Structure de PFIM" width="200"/>
 </p>
 
-
 ## Evaluate or optimize designs for nonlinear mixed effects models using the Fisher Information Matrix.
 
 PFIM is an R package for evaluating and optimizing designs for nonlinear mixed effects models using the Fisher Information Matrix approach. The package provides comprehensive tools for population pharmacokinetic/pharmacodynamic (PK/PD) study design optimization.
@@ -40,6 +39,9 @@ The methods implemented in PFIM are based on established research in optimal des
 ## Package Information
 
 Version: 7.0
+
+I would like to inform you that version 6.1 of the package is now deprecated and no longer maintained.  
+Please upgrade to this vesion 7.0
 
 Author and creator: Romain Leroux <https://orcid.org/0009-0009-5779-5303> \[aut, cre\]
 
