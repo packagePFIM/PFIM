@@ -20,6 +20,8 @@ PFIM is an R package for evaluating and optimizing designs for nonlinear mixed e
 - **Custom Models**: Support for user-defined analytical and ODE-based models.
 - **Multiple optimization algorithms**: Various optimization methods for discrete and continuous optimization (PGBO, PSO, Simplex, Fedorov-Wynn, multiplicative algorithm)
 
+The source code is modular, designed using a functional programming approach (via the package **purrr**) and R S7 object-oriented programming, which makes it easy to extend and customize your models and algorithms.
+
 ## Installation
 
 ```{r global_options, echo = FALSE, include = FALSE, eval =FALSE }
