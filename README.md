@@ -1,21 +1,25 @@
 
 # PFIM 
 
-[![CRAN](http://www.r-pkg.org/badges/version/PFIM)](http://cran.r-project.org/package=PFIM)
+[![CRAN Version](http://www.r-pkg.org/badges/version/PFIM)](https://cran.r-project.org/package=PFIM)
+[![Total Downloads](https://cranlogs.r-pkg.org/badges/grand-total/PFIM)](https://cran.r-project.org/package=PFIM)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
 <p align="center">
   <img src="Logo_PFIM.png" alt="Structure de PFIM" width="200"/>
 </p>
 
-
-## Evaluate or optimize designs for nonlinear mixed effects models using the Fisher Information Matrix.
+## Overview
 
 PFIM is an R package for evaluating and optimizing designs for nonlinear mixed effects models using the Fisher Information Matrix approach. The package provides comprehensive tools for population pharmacokinetic/pharmacodynamic (PK/PD) study design optimization.
 
 **Key Features**
+- **User script**: clear and intuitive
 - **Model Library**: Pre-built PK/PD models for common scenarios.
 - **Custom Models**: Support for user-defined analytical and ODE-based models.
-- **Multiple Algorithms**: Various optimization methods (PGBO, PSO, Simplex, Fedorov-Wynn, Multiplicative Algorithm)
+- **Multiple optimization algorithms**: Various optimization methods for discrete and continuous optimization (PGBO, PSO, Simplex, Fedorov-Wynn, multiplicative algorithm)
+
+The source code is modular, designed using a functional programming approach (via the package **purrr**) and R S7 object-oriented programming, which makes it easy to extend and customize your models and algorithms.
 
 ## Installation
 
@@ -42,7 +46,7 @@ The methods implemented in PFIM are based on established research in optimal des
 Version: 7.0
 
 I would like to inform you that the previous version 6.1 of the package is now deprecated and no longer maintained.  
-Please upgrade to this version 7.0 For the new features of this version, including the new user script, please consult the NEWS file.
+Please upgrade to this version 7.0 for the new features of this version, including the new user script, please consult the NEWS file.
 
 Author and creator: Romain Leroux <https://orcid.org/0009-0009-5779-5303> \[aut, cre\]
 
