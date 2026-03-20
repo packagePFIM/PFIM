@@ -1,0 +1,41 @@
+# EditorConfig for the PFIM package — https://editorconfig.org
+root = true
+
+# ── Global Configuration (Safety & Cleanliness) ─────────────────────────────
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = space
+indent_size = 2
+
+# ── R Language & Documentation (Tidyverse/CRAN Standard) ────────────────────
+[*.{R,r,Rmd,qmd,Rnw,Rhtml}]
+# 2-space indentation is the absolute standard for R
+indent_style = space
+indent_size = 2
+
+# ── Package Metadata ────────────────────────────────────────────────────────
+# DESCRIPTION files often use 4 spaces for better CRAN readability
+[DESCRIPTION]
+indent_size = 4
+
+# NAMESPACE is usually roxygen2-generated, keeping it at 2
+[NAMESPACE]
+indent_size = 2
+
+# ── Web, Config & Data (YAML, JSON, XML) ────────────────────────────────────
+[*.{yml,yaml,json,xml,toml}]
+indent_style = space
+indent_size = 2
+
+# ── System & Compilation Files ──────────────────────────────────────────────
+# Important: Makefiles REQUIRE tabs to function correctly
+[{Makefile,makefile}]
+indent_style = tab
+
+# ── Pure Markdown ───────────────────────────────────────────────────────────
+[*.md]
+# Trailing whitespace is allowed in MD for manual line breaks
+trim_trailing_whitespace = false

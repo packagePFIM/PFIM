@@ -1,0 +1,103 @@
+Package: PFIM
+Type: Package
+Title: Population Fisher Information Matrix
+Version: 7.0.3
+Date: 2026-01-30
+Authors@R: c(
+    person(given = "Romain",
+           family = "Leroux",
+           role = c("aut","cre"),
+           comment = c(ORCID = "0009-0009-5779-5303"),
+           email = "romainlerouxPFIM@gmail.com"),
+    person(given = "France",
+           family = "Mentr\u00E9",
+           role = c("aut"),
+           comment = c(ORCID = "0000-0002-7045-1275"),
+           email = "france.mentre@inserm.fr"),
+    person(given = "J\u00E9r\u00E9my",
+           family = "Seurat",
+           role = c("ctb"),
+           email = "jeremy.seurat@inserm.fr"))    
+Maintainer: Romain Leroux <romainlerouxPFIM@gmail.com>         
+NeedsCompilation: no
+Description: Evaluate or optimize designs for nonlinear mixed effects models using the Fisher Information matrix. Methods used in the package refer to 
+    Mentré F, Mallet A, Baccar D (1997) <doi:10.1093/biomet/84.2.429>,
+    Retout S, Comets E, Samson A, Mentré F (2007) <doi:10.1002/sim.2910>,
+    Bazzoli C, Retout S, Mentré F (2009) <doi:10.1002/sim.3573>,
+    Le Nagard H, Chao L, Tenaillon O (2011) <doi:10.1186/1471-2148-11-326>,
+    Combes FP, Retout S, Frey N, Mentré F (2013) <doi:10.1007/s11095-013-1079-3> and
+    Seurat J, Tang Y, Mentré F, Nguyen TT (2021) <doi:10.1016/j.cmpb.2021.106126>.
+URL: http://www.pfim.biostat.fr/, https://github.com/packagePFIM
+BugReports: https://github.com/packagePFIM/PFIM/issues
+Depends: R (>= 4.0.0)
+License: GPL (>=3) 
+Encoding: UTF-8
+LazyData: true
+LazyDataCompression: xz
+VignetteBuilder: knitr
+Imports: 
+    utils,
+    inline,
+    Deriv,
+    methods,
+    deSolve,
+    purrr,
+    stringr,
+    S7,
+    Matrix,
+    ggplot2,
+    Rcpp,
+    RcppArmadillo,
+    pracma,
+    kableExtra,
+    tibble,
+    scales,
+    knitr
+Collate: 
+    'Administration.R'
+    'AdministrationConstraints.R'
+    'Fim.R'
+    'PFIMProject.R'
+    'Optimization.R'
+    'PGBOAlgorithm.R'
+    'PSOAlgorithm.R'
+    'SimplexAlgorithm.R'
+    'FedorovWynnAlgorithm.R'
+    'MultiplicativeAlgorithm.R'
+    'Model.R'
+    'Arm.R'
+    'BayesianFim.R'
+    'ModelError.R'
+    'Combined1.R'
+    'Constant.R'
+    'Design.R'
+    'Distribution.R'
+    'Evaluation.R'
+    'IndividualFim.R'
+    'LibraryOfModels.R'
+    'LibraryOfPDModels.R'
+    'LibraryOfPKModels.R'
+    'LogNormal.R'
+    'ModelODE.R'
+    'ModelAnalytic.R'
+    'ModelInfusion.R'
+    'ModelAnalyticInfusion.R'
+    'ModelAnalyticInfusionSteadyState.R'
+    'ModelAnalyticSteadyState.R'
+    'ModelODEBolus.R'
+    'ModelODEDoseInEquations.R'
+    'ModelODEDoseNotInEquations.R'
+    'ModelODEInfusion.R'
+    'ModelODEInfusionDoseInEquation.R'
+    'ModelParameter.R'
+    'Normal.R'
+    'PFIM-package.R'
+    'PopulationFim.R'
+    'Proportional.R'
+    'SamplingTimeConstraints.R'
+    'SamplingTimes.R'
+    'plotMethods.R'
+    'utils.R'
+    'zzz.R'
+RoxygenNote: 7.3.3
+Suggests: rmarkdown, testthat (>= 3.0.0)

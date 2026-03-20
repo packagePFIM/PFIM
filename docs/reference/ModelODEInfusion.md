@@ -1,0 +1,105 @@
+# ModelODEInfusion Class
+
+The `ModelODEInfusion` class is specifically designed to define
+ODE-based models for infusion-type administrations. It extends the
+`ModelInfusion` properties to handle continuous drug delivery through
+differential equations.
+
+## Usage
+
+``` r
+ModelODEInfusion(
+  name = character(0),
+  modelParameters = list(),
+  samplings = numeric(0),
+  modelEquations = list(),
+  wrapper = function() NULL,
+  outputFormula = list(),
+  outputNames = character(0),
+  variableNames = character(0),
+  outcomesWithAdministration = character(0),
+  outcomesWithNoAdministration = character(0),
+  modelError = list(),
+  odeSolverParameters = list(),
+  parametersForComputingGradient = list(),
+  initialConditions = numeric(0),
+  functionArguments = character(0),
+  functionArgumentsSymbol = list()
+)
+```
+
+## Arguments
+
+- name:
+
+  A `character` vector specifying the name of the model.
+
+- modelParameters:
+
+  A `list` of objects defining the model parameters.
+
+- samplings:
+
+  A `numeric` vector specifying the planned sampling times.
+
+- modelEquations:
+
+  A `list` containing the system of equations (analytical or ODEs).
+
+- wrapper:
+
+  A `function` wrapper used to interface the model (defaults to
+  `function() NULL`).
+
+- outputFormula:
+
+  A `list` of mathematical formulas for the model outputs.
+
+- outputNames:
+
+  A `character` vector defining the names of the output variables.
+
+- variableNames:
+
+  A `character` vector defining the names of the state variables.
+
+- outcomesWithAdministration:
+
+  A `character` vector specifying outcomes associated with drug
+  administration.
+
+- outcomesWithNoAdministration:
+
+  A `character` vector specifying outcomes without drug administration.
+
+- modelError:
+
+  A `list` defining the residual error model structure.
+
+- odeSolverParameters:
+
+  A `list` of parameters for the ODE solver (e.g., `atol`, `rtol`).
+
+- parametersForComputingGradient:
+
+  A `list` of parameters required for numerical gradient computation.
+
+- initialConditions:
+
+  A `numeric` vector specifying the initial state of the system.
+
+- functionArguments:
+
+  A `character` vector of arguments required by the model function.
+
+- functionArgumentsSymbol:
+
+  A `list` of symbols representing the function arguments.
+
+## Note
+
+Copyright (c) 2026-present Romain Leroux. All rights reserved.
+
+## Author
+
+Romain Leroux <romainlerouxPFIM@gmail.com>

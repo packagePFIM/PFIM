@@ -1,0 +1,96 @@
+---
+title: "`r tablesForReport$projectName `"
+fig: no crop
+geometry: left=1mm, right=1mm, top=1mm, bottom=1mm, asymmetric
+indent: TRUE
+output:
+  html_document:
+    df_print: paged
+    fig_caption: yes
+  word_document: default
+  pdf_document: default
+header-includes: 
+    - \usepackage{placeins}
+    - \usepackage{indentfirst}
+    - \usepackage{setspace}\doublespacing
+    - \usepackage{lineno}
+    - \linenumbers
+author: "`r 'PFIM 7.0' `"
+date: "`r paste( 'Date:' , Sys.Date())`"
+---
+ 
+```{r setup, include=FALSE}
+options(kableExtra.latex.load_packages = FALSE)
+options(kableExtra.auto_format = FALSE)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Evaluation outputs
+```{r evaluationOutputs, echo = FALSE, comment='', fig.height = 5, fig.width = 10, fig.align = "center"} 
+tablesForReport$evaluationOutputs
+```
+
+# Model equations 
+```{r modelEquations, echo = FALSE, comment='', fig.height = 5, fig.width = 10, fig.align = "center"} 
+tablesForReport$modelEquations
+```
+
+# Error model 
+```{r ModelError, echo = FALSE, comment='', fig.height = 5, fig.width = 10, fig.align = "center"} 
+tablesForReport$modelErrorTable
+```
+
+# Model parameters 
+```{r ModelParameters, echo = FALSE, comment='', fig.height = 5, fig.width = 10, fig.align = "center"} 
+tablesForReport$modelParametersTable
+```
+
+# Administration parameters 
+```{r AdministrationParameters, echo = FALSE, comment='', fig.height = 5, fig.width = 10, fig.align = "center"} 
+tablesForReport$administrationTable
+```
+
+# Initial design
+```{r InitialDesigns, echo = FALSE, comment='', fig.height = 5, fig.width = 10, fig.align = "center"} 
+tablesForReport$initialDesignTable
+```
+
+# Fisher information matrix
+
+## Fixed effects 
+```{r FimFixedEffect, echo = FALSE, comment='', fig.height = 5, fig.width = 10, fig.align = "center"} 
+tablesForReport$fimInitialDesignTable$fixedEffectsTable
+``` 
+
+## Variance effects 
+```{r FimVarianceEffect, echo = FALSE, comment='', fig.height = 5, fig.width = 10, fig.align = "center"} 
+tablesForReport$fimInitialDesignTable$varianceEffectsTable
+``` 
+
+# Determinant, D-criterion of the FIM and condition numbers
+```{r Criteria, echo = FALSE, comment='', fig.height = 5, fig.width = 10, fig.align = "center"} 
+tablesForReport$fimInitialDesignTable$FIMCriteriaTable
+``` 
+ 
+# Values for SE and RSE
+```{r SEandRSE, echo = FALSE, comment='', fig.height = 5, fig.width = 10, fig.align = "center"} 
+tablesForReport$fimInitialDesignTable$SEAndRSETable
+``` 
+
+# Graphs for the responses
+```{r plotsEvaluation, 'results' = FALSE, echo = FALSE, comment='', fig.height = 5, fig.width = 10, fig.align = "center"} 
+tablesForReport$plotsEvaluation 
+``` 
+
+# Graphs for the sensitivity indices
+```{r plotSensitivityIndices, 'results' = FALSE, echo = FALSE, comment='', fig.height = 5, fig.width = 10, fig.align = "center"} 
+tablesForReport$plotSensitivityIndices 
+``` 
+
+# Graphs for the SE and RSE
+```{r plotSEandRSE, 'results' = FALSE, echo = FALSE, comment='', fig.height = 5, fig.width = 10, fig.align = "center"} 
+tablesForReport$plotSE 
+tablesForReport$plotRSE 
+``` 
+
+

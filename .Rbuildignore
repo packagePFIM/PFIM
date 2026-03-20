@@ -1,0 +1,7 @@
+^.*\.Rproj$
+^\.RDataTmp.*$
+^\.editorconfig$
+^man-roxygen$
+^.*\.RData$
+^.*\.Rhistory$
+^\.Rproj\.user$
