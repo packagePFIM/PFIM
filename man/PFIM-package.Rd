@@ -83,6 +83,7 @@ Useful links:
 \itemize{
   \item \url{http://www.pfim.biostat.fr/}
   \item \url{https://github.com/packagePFIM}
+  \item \url{https://packagepfim.github.io/PFIM/}
   \item Report bugs at \url{https://github.com/packagePFIM/PFIM/issues}
 }
 

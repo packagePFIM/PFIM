@@ -17,7 +17,7 @@ The string `"Linear1InfusionSingleDose_ClV"` decodes as:
 |:---|:---|
 | `Linear` | First-order (linear) elimination |
 | `1` | One-compartment disposition |
-| `Infusion` | IV infusion route; requires `Tinf` in [`Administration()`](https://packagePFIM.github.io/PFIM/reference/Administration.md) |
+| `Infusion` | IV infusion route; requires `Tinf` in [`Administration()`](https://packagepfim.github.io/PFIM/reference/Administration.md) |
 | `ClV` | Parameterised by clearance $Cl$ and volume $V$ |
 
 The predicted concentration follows:

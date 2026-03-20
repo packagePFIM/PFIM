@@ -70,7 +70,7 @@ additiveError = ModelError(
   sigmaSlope = 0.0
 )
 print(additiveError)
-#> <PFIM::ModelError> <environment: 0x0000024a453b7cb0> 
+#> <PFIM::ModelError> <environment: 0x0000021f68175c10> 
 #>  @ output         : chr "RespPK"
 #>  @ equation       :  expression()
 #>  @ derivatives    : list()
@@ -87,7 +87,7 @@ combinedError = ModelError(
   sigmaSlope = 0.15
 )
 print(combinedError)
-#> <PFIM::ModelError> <environment: 0x0000024a45045008> 
+#> <PFIM::ModelError> <environment: 0x0000021f67c62310> 
 #>  @ output         : chr "RespPK"
 #>  @ equation       :  expression()
 #>  @ derivatives    : list()

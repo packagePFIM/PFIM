@@ -1,7 +1,7 @@
 # PSOAlgorithm Class
 
 The `PSOAlgorithm` class is a subclass of
-[`Optimization`](https://packagePFIM.github.io/PFIM/reference/Optimization.md)
+[`Optimization`](https://packagepfim.github.io/PFIM/reference/Optimization.md)
 that implements the PSO metaheuristic. It optimizes experimental designs
 by moving a "swarm" of candidate solutions (particles) through the
 search space.

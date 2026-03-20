@@ -1,7 +1,7 @@
 # Generate Numerical Intervals from Sampling Constraints
 
 The `generateSamplingsFromSamplingConstraints` method transforms a
-[`SamplingTimeConstraints`](https://packagePFIM.github.io/PFIM/reference/SamplingTimeConstraints.md)
+[`SamplingTimeConstraints`](https://packagepfim.github.io/PFIM/reference/SamplingTimeConstraints.md)
 object into a structured list of mathematical intervals. These intervals
 define the feasible search space for each optimizable sampling point.
 
@@ -10,7 +10,7 @@ define the feasible search space for each optimizable sampling point.
 - samplingTimeConstraints:
 
   An object of class
-  [`SamplingTimeConstraints`](https://packagePFIM.github.io/PFIM/reference/SamplingTimeConstraints.md)
+  [`SamplingTimeConstraints`](https://packagepfim.github.io/PFIM/reference/SamplingTimeConstraints.md)
   containing the user-defined constraints and windows.
 
 ## Value

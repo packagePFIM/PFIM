@@ -2,12 +2,12 @@
 
 Dispatches the optimization of a study design to the appropriate
 algorithm. Methods are available for all PFIM optimization algorithms:
-[`MultiplicativeAlgorithm`](https://packagePFIM.github.io/PFIM/reference/MultiplicativeAlgorithm.md),
-[`FedorovWynnAlgorithm`](https://packagePFIM.github.io/PFIM/reference/FedorovWynnAlgorithm.md),
-[`SimplexAlgorithm`](https://packagePFIM.github.io/PFIM/reference/SimplexAlgorithm.md),
-[`PSOAlgorithm`](https://packagePFIM.github.io/PFIM/reference/PSOAlgorithm.md),
+[`MultiplicativeAlgorithm`](https://packagepfim.github.io/PFIM/reference/MultiplicativeAlgorithm.md),
+[`FedorovWynnAlgorithm`](https://packagepfim.github.io/PFIM/reference/FedorovWynnAlgorithm.md),
+[`SimplexAlgorithm`](https://packagepfim.github.io/PFIM/reference/SimplexAlgorithm.md),
+[`PSOAlgorithm`](https://packagepfim.github.io/PFIM/reference/PSOAlgorithm.md),
 and
-[`PGBOAlgorithm`](https://packagePFIM.github.io/PFIM/reference/PGBOAlgorithm.md).
+[`PGBOAlgorithm`](https://packagepfim.github.io/PFIM/reference/PGBOAlgorithm.md).
 
 ## Usage
 
@@ -20,13 +20,13 @@ optimizeDesign(optimizationObject, optimizationAlgorithm, ...)
 - optimizationObject:
 
   An object of class
-  [`Optimization`](https://packagePFIM.github.io/PFIM/reference/Optimization.md)
+  [`Optimization`](https://packagepfim.github.io/PFIM/reference/Optimization.md)
   containing the design space, model, and objective function settings.
 
 - optimizationAlgorithm:
 
   An object of the algorithm class to use (`MultiplicativeAlgorithm`,
-  `FedorovWynnAlgorithm`, `PSOAlgorithm`, etc.).
+  `FedorovWynnAlgorithm`, etc.).
 
 - ...:
 

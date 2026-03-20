@@ -11,7 +11,7 @@ components.
 - fim:
 
   An object of class
-  [`PopulationFim`](https://packagePFIM.github.io/PFIM/reference/PopulationFim.md)
+  [`PopulationFim`](https://packagepfim.github.io/PFIM/reference/PopulationFim.md)
   containing the calculated SE and RSE values.
 
 - evaluation:

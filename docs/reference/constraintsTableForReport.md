@@ -3,12 +3,12 @@
 Extracts and formats the design constraints and algorithm
 hyperparameters into a structured table suitable for inclusion in PFIM
 reports. Methods are available for all optimization algorithms:
-[`MultiplicativeAlgorithm`](https://packagePFIM.github.io/PFIM/reference/MultiplicativeAlgorithm.md),
-[`FedorovWynnAlgorithm`](https://packagePFIM.github.io/PFIM/reference/FedorovWynnAlgorithm.md),
-[`SimplexAlgorithm`](https://packagePFIM.github.io/PFIM/reference/SimplexAlgorithm.md),
-[`PSOAlgorithm`](https://packagePFIM.github.io/PFIM/reference/PSOAlgorithm.md),
+[`MultiplicativeAlgorithm`](https://packagepfim.github.io/PFIM/reference/MultiplicativeAlgorithm.md),
+[`FedorovWynnAlgorithm`](https://packagepfim.github.io/PFIM/reference/FedorovWynnAlgorithm.md),
+[`SimplexAlgorithm`](https://packagepfim.github.io/PFIM/reference/SimplexAlgorithm.md),
+[`PSOAlgorithm`](https://packagepfim.github.io/PFIM/reference/PSOAlgorithm.md),
 and
-[`PGBOAlgorithm`](https://packagePFIM.github.io/PFIM/reference/PGBOAlgorithm.md).
+[`PGBOAlgorithm`](https://packagepfim.github.io/PFIM/reference/PGBOAlgorithm.md).
 
 ## Usage
 

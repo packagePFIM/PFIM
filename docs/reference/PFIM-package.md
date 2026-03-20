@@ -123,6 +123,8 @@ Useful links:
 
 - <https://github.com/packagePFIM>
 
+- <https://packagepfim.github.io/PFIM/>
+
 - Report bugs at <https://github.com/packagePFIM/PFIM/issues>
 
 ## Author

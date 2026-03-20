@@ -10,21 +10,21 @@ variability (random effects) and the residual error components.
 - arm:
 
   An object of class
-  [`Arm`](https://packagePFIM.github.io/PFIM/reference/Arm.md) defining
+  [`Arm`](https://packagepfim.github.io/PFIM/reference/Arm.md) defining
   the experimental design (sampling times, doses) for a group of
   subjects.
 
 - model:
 
   An object of class
-  [`Model`](https://packagePFIM.github.io/PFIM/reference/Model.md)
+  [`Model`](https://packagepfim.github.io/PFIM/reference/Model.md)
   containing the structural equations and the statistical model for
   random effects.
 
 - fim:
 
   An object of class
-  [`PopulationFim`](https://packagePFIM.github.io/PFIM/reference/PopulationFim.md)
+  [`PopulationFim`](https://packagepfim.github.io/PFIM/reference/PopulationFim.md)
   used as the container for the resulting matrices.
 
 ## Value

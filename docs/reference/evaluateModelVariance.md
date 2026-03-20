@@ -9,13 +9,13 @@ partial derivatives with respect to the variance parameters
 - model:
 
   An object of class
-  [`Model`](https://packagePFIM.github.io/PFIM/reference/Model.md)
+  [`Model`](https://packagepfim.github.io/PFIM/reference/Model.md)
   defining the structural and residual error models.
 
 - arm:
 
   An object of class
-  [`Arm`](https://packagePFIM.github.io/PFIM/reference/Arm.md) defining
+  [`Arm`](https://packagepfim.github.io/PFIM/reference/Arm.md) defining
   the design (sampling times and doses) for a specific group.
 
 ## Value

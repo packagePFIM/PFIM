@@ -54,12 +54,12 @@ Copyright (c) 2026-present Romain Leroux. All rights reserved.
 
 ## See also
 
-[`plotEvaluation`](https://packagePFIM.github.io/PFIM/reference/plotEvaluation.md),
-[`plotSensitivityIndices`](https://packagePFIM.github.io/PFIM/reference/plotSensitivityIndices.md),
-[`plotSE`](https://packagePFIM.github.io/PFIM/reference/plotSE.md),
-[`plotRSE`](https://packagePFIM.github.io/PFIM/reference/plotRSE.md),
-[`plotWeights`](https://packagePFIM.github.io/PFIM/reference/plotWeights.md),
-[`plotFrequencies`](https://packagePFIM.github.io/PFIM/reference/plotFrequencies.md)
+[`plotEvaluation`](https://packagepfim.github.io/PFIM/reference/plotEvaluation.md),
+[`plotSensitivityIndices`](https://packagepfim.github.io/PFIM/reference/plotSensitivityIndices.md),
+[`plotSE`](https://packagepfim.github.io/PFIM/reference/plotSE.md),
+[`plotRSE`](https://packagepfim.github.io/PFIM/reference/plotRSE.md),
+[`plotWeights`](https://packagepfim.github.io/PFIM/reference/plotWeights.md),
+[`plotFrequencies`](https://packagepfim.github.io/PFIM/reference/plotFrequencies.md)
 
 ## Author
 

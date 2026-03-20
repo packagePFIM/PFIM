@@ -10,7 +10,7 @@ difference method. This includes calculating inverse column scales
 - model:
 
   An object of class
-  [`Model`](https://packagePFIM.github.io/PFIM/reference/Model.md)
+  [`Model`](https://packagepfim.github.io/PFIM/reference/Model.md)
   containing the structural and error model definitions.
 
 ## Value

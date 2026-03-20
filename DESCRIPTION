@@ -27,7 +27,7 @@ Description: Evaluate or optimize designs for nonlinear mixed effects models usi
     Le Nagard H, Chao L, Tenaillon O (2011) <doi:10.1186/1471-2148-11-326>,
     Combes FP, Retout S, Frey N, Mentré F (2013) <doi:10.1007/s11095-013-1079-3> and
     Seurat J, Tang Y, Mentré F, Nguyen TT (2021) <doi:10.1016/j.cmpb.2021.106126>.
-URL: http://www.pfim.biostat.fr/, https://github.com/packagePFIM
+URL: http://www.pfim.biostat.fr/, https://github.com/packagePFIM, https://packagepfim.github.io/PFIM/
 BugReports: https://github.com/packagePFIM/PFIM/issues
 Depends: R (>= 4.0.0)
 License: GPL (>=3) 

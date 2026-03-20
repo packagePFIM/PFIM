@@ -2,7 +2,7 @@
 
 The `setEvaluationFim` method processes the raw results from a model
 evaluation to populate the detailed statistical slots of a
-[`PopulationFim`](https://packagePFIM.github.io/PFIM/reference/PopulationFim.md)
+[`PopulationFim`](https://packagepfim.github.io/PFIM/reference/PopulationFim.md)
 object. It transforms the Fisher Information Matrix into actionable
 metrics like Standard Errors (SE) and Relative Standard Errors (RSE).
 
@@ -11,7 +11,7 @@ metrics like Standard Errors (SE) and Relative Standard Errors (RSE).
 - fim:
 
   An object of class
-  [`PopulationFim`](https://packagePFIM.github.io/PFIM/reference/PopulationFim.md)
+  [`PopulationFim`](https://packagepfim.github.io/PFIM/reference/PopulationFim.md)
   to be updated.
 
 - evaluation:
@@ -27,7 +27,7 @@ The object `IndividualFim` with its fisherMatrix, fixedEffects,
 shrinkage, condNumberFixedEffects, SEAndRSE.
 
 The updated
-[`PopulationFim`](https://packagePFIM.github.io/PFIM/reference/PopulationFim.md)
+[`PopulationFim`](https://packagepfim.github.io/PFIM/reference/PopulationFim.md)
 object, with the following slots populated: `fisherMatrix`,
 `fixedEffects`, `shrinkage`, `condNumberFixedEffects`, and `SEAndRSE`.
 

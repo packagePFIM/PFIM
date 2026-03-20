@@ -15,7 +15,7 @@ getArmConstraints(arm, optimizationAlgorithm, ...)
 - arm:
 
   An object of class
-  [`Arm`](https://packagePFIM.github.io/PFIM/reference/Arm.md).
+  [`Arm`](https://packagepfim.github.io/PFIM/reference/Arm.md).
 
 - optimizationAlgorithm:
 

@@ -11,7 +11,7 @@ Plot Relative Standard Errors (RSE%) for Population FIM
 - fim:
 
   An object of class
-  [`PopulationFim`](https://packagePFIM.github.io/PFIM/reference/PopulationFim.md)
+  [`PopulationFim`](https://packagepfim.github.io/PFIM/reference/PopulationFim.md)
   containing the calculated RSE values.
 
 - evaluation:

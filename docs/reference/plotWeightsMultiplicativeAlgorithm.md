@@ -10,13 +10,13 @@ prioritized by the optimization process.
 - optimization:
 
   An object of class
-  [`Optimization`](https://packagePFIM.github.io/PFIM/reference/Optimization.md)
+  [`Optimization`](https://packagepfim.github.io/PFIM/reference/Optimization.md)
   containing the optimized weights.
 
 - optimizationAlgorithm:
 
   An object of class
-  [`MultiplicativeAlgorithm`](https://packagePFIM.github.io/PFIM/reference/MultiplicativeAlgorithm.md)
+  [`MultiplicativeAlgorithm`](https://packagepfim.github.io/PFIM/reference/MultiplicativeAlgorithm.md)
   used for the optimization.
 
 ## Value

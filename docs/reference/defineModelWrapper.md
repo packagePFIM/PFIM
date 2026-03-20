@@ -10,7 +10,7 @@ define the model wrapper for the ode solver
 
 - evaluation:
 
-  An object of class `Evaluation` that defines the evaluation
+  An object of class Evaluation that defines the evaluation
 
 ## Value
 

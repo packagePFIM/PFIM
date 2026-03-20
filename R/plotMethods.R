@@ -78,10 +78,12 @@ plot = new_generic("plot", "x", function(x, plotOptions = list(), which = NULL, 
 # -- method(plot, Evaluation) -------------------------------------------------
 method(plot, Evaluation) = function(x,
                                     plotOptions = list(),
-                                    which       = .WHICH_EVALUATION,
+                                    which       = NULL,
                                     ...) {
-  .checkWhich(which, .WHICH_EVALUATION, "Evaluation")
-  which = match.arg(which, choices = .WHICH_EVALUATION, several.ok = TRUE)
+  which = if (is.null(which)) .WHICH_EVALUATION else {
+    .checkWhich(which, .WHICH_EVALUATION, "Evaluation")
+    match.arg(which, choices = .WHICH_EVALUATION, several.ok = TRUE)
+  }
   out   = list()
   if ("evaluation"         %in% which) out$evaluation         = plotEvaluation(x, plotOptions)
   if ("sensitivityIndices" %in% which) out$sensitivityIndices = plotSensitivityIndices(x, plotOptions)
@@ -93,10 +95,12 @@ method(plot, Evaluation) = function(x,
 # -- method(plot, .Optimization_S7) -------------------------------------------
 method(plot, .Optimization_S7) = function(x,
                                           plotOptions = list(),
-                                          which       = .WHICH_OPTIMIZATION,
+                                          which       = NULL,
                                           ...) {
-  .checkWhich(which, .WHICH_OPTIMIZATION, "Optimization")
-  which                   = match.arg(which, choices = .WHICH_OPTIMIZATION, several.ok = TRUE)
+  which = if (is.null(which)) .WHICH_OPTIMIZATION else {
+    .checkWhich(which, .WHICH_OPTIMIZATION, "Optimization")
+    match.arg(which, choices = .WHICH_OPTIMIZATION, several.ok = TRUE)
+  }
   optimisationDesign      = prop(x, "optimisationDesign")
   evaluationOptimalDesign = optimisationDesign$evaluationOptimalDesign
   out = list()

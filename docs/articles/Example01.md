@@ -1113,7 +1113,7 @@ print(getDcriterion(optimizationMultResults))
 
 #### Arm weights
 
-[`plotWeights()`](https://packagePFIM.github.io/PFIM/reference/plotWeights.md)
+[`plotWeights()`](https://packagepfim.github.io/PFIM/reference/plotWeights.md)
 shows the weights for each arm, considering a specified threshold value.
 
 ``` r

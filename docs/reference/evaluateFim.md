@@ -23,7 +23,7 @@ estimates. This method specifically computes:
 - fim:
 
   An object of class
-  [`PopulationFim`](https://packagePFIM.github.io/PFIM/reference/PopulationFim.md)
+  [`PopulationFim`](https://packagepfim.github.io/PFIM/reference/PopulationFim.md)
   to be populated with results.
 
 - model:

@@ -1,4 +1,4 @@
-# Generate Statistical Tables for Evaluation Reports
+# Generate tables for the Bayesian Fim report
 
 The `tablesForReport` method aggregates the results of a PFIM analysis
 into three standardized tables. It provides a structured view of
@@ -10,7 +10,7 @@ estimation (Standard Errors and Relative Standard Errors).
 - fim:
 
   An object of class
-  [`PopulationFim`](https://packagePFIM.github.io/PFIM/reference/PopulationFim.md)
+  [`PopulationFim`](https://packagepfim.github.io/PFIM/reference/PopulationFim.md)
   containing the calculated Fisher Information Matrix and derived
   statistics.
 
@@ -20,6 +20,10 @@ estimation (Standard Errors and Relative Standard Errors).
   and output definitions.
 
 ## Value
+
+A list of kable tables (Fixed Effects, Criteria, SE/RSE/Shrinkage).
+
+fixedEffectsTable, FIMCriteriaTable, SEAndRSETable.
 
 A `list` containing three data frames:
 
@@ -36,6 +40,10 @@ A `list` containing three data frames:
   Table of precision metrics (SE and RSE%).
 
 ## Note
+
+Copyright (c) 2026-present Romain Leroux. All rights reserved.
+
+Copyright (c) 2026-present Romain Leroux. All rights reserved.
 
 Copyright (c) 2026-present Romain Leroux. All rights reserved.
 

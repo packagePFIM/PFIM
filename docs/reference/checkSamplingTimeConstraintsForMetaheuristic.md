@@ -10,13 +10,13 @@ required for clinical safety or logistical practicality.
 - samplingTimesConstraints:
 
   An object of class
-  [`SamplingTimeConstraints`](https://packagePFIM.github.io/PFIM/reference/SamplingTimeConstraints.md)
+  [`SamplingTimeConstraints`](https://packagepfim.github.io/PFIM/reference/SamplingTimeConstraints.md)
   defining the allowed design space.
 
 - arm:
 
   An object of class
-  [`Arm`](https://packagePFIM.github.io/PFIM/reference/Arm.md)
+  [`Arm`](https://packagepfim.github.io/PFIM/reference/Arm.md)
   representing the experimental group being validated.
 
 - newSamplings:

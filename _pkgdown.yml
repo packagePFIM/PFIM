@@ -1,45 +1,37 @@
-url: https://packagePFIM.github.io/PFIM
-
+url: https://packagepfim.github.io/PFIM/
 template:
   bootstrap: 5
-
 home:
   title: PFIM -- Population Fisher Information Matrix
-
 navbar:
   structure:
-    left: [intro, reference, articles]
+    left:
+    - intro
+    - reference
+    - articles
   components:
     articles:
       text: Vignettes
       menu:
-      - text: "Example 01 -- Discrete Space"
+      - text: Example 01 -- Discrete Space
         href: articles/Example01.html
-      - text: "Example 02 -- Continuous Space"
+      - text: Example 02 -- Continuous Space
         href: articles/Example02.html
-
 reference:
-
-# ==============================================================================
-- title: "Main classes"
-  desc: "Top-level objects: evaluation and optimization of experimental designs"
+- title: Main classes
+  desc: 'Top-level objects: evaluation and optimization of experimental designs'
   contents:
   - PFIM-package
   - PFIMProject
   - Evaluation
   - Optimization
-
-# ==============================================================================
-- title: "Run & display"
+- title: Run & display
   contents:
   - run
   - show
-
-# ==============================================================================
-- title: "Plot"
-  desc: >
-    Unified OO entry point. `plot()` dispatches on the object class and returns
-    a named list of ggplot2 objects. Specific plot functions are also available.
+- title: Plot
+  desc: |
+    Unified OO entry point. `plot()` dispatches on the object class and returns a named list of ggplot2 objects. Specific plot functions are also available.
   contents:
   - plot
   - plotSE
@@ -57,10 +49,8 @@ reference:
   - plotEvaluationSI
   - processArmEvaluationResults
   - processArmEvaluationSI
-
-# ==============================================================================
-- title: "Accessors"
-  desc: "Extract results from Evaluation or Optimization objects"
+- title: Accessors
+  desc: Extract results from Evaluation or Optimization objects
   contents:
   - getFim
   - getFisherMatrix
@@ -71,19 +61,15 @@ reference:
   - getDcriterion
   - getCorrelationMatrix
   - Dcriterion
-
-# ==============================================================================
-- title: "Report"
+- title: Report
   contents:
   - Report
   - generateReportEvaluation
   - generateReportOptimization
   - tablesForReport
   - constraintsTableForReport
-
-# ==============================================================================
-- title: "Design objects"
-  desc: "Experimental design specification"
+- title: Design objects
+  desc: Experimental design specification
   contents:
   - Design
   - Arm
@@ -91,9 +77,7 @@ reference:
   - Administration
   - SamplingTimeConstraints
   - AdministrationConstraints
-
-# ==============================================================================
-- title: "Model parameters & error"
+- title: Model parameters & error
   contents:
   - ModelParameter
   - LogNormal
@@ -103,17 +87,13 @@ reference:
   - Combined1
   - Constant
   - Proportional
-
-# ==============================================================================
-- title: "FIM classes"
+- title: FIM classes
   contents:
   - Fim
   - PopulationFim
   - IndividualFim
   - BayesianFim
-
-# ==============================================================================
-- title: "FIM methods"
+- title: FIM methods
   contents:
   - defineFim
   - setEvaluationFim
@@ -129,9 +109,7 @@ reference:
   - evaluateErrorModelDerivatives
   - evaluateInitialConditions
   - computeVMat
-
-# ==============================================================================
-- title: "Model classes"
+- title: Model classes
   contents:
   - Model
   - ModelAnalytic
@@ -145,9 +123,7 @@ reference:
   - ModelODEDoseNotInEquations
   - ModelODEInfusion
   - ModelODEInfusionDoseInEquation
-
-# ==============================================================================
-- title: "Model helpers"
+- title: Model helpers
   contents:
   - defineModelType
   - defineModelEquationsFromLibraryOfModel
@@ -157,10 +133,8 @@ reference:
   - definePKPDModel
   - convertPKModelAnalyticToPKModelODE
   - finiteDifferenceHessian
-
-# ==============================================================================
-- title: "Library of models"
-  desc: "Pre-implemented standard PK/PD structural models"
+- title: Library of models
+  desc: Pre-implemented standard PK/PD structural models
   contents:
   - LibraryOfModels
   - LibraryOfPKModels
@@ -178,9 +152,7 @@ reference:
   - Linear2InfusionSteadyState_ClQV1V2tau
   - Linear2InfusionSteadyState_kk12k21Vtau
   - replaceVariablesLibraryOfModels
-
-# ==============================================================================
-- title: "Optimization algorithms"
+- title: Optimization algorithms
   contents:
   - defineOptimizationAlgorithm
   - FedorovWynnAlgorithm
@@ -194,9 +166,7 @@ reference:
   - MultiplicativeAlgorithm_Rcpp
   - fisherSimplex
   - fun.amoeba
-
-# ==============================================================================
-- title: "Sampling & dose helpers"
+- title: Sampling & dose helpers
   contents:
   - setSamplingConstraintForOptimization
   - updateSamplingTimes
@@ -209,11 +179,10 @@ reference:
   - armAdministration
   - getArmConstraints
   - getArmData
-
-# ==============================================================================
-- title: "Utilities"
+- title: Utilities
   contents:
   - getListLastName
   - getModelErrorData
   - getModelParametersData
   - adjustGradient
+

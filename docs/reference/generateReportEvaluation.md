@@ -11,13 +11,13 @@ stability.
 - fim:
 
   An object of class
-  [`PopulationFim`](https://packagePFIM.github.io/PFIM/reference/PopulationFim.md)
+  [`PopulationFim`](https://packagepfim.github.io/PFIM/reference/PopulationFim.md)
   containing the finalized FIM data.
 
 - tablesForReport:
 
   A `list` of data frames (as returned by
-  [`tablesForReport`](https://packagePFIM.github.io/PFIM/reference/tablesForReport.md))
+  [`tablesForReport`](https://packagepfim.github.io/PFIM/reference/tablesForReport.md))
   containing the formatted statistical summaries.
 
 ## Value

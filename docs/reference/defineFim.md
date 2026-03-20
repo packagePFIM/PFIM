@@ -25,7 +25,7 @@ defineFim(pfimproject, ...)
 - pfimproject:
 
   An object of class
-  [`PFIMProject`](https://packagePFIM.github.io/PFIM/reference/PFIMProject.md)
+  [`PFIMProject`](https://packagepfim.github.io/PFIM/reference/PFIMProject.md)
   containing the model and design specifications.
 
 - ...:
@@ -35,7 +35,7 @@ defineFim(pfimproject, ...)
 ## Value
 
 An object of class
-[`Fim`](https://packagePFIM.github.io/PFIM/reference/Fim.md) initialized
+[`Fim`](https://packagepfim.github.io/PFIM/reference/Fim.md) initialized
 with the settings defined in the project.
 
 ## Note

@@ -12,7 +12,7 @@ LibraryOfPKModels
 ## Format
 
 An object of class `PFIM::LibraryOfPKModels` (inherits from
-[`PFIM::LibraryOfModels`](https://packagePFIM.github.io/PFIM/reference/LibraryOfModels.md),
+[`PFIM::LibraryOfModels`](https://packagepfim.github.io/PFIM/reference/LibraryOfModels.md),
 `S7_object`) of length 1.
 
 ## Details

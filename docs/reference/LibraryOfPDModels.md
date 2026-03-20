@@ -12,13 +12,13 @@ LibraryOfPDModels
 ## Format
 
 An object of class `PFIM::LibraryOfPDModels` (inherits from
-[`PFIM::LibraryOfModels`](https://packagePFIM.github.io/PFIM/reference/LibraryOfModels.md),
+[`PFIM::LibraryOfModels`](https://packagepfim.github.io/PFIM/reference/LibraryOfModels.md),
 `S7_object`) of length 1.
 
 ## Details
 
 This class inherits from
-[`LibraryOfModels`](https://packagePFIM.github.io/PFIM/reference/LibraryOfModels.md)
+[`LibraryOfModels`](https://packagepfim.github.io/PFIM/reference/LibraryOfModels.md)
 and provides a dedicated structure for pharmacodynamic responses. It is
 designed to handle various PD mechanisms, including direct effect models
 (Emax, Sigmoid Emax), indirect response models (Turnover), and

@@ -2,7 +2,7 @@
 
 The method acts as a constructor for the specific model class required
 for analysis. It extracts configurations from a
-[`PFIMProject`](https://packagePFIM.github.io/PFIM/reference/PFIMProject.md)
+[`PFIMProject`](https://packagepfim.github.io/PFIM/reference/PFIMProject.md)
 and instantiates a `Model` object, integrating equations, parameter
 structures, error models, and solver settings.
 
@@ -17,7 +17,7 @@ defineModelType(pfimproject, ...)
 - pfimproject:
 
   An object of class
-  [`PFIMProject`](https://packagePFIM.github.io/PFIM/reference/PFIMProject.md)
+  [`PFIMProject`](https://packagepfim.github.io/PFIM/reference/PFIMProject.md)
   containing the project specifications.
 
 - ...:
