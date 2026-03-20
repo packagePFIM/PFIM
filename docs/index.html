@@ -52,8 +52,114 @@
   </div>
 </nav><div class="container template-home">
 <div class="row">
-  <main id="main" class="col-md-9">
-Evaluate or optimize designs for nonlinear mixed effects models using the Fisher Information matrix. Methods used in the package refer to Mentré F, Mallet A, Baccar D (1997) &lt;<a href="https://doi.org/10.1093/biomet/84.2.429" class="external-link">doi:10.1093/biomet/84.2.429</a>&gt;, Retout S, Comets E, Samson A, Mentré F (2007) &lt;<a href="https://doi.org/10.1002/sim.2910" class="external-link">doi:10.1002/sim.2910</a>&gt;, Bazzoli C, Retout S, Mentré F (2009) &lt;<a href="https://doi.org/10.1002/sim.3573" class="external-link">doi:10.1002/sim.3573</a>&gt;, Le Nagard H, Chao L, Tenaillon O (2011) &lt;<a href="https://doi.org/10.1186/1471-2148-11-326" class="external-link">doi:10.1186/1471-2148-11-326</a>&gt;, Combes FP, Retout S, Frey N, Mentré F (2013) &lt;<a href="https://doi.org/10.1007/s11095-013-1079-3" class="external-link">doi:10.1007/s11095-013-1079-3</a>&gt; and Seurat J, Tang Y, Mentré F, Nguyen TT (2021) &lt;<a href="https://doi.org/10.1016/j.cmpb.2021.106126" class="external-link">doi:10.1016/j.cmpb.2021.106126</a>&gt;.
+  <main id="main" class="col-md-9"><div class="section level1">
+<div class="page-header"><h1 id="pfim">PFIM<a class="anchor" aria-label="anchor" href="#pfim"></a>
+</h1></div>
+<p><a href="https://cran.r-project.org/package=PFIM" class="external-link"><img src="http://www.r-pkg.org/badges/version/PFIM" alt="CRAN Version"></a> <a href="https://cran.r-project.org/package=PFIM" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/grand-total/PFIM" alt="Total Downloads"></a> <a href="https://www.gnu.org/licenses/gpl-3.0" class="external-link"><img src="https://img.shields.io/badge/License-GPLv3-blue.svg" alt="License: GPL v3"></a></p>
+<p align="center">
+<img src="Logo_PFIM.png" alt="Structure de PFIM" width="200"></p>
+<div class="section level2">
+<h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
+</h2>
+<p>PFIM is an R package for evaluating and optimizing designs for nonlinear mixed effects models using the Fisher Information Matrix approach. The package provides comprehensive tools for population pharmacokinetic/pharmacodynamic (PK/PD) study design optimization.</p>
+<p><strong>Key Features</strong> - <strong>User script</strong>: clear and intuitive - <strong>Model Library</strong>: Pre-built PK/PD models for common scenarios. - <strong>Custom Models</strong>: Support for user-defined analytical and ODE-based models. - <strong>Multiple optimization algorithms</strong>: Various optimization methods for discrete and continuous optimization (PGBO, PSO, Simplex, Fedorov-Wynn, multiplicative algorithm)</p>
+<p>The source code is modular, designed using a functional programming approach (via the package <strong>purrr</strong>) and R S7 object-oriented programming, which makes it easy to extend and customize your models and algorithms.</p>
+</div>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
+<p><code>{r global_options, echo = FALSE, include = FALSE, eval =FALSE } # Install from CRAN: install.packages("PFIM") # Load the package: library(PFIM)</code></p>
+</div>
+<div class="section level2">
+<h2 id="methodology">Methodology<a class="anchor" aria-label="anchor" href="#methodology"></a>
+</h2>
+<p>The methods implemented in PFIM are based on established research in optimal design theory:</p>
+<ul>
+<li>Mentré F, Mallet A, Baccar D (1997) <a href="doi:10.1093/biomet/84.2.429" class="uri">doi:10.1093/biomet/84.2.429</a>,</li>
+<li>Retout S, Comets E, Samson A, Mentré F (2007) <a href="doi:10.1002/sim.2910" class="uri">doi:10.1002/sim.2910</a>,</li>
+<li>Bazzoli C, Retout S, Mentré F (2009) <a href="doi:10.1002/sim.3573" class="uri">doi:10.1002/sim.3573</a>,</li>
+<li>Le Nagard H, Chao L, Tenaillon O (2011) <a href="doi:10.1186/1471-2148-11-326" class="uri">doi:10.1186/1471-2148-11-326</a>,</li>
+<li>Combes FP, Retout S, Frey N, Mentré F (2013) <a href="doi:10.1007/s11095-013-1079-3" class="uri">doi:10.1007/s11095-013-1079-3</a>
+</li>
+<li>Seurat J, Tang Y, Mentré F, Nguyen TT (2021) <a href="doi:10.1016/j.cmpb.2021.106126" class="uri">doi:10.1016/j.cmpb.2021.106126</a>
+</li>
+</ul>
+</div>
+<div class="section level2">
+<h2 id="package-information">Package Information<a class="anchor" aria-label="anchor" href="#package-information"></a>
+</h2>
+<p>Version: 7.0</p>
+<p>I would like to inform you that the previous version 6.1 of the package is now deprecated and no longer maintained.<br>
+Please upgrade to this version 7.0 for the new features of this version, including the new user script, please consult the NEWS file.</p>
+<p>Author and creator: Romain Leroux <a href="https://orcid.org/0009-0009-5779-5303" class="external-link uri">https://orcid.org/0009-0009-5779-5303</a> [aut, cre]</p>
+<p>Author: France Mentré ORCID <a href="https://orcid.org/0000-0002-7045-1275" class="external-link uri">https://orcid.org/0000-0002-7045-1275</a> [aut]</p>
+<p>Contributors: Jérémy Seurat [ctb]</p>
+<p>Maintainer: Romain Leroux &lt;<a href="mailto:romainlerouxPFIM@gmail.com" class="email">romainlerouxPFIM@gmail.com</a>&gt;</p>
+<p>License: GPL-2 | GPL-3 [expanded from: GPL (≥ 3)]</p>
+<p>Logo designed by Lucie Fayette</p>
+</div>
+<div class="section level2">
+<h2 id="design-evaluation-and-optimization">Design evaluation and optimization<a class="anchor" aria-label="anchor" href="#design-evaluation-and-optimization"></a>
+</h2>
+<p>Design evaluation and optimization examples have been implemented in PFIM 7.0. Source scripts are available in the folder Design_Evaluation/ and Design_Optimization/</p>
+<ul>
+<li>Design_Evaluation/
+<ul>
+<li>library_of_models
+<ul>
+<li>pk_analytic</li>
+<li>pk_analytic_infusion</li>
+<li>pk_analytic_infusion_pd_analytic</li>
+<li>pk_analytic_infusion_pd_ode</li>
+<li>pk_analytic_infusion_steady_state</li>
+<li>pk_analytic_pd_analytic</li>
+<li>pk_analytic_pd_ode</li>
+<li>pk_analytic_steady_state</li>
+<li>pk_analytic_steady_state_pd_analytic</li>
+</ul>
+</li>
+<li>user_defined_model
+<ul>
+<li>model_analytic</li>
+<li>model_analytic_infusion</li>
+<li>model_analytic_steady_state</li>
+<li>model_ode_bolus</li>
+<li>model_ode_dose_in_equations</li>
+<li>model_ode_dose_not_in_equations</li>
+<li>model_ode_infusion_dose_in_equations</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Design_Optimization
+<ul>
+<li>continuous/
+<ul>
+<li>PGBO</li>
+<li>PSO</li>
+<li>Simplex</li>
+</ul>
+</li>
+<li>discrete/
+<ul>
+<li>FedorovWynn/</li>
+<li>MultiplicativeAlgorithm/</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>The Vignettes/ folder contains the two vignettes available on CRAN.</p>
+<p>To run all the scripts, simply copy these folders to your computer and execute the run_examples_PFIM.R script. Within this script, you need to specify the paths to the Design_Evaluation and Design_Optimization directories.</p>
+<p>The Package documentation/ folder contains the complete documentation for all methods and classes included in the package.</p>
+</div>
+<div class="section level2">
+<h2 id="getting-help">Getting help<a class="anchor" aria-label="anchor" href="#getting-help"></a>
+</h2>
+<p>If you encounter a clear bug, please file the issue with a minimal reproducible example in the folder Issues.</p>
+<p>For questions and other discussion, please use the PFIM group mailing list: <a href="mailto:thepfimgroup@googlegroups.com" class="email">thepfimgroup@googlegroups.com</a></p>
+</div>
+</div>
   </main><aside class="col-md-3"><div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
