@@ -1,404 +1,506 @@
 ---
-title: "Design evaluation and optimization in continuous space"
-classoption: openany
+title: "Design Evaluation and Optimization in Continuous Space"
+date: ""
 output:
   rmarkdown::html_vignette:
     toc: true
+    toc_depth: 3
 bibliography: references.bib
 biblio-style: apalike
 link-citations: yes
-linkcolor: blue
-urlcolor: green
 vignette: >
-  %\VignetteIndexEntry{Design evaluation and optimization in continuous space}
+  %\VignetteIndexEntry{Design Evaluation and Optimization in Continuous Space}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
   
-  <style type="text/css">
+<style type="text/css">
+/* Typography */
+body       { font-size: 14px; line-height: 1.7; color: #2c3e50;
+max-width: 1200px; }
+h1, h2, h3 { font-weight: 600; margin-top: 1.8em; color: #2c3e50; border-bottom: none !important;}
+p          { margin-bottom: 0.9em; }
+
+/* Code */
+pre  { font-size: 12px; border-radius: 4px; background: #f8f8f8;
+border: 1px solid #e0e0e0; padding: 10px; }
+code { font-size: 12px; background: #f4f4f4; padding: 1px 4px;
+border-radius: 3px; }
+
+/* Callout boxes */
+.box-note, .box-warn, .box-tip {
+border-left: 5px solid;
+padding: 10px 14px;
+margin: 14px 0;
+border-radius: 0 4px 4px 0;
+font-size: 13.5px;
+}
+.box-note { background: #eaf4fb; border-color: #3498db; }
+.box-warn { background: #fef9e7; border-color: #f39c12; }
+.box-tip  { background: #eafaf1; border-color: #27ae60; }
+
+/* Tables */
+table { 
+    font-size: 13px; 
+    border-collapse: collapse; 
+    margin: 2em auto;       /* Centre le tableau dans la page */
+    width: auto;            /* Largeur ajustée au contenu (pas 100%) */
+    min-width: 50%;         /* Évite que le tableau soit trop étroit */
+    max-width: 95%; 
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1); /* Optionnel : ombre légère pour le relief */
+}
+
+th { 
+    background: #2c3e50; 
+    color: #ffffff; 
+    padding: 10px 15px; 
+    text-align: center !important; /* Centre les titres des colonnes */
+    border-bottom: 2px solid #1a252f;
+}
+
+td { 
+    padding: 8px 15px; 
+    border-bottom: 1px solid #e0e0e0; 
+    background: #ffffff !important; /* Force le fond blanc partout */
+    text-align: left;              /* Texte à gauche pour la lecture */
+    vertical-align: middle;
+}
+
+/* Centre le texte des colonnes courtes (Symbol et Unit) */
+/* Cible la 1ère et la 3ème colonne */
+td:first-child, td:last-child {
+    text-align: center;
+}
+hr { border-top: 1px solid #dee2e6; margin: 2em 0; }
+</style>
   
-  body{
-  font-size: 11pt;
-  }
-  
-  h1.title {
-  font-size: 40pt;
-  }
-  
-  code.r{
-  font-size: 11pt;
-  }
-  
-  body {
-  max-width: 1600px;  
-  margin-left:10px;
-  line-height: 20px;
-  }
-  
-  </style>
-  
-```{r global_options, echo = FALSE, include = FALSE}
-backup_options <- options()
-options(width = 3000)
-knitr::opts_chunk$set(collapse = TRUE,
-comment = "#>",echo = FALSE, warning = FALSE, message = FALSE,
-cache = FALSE, tidy = FALSE, size = "small")
+```{r setup, include=FALSE}
+backup_options = options()
+options(width = 120)
+
+knitr::opts_chunk$set(
+echo       = TRUE,
+eval       = FALSE,          # chunks do NOT execute by default (CRAN compliance)
+warning    = FALSE,
+message    = FALSE,
+comment    = "#>",
+cache      = FALSE,
+fig.width  = 8,
+fig.height = 5,
+fig.align  = "center",
+out.width  = "90%"
+)
+
 library(PFIM)
+
+# paths$data    : pre-computed RDS files shipped in inst/extdata/
+# paths$outputs : text outputs  -> tempdir() (CRAN-compliant)
+# paths$reports : HTML reports  -> tempdir()
+paths = list(
+data    = system.file("extdata", package = "PFIM"),
+outputs = file.path(tempdir(), "pfim_out"),
+reports = file.path(tempdir(), "pfim_rep")
+)
+dir.create(paths$outputs, showWarnings = FALSE, recursive = TRUE)
+dir.create(paths$reports, showWarnings = FALSE, recursive = TRUE)
+
+# Shared plot options
+plotOptions = list(unitTime = "hour", unitOutcomes = c("mcg/mL", "DI%"))
 ```
 
-# Overview
+---
 
-In this example, we simulate an 1-compartment model with linear elimination for IV infusion over 1 hour (inspired by [@Sukeishi2021]). One hundred and fifty (150) subjects receive a 400mg loading dose on the first day, followed by 4 daily doses of 200mg. Blood samples are taken at the end of the $1^{st}$ infusion (H1), H20, H44, H66 and H120. By evaluating this design, we will then select 4 sampling times on intervals (0,48) and (72,120) for an optimal design using PSO (Particle Swarm Optimization) algorithm. The same optimization problem will also be run with PGBO (Population Based Genetic Optimization) and Simplex algorithm.
+# Design Evaluation
 
-Reports of the design evaluation and optimization are available at https://github.com/iame-researchCenter/PFIM
+## Model Equations from from Library of Models
 
-# Design evaluation 
+PFIM provides a library of pre-implemented standard PK/PD structural models.
+`modelFromLibrary` replaces `modelEquations` — the two arguments are mutually
+exclusive. The key `"PKModel"` is used for pharmacokinetic models.
 
-### Define the PK model `Linear1InfusionSingleDose_ClV` from the library of models
+The string `"Linear1InfusionSingleDose_ClV"` decodes as:
 
-```{r, echo = TRUE, comment=''} 
-modelFromLibrary = list("PKModel" = "Linear1InfusionSingleDose_ClV") 
+| Token | Meaning |
+|:------|:--------|
+| `Linear` | First-order (linear) elimination |
+| `1` | One-compartment disposition |
+| `Infusion` | IV infusion route; requires `Tinf` in `Administration()` |
+| `ClV` | Parameterised by clearance $Cl$ and volume $V$ |
+
+The predicted concentration follows:
+
+$$C_c(t) = \begin{cases}
+\dfrac{D}{T_{inf} \cdot Cl}\!\left(1 - e^{-\frac{Cl}{V}t}\right) & 0 \leq t \leq T_{inf} \\[6pt]
+C_c(T_{inf})\,e^{-\frac{Cl}{V}(t - T_{inf})} & t > T_{inf}
+\end{cases}$$
+
+```{r model-library, echo = TRUE, eval = FALSE, comment=''}
+modelFromLibrary = list("PKModel" = "Linear1InfusionSingleDose_ClV")
 ```
 
-### Define mu and omega for each parameter
+## Model Parameters
 
-```{r, echo = TRUE, comment=''} 
+The model has two structural parameters, both log-normally distributed:
+
+| Parameter | Description | $\mu$ | $\omega$ | Fixed $\mu$ | Fixed $\omega$ |
+|:---------:|:------------|------:|---------:|:-----------:|:--------------:|
+| $V$ | Volume of distribution (L) | 50 | $\sqrt{0.26} \approx 0.51$ | No | No |
+| $Cl$ | Total clearance (L/h) | 5 | $\sqrt{0.34} \approx 0.58$ | No | No |
+
+IIV of ~51% for $V$ reflects moderate variability in body composition; ~58% for
+$Cl$ is typical of metabolic clearance variability. Note that $\omega$ is the
+standard deviation on the log scale: `omega = sqrt(variance)`.
+
+```{r model-parameters}
 modelParameters = list(
-  ModelParameter( name = "V",    distribution = LogNormal( mu = 50, omega = sqrt( .26 ) ) ),
-  ModelParameter( name = "Cl",   distribution = LogNormal( mu = 5, omega = sqrt( .34 ) ) ) )
+  ModelParameter(name = "V",  distribution = LogNormal(mu = 50, omega = sqrt(0.26))),
+  ModelParameter(name = "Cl", distribution = LogNormal(mu = 5,  omega = sqrt(0.34)))
+)
 ```
 
+## Residual Error Model
 
-### Define the error model to the response PK `RespPK` 
+A `Combined1` error model is used for the PK response.
 
-```{r, echo = TRUE, comment=''} 
+```{r error-model, echo = TRUE, eval = FALSE, comment=''}
 errorModelRespPK = Combined1( output = "RespPK", sigmaInter = 0.5, sigmaSlope = sqrt( 0.15 ) )
 modelError = list( errorModelRespPK )
 ```
 
+## Administration Parameters
 
-### Define the administration parameters of the response PK
+The dosing schedule encodes the full multiple-dose regimen. The loading dose
+(400 mg = 2× maintenance) rapidly raises $C_c$ toward the therapeutic target;
+subsequent 200 mg doses maintain near-steady-state concentrations.
 
-```{r, echo = TRUE, comment=''} 
-administrationRespPK = Administration( outcome = "RespPK",
-                                       Tinf = rep( 1, 5 ),
-                                       timeDose = seq( 0, 96, 24 ),
-                                       dose = c( 400, rep( 200, 4 ) ) )
+```{r administration, echo = TRUE, eval = FALSE, comment=''}
+administrationRespPK = Administration(
+  outcome  = "RespPK",
+  Tinf     = rep(1, 5),           # 1-hour infusion for each of the 5 doses
+  timeDose = seq(0, 96, 24),      # dosing at t = 0, 24, 48, 72, 96 h
+  dose     = c(400, rep(200, 4))  # 400 mg loading + 4 × 200 mg maintenance
+)
 ```
 
-### Define the sampling times for the response PK `RespPK`
+## Sampling Times
 
-```{r, echo = TRUE, comment=''} 
-samplingTimesRespPK = SamplingTimes( outcome = "RespPK", 
-                                     samplings = c( 1,12,24,44,72,120 ) )
-``` 
+Six sampling times cover distinct phases of the multi-dose concentration profile:
 
-### Define an arm called `arm1` of size 150 with administration `administrationRespPK` and samplings `samplingTimesRespPK`
+| Time (h) | Pharmacokinetic phase |
+|:--------:|:----------------------|
+| 1 | End of first infusion — $C_{max}$ of dose 1 |
+| 12 | Mid-interdose Day 1 — early elimination |
+| 24 | Trough before dose 2 — $C_{min}$ after dose 1 |
+| 44 | Near $C_{max}$ of dose 2 (dose at 24 h + ~20 h) |
+| 72 | Trough before dose 4 — approaching steady state |
+| 120 | 24 h after the last dose — post-SS elimination |
 
-```{r, echo = TRUE, comment=''} 
-arm1 = Arm( name = "arm1",
-            size = 150,
-            administrations = list( administrationRespPK ) ,
-            samplingTimes   = list( samplingTimesRespPK ) )
+```{r sampling-times-eval, echo = TRUE, eval = FALSE, comment=''}
+samplingTimesRespPK = SamplingTimes(
+  outcome   = "RespPK",
+  samplings = c(1, 12, 24, 44, 72, 120)
+)
 ```
 
-### Add the arm `arm1` to the design `design1`
+## Arm and Design
 
-```{r, echo = TRUE, comment=''} 
-design1 = Design( name = "design1", arms = list( arm1 ) )
+A single arm with all 150 subjects on the same regimen. No `initialCondition` is
+required: the library model sets $C_c(0) = 0$ internally for IV infusion models.
 
+```{r arm-design-eval, echo = TRUE, eval = FALSE, comment=''}
+arm1 = Arm(
+  name            = "arm1",
+  size            = 150,
+  administrations = list(administrationRespPK),
+  samplingTimes   = list(samplingTimesRespPK)
+)
+
+design1 = Design(name = "design1", arms = list(arm1))
 ```
 
-### Evaluate the population, individual and Bayesian FIMs
+## FIM Evaluation: Population, Individual, and Bayesian FIM
 
-```{r, echo = TRUE, eval = FALSE, comment=''} 
-evaluationPop = Evaluation( name = "",
-                            modelFromLibrary = modelFromLibrary,
-                            modelParameters = modelParameters,
-                            modelError = modelError,
-                            outputs = list( "RespPK" ),
-                            designs = list( design1 ),
-                            fimType =  "population",
-                            odeSolverParameters = list( atol = 1e-8, rtol = 1e-8 ) )
+```{r evaluation-run, echo = TRUE, eval = FALSE, comment=''}
+# --- Population FIM ---
+evaluationPop = Evaluation(
+  name                = "evaluationPop",
+  modelFromLibrary    = modelFromLibrary,
+  modelParameters     = modelParameters,
+  modelError          = modelError,
+  outputs             = list("RespPK"),
+  designs             = list(design1),
+  fimType             = "population",
+  odeSolverParameters = list(atol = 1e-8, rtol = 1e-8)
+)
+evaluationPopResults = run(evaluationPop)
 
-evaluationFIMPop = run( evaluationPop )
+# --- Individual FIM ---
+evaluationInd = Evaluation(
+  name                = "evaluationInd",
+  modelFromLibrary    = modelFromLibrary,
+  modelParameters     = modelParameters,
+  modelError          = modelError,
+  outputs             = list("RespPK"),
+  designs             = list(design1),
+  fimType             = "individual",
+  odeSolverParameters = list(atol = 1e-8, rtol = 1e-8)
+)
+evaluationIndResults = run(evaluationInd)
 
-evaluationInd = Evaluation( name = "",
-                            modelFromLibrary = modelFromLibrary,
-                            modelParameters = modelParameters,
-                            modelError = modelError,
-                            outputs = list( "RespPK" ),
-                            designs = list( design1 ),
-                            fimType = "individual",
-                            odeSolverParameters = list( atol = 1e-8, rtol = 1e-8 ) )
-
-evaluationFIMInd = run( evaluationInd )
-
-evaluationBay = Evaluation( name = "",
-                            modelFromLibrary = modelFromLibrary,
-                            modelParameters = modelParameters,
-                            modelError = modelError,
-                            outputs = list( "RespPK" ),
-                            designs = list( design1 ),
-                            fimType = "Bayesian",
-                            odeSolverParameters = list( atol = 1e-8, rtol = 1e-8 ) )
-
-evaluationFIMBay = run( evaluationBay )
-
+# --- Bayesian FIM ---
+evaluationBay = Evaluation(
+  name                = "evaluationBay",
+  modelFromLibrary    = modelFromLibrary,
+  modelParameters     = modelParameters,
+  modelError          = modelError,
+  outputs             = list("RespPK"),
+  designs             = list(design1),
+  fimType             = "Bayesian",
+  odeSolverParameters = list(atol = 1e-8, rtol = 1e-8)
+)
+evaluationBayResults = run(evaluationBay)
 ```
 
-### Display the results of the design evaluations 
-
-```{r, echo = TRUE, eval = FALSE, comment=''} 
-show( evaluationFIMPop )
-show( evaluationFIMInd )
-show( evaluationFIMBay )
-
-fisherMatrix = getFisherMatrix( evaluationFIMPop )
-getCorrelationMatrix( evaluationFIMPop )
-getSE( evaluationFIMPop )
-getRSE( evaluationFIMPop )
-getShrinkage( evaluationFIMPop )
-getDeterminant( evaluationFIMPop )
-getDcriterion( evaluationFIMPop )
-
-plotOptions = list( unitTime = c("hour"), unitOutcomes = c("mcg/mL")  )
-
-plotEvaluation = plotEvaluation( evaluationFIMPop, plotOptions )
-
-plotSensitivityIndices = plotSensitivityIndices( evaluationFIMPop, plotOptions )
-
-SE = plotSE( evaluationFIMPop )
-RSE = plotRSE( evaluationFIMPop )
-
-# examples
-plotOutcomesEvaluationRespPK = plotEvaluation[["design1"]][["arm1"]][["RespPK"]]
-plotSensitivityIndice_RespPK_Cl =  plotSensitivityIndices[["design1"]][["arm1"]][["RespPK"]][["V"]]
-
+```{r results-show-pop, echo = TRUE, eval = FALSE, comment=''} 
+show(evaluationPopResults)
 ```
 
-### Create and save the report for the design evaluation
-
-```{r, echo = TRUE, eval = FALSE, comment=''} 
-
-outputPath = getwd()
-
-plotOptions = list( unitTime=c("hour"), unitResponses= c("mcg/mL") )
-
-outputFile = "Example02_EvaluationPopFIM.html"
-Report( evaluationFIMPop, outputPath, outputFile, plotOptions )
-
-outputFile = "Example02_EvaluationIndFIM.html"
-Report( evaluationFIMInd, outputPath, outputFile, plotOptions )
-
-outputFile = "Example02_EvaluationBayFIM.html"
-Report( evaluationFIMBay, outputPath, outputFile, plotOptions )
+```{r results-pop_from_outputs, echo = FALSE,  eval=TRUE, comment=''} 
+lines = readLines("outputs/vignette2_evaluation_PopFIM_show.txt")
+cat(paste(lines, collapse = "\n"))
 ```
 
-# Design optimization
-
-### Create an sampling times
-We create sampling times that will be used in the initial design for comparison during the optimization process. As PSO does not optimize the dose regimens, we keep the same administration.
-
-```{r, echo = TRUE, comment=''} 
-samplingTimesRespPK = SamplingTimes( outcome = "RespPK", samplings = c( 1, 48, 72, 120  ) )
+```{r results-show-ind, echo = TRUE, eval = FALSE, comment=''} 
+show(evaluationIndResults)
 ```
 
-### Define design constraints
-
-We define sampling times constraints that aim to select 4 sampling times: 2 within the interval [1,48], and 2 within [72, 120], with at least a delay of 5 between two points. 
-```{r, echo = TRUE, eval = FALSE, comment=''} 
-samplingConstraintsRespPK  = SamplingTimeConstraints( outcome = "RespPK",
-                                                      initialSamplings = c( 1, 48, 72, 120 ),
-                                                      numberOfTimesByWindows = c( 2, 2 ),
-                                                      samplingsWindows = list( c( 1, 48 ), c( 72, 120 ) ),
-                                                      minSampling = 5 )
+```{r results-ind_from_outputs, echo = FALSE,  eval=TRUE, comment=''} 
+lines = readLines("outputs/vignette2_evaluation_IndFIM_show.txt")
+cat(paste(lines, collapse = "\n"))
 ```
 
-### Create the constraint arm and the associated design
-
-```{r, echo = TRUE, eval = FALSE, comment=''} 
-arm2 = Arm( name = "arm2",
-            size = 150,
-            administrations = list( administrationRespPK ) ,
-            samplingTimes   = list( samplingTimesRespPK ),
-            samplingTimesConstraints = list( samplingConstraintsRespPK ) )
-
-design2 = Design( name = "design2", arms = list( arm2 ), numberOfArms = 150 )
+```{r results-show-bay, echo = TRUE, eval = FALSE, comment=''} 
+show(evaluationBayResults)
 ```
 
-### Set the the parameters of the PSO algorithm and run the algorithm for the design optimization with a population FIM
-
-```{r, echo = TRUE, eval = FALSE, comment=''} 
-optimization = Optimization( name = "",
-                             
-                             modelFromLibrary = modelFromLibrary,
-                             modelParameters = modelParameters,
-                             modelError = modelError,
-                             
-                             optimizer = "PSOAlgorithm",
-                             
-                             optimizerParameters = list(
-                               maxIteration = 100,
-                               populationSize = 10,
-                               personalLearningCoefficient = 2.05,
-                               globalLearningCoefficient = 2.05,
-                               seed = 42,
-                               showProcess = T  ),
-                             
-                             designs = list( design2 ),
-                             
-                             fimType = "population",
-                             
-                             outputs = list( "RespPK") )
-
-```
-### Run the PSO algorithm for the optimization with a population FIM
-
-```{r, echo = TRUE, eval = FALSE, comment=''} 
-optimizationPSO = run( optimization )
-saveRDS( optimizationPSO, "optimizationPSO.RDS" )
+```{r results-bay_from_outputs, echo = FALSE,  eval=TRUE, comment=''} 
+lines = readLines("outputs/vignette2_evaluation_BayFIM_show.txt")
+cat(paste(lines, collapse = "\n"))
 ```
 
-### Display the results of the design optimization
-```{r, echo = TRUE, eval = FALSE, comment=''} 
+```{r eval-accessors, echo = TRUE, eval = FALSE, comment=''}
+cat("--- Fisher Information Matrix (population FIM) ---\n")
+print(getFisherMatrix(evaluationPopResults))
 
-show( optimizationPSO )
+cat("--- Correlation Matrix (population FIM) ---\n")
+print(getCorrelationMatrix(evaluationPopResults))
 
-fisherMatrix = getFisherMatrix( optimizationPSO )
-getCorrelationMatrix( optimizationPSO )
-getSE( optimizationPSO )
-getRSE( optimizationPSO )
-getShrinkage( optimizationPSO )
-getDeterminant( optimizationPSO )
-getDcriterion( optimizationPSO )
+cat("--- Standard Errors ---\n")
+print(getSE(evaluationPopResults))
+
+cat("--- Relative Standard Errors ---\n")
+print(getRSE(evaluationPopResults))
+
+cat("--- Shrinkage ---\n")
+print(getShrinkage(evaluationPopResults))
+
+cat("--- D-Criterion ---\n")
+print(getDcriterion(evaluationPopResults))
 ```
 
-### Create and save the report for the design optimization
-```{r, echo = TRUE, eval = FALSE, comment=''} 
+### Response profiles
 
-outputPath = "C:/..."
-
-outputFile = "Example02_OptimizationPSOPopFIM.html"
-
-Report( optimizationPSO, outputPath, outputFile, plotOptions )
+```{r eval-plots, echo = TRUE, eval = FALSE, comment=''}
+plotOptions = list(unitTime = "hour", unitOutcomes = "mcg/mL")
+# plot() is the unified OO entry point -- dispatches on class, returns a named list:
+#   $evaluation         -> nested [["design"]][["arm"]][["outcome"]]
+#   $sensitivityIndices -> nested [["design"]][["arm"]][["outcome"]][["param"]]
+#   $SE / $RSE          -> ggplot2 bar charts
+# Predicted concentration profile with sampling times overlaid
+plotsEval = plot(evaluationPopResults,
+                 plotOptions = plotOptions,
+                 which       = c("evaluation", "sensitivityIndices", "SE", "RSE"))
+plotOutcomesRespPK = plotsEval$evaluation[["design1"]][["arm1"]][["RespPK"]]
+print(plotOutcomesRespPK)
 ```
 
-### Set the the parameters of the PGBO algorithm and run the algorithm for the design optimization with a population FIM
-
-```{r, echo = TRUE, eval = FALSE, comment=''} 
-optimizationPGBO = Optimization( name = "",
-                                 modelFromLibrary = modelFromLibrary,
-                                 modelParameters = modelParameters,
-                                 modelError = modelError,
-                                 
-                                 optimizer = "PGBOAlgorithm",
-                                 
-                                 optimizerParameters = list(
-                                   N = 30,
-                                   muteEffect = 0.65,
-                                   maxIteration = 1000,
-                                   purgeIteration = 200,
-                                   seed = 42,
-                                   showProcess = TRUE  ),
-                                 
-                                 designs = list( design2 ),
-                                 
-                                 fimType = "population",
-                                 
-                                 outputs = list( "RespPK") )
-
+```{r plot-eval-pk_from_figures, echo = FALSE,  eval=TRUE, out.width="50%",comment='', fig.align = "center", fig.cap="PK response profile -- arm1 (population FIM)"} 
+knitr::include_graphics("figures/vignette2_evaluation_popFim_design1_arm1_RespPK.png")
 ```
 
-### Run the PGBO algorithm for the optimization with a population FIM
+### Sensitivity indices
 
-```{r, echo = TRUE, eval = FALSE, comment=''} 
-optimizationPGBO = run( optimizationPGBO )
-saveRDS( optimizationPGBO, "optimizationPGBO.RDS" )
-
-fisherMatrix = getFisherMatrix( optimizationPGBO )
-getCorrelationMatrix( optimizationPGBO )
-getSE( optimizationPGBO )
-getRSE( optimizationPGBO )
-getShrinkage( optimizationPGBO )
-getDeterminant( optimizationPGBO )
-getDcriterion( optimizationPGBO )
+```{r eval-plots-si-V-Cl, echo = TRUE, eval = FALSE, comment=''}
+# $sensitivityIndices is computed in the same plot() call above
+print(plotsEval$sensitivityIndices[["design1"]][["arm1"]][["RespPK"]][["V"]])
+print(plotsEval$sensitivityIndices[["design1"]][["arm1"]][["RespPK"]][["Cl"]])
 ```
 
-### Display the results of the design optimization
-
-```{r, echo = TRUE, eval = FALSE, comment=''} 
-show( optimizationPGBO )
+```{r plot-si-V_from_figures, echo = FALSE,  eval=TRUE, out.width="50%",comment='', fig.align = "center", fig.cap="Sensitivity index for V -- RespPK, arm1"} 
+knitr::include_graphics("figures/vignette2_evaluation_popFim_design1_SI_RespPK_V.png")
 ```
 
-### Create and save the report for the design optimization
-
-```{r, echo = TRUE, eval = FALSE, comment=''} 
-
-outputPath = "C:/..."
-
-outputFile = "Example02_OptimizationPGBOPopFIM.html"
-
-Report( optimizationPGBO, outputPath, outputFile, plotOptions )
+```{r plot-si-cl_from_figures, echo = FALSE,  eval=TRUE, out.width="50%",comment='', fig.align = "center", fig.cap="Sensitivity index for Cl -- RespPK, arm1"} 
+knitr::include_graphics("figures/vignette2_evaluation_popFim_design1_SI_RespPK_Cl.png")
 ```
 
-# Set the the parameters of the Simplex algorithm and run the algorithm for the design optimization with a population FIM
+### Standard errors and Relative Standard errors
 
-```{r, echo = TRUE, eval = FALSE, comment=''} 
-optimizationSimplex = Optimization( name = "",
-                                   modelFromLibrary = modelFromLibrary,
-                                   modelParameters = modelParameters,
-                                   modelError = modelError,
-                                   
-                                   optimizer = "SimplexAlgorithm",
-                                   
-                                   optimizerParameters = list( pctInitialSimplexBuilding = 10,
-                                                               maxIteration = 1000,
-                                                               tolerance = 1e-10,
-                                                               showProcess = TRUE  ),
-                                   
-                                   designs = list( design2 ),
-                                   
-                                   fimType = "population",
-                                   
-                                   outputs = list( "RespPK") )
-
-optimizationSimplex = run( optimizationSimplex )
-saveRDS( optimizationSimplex, "optimizationSimplex.RDS" )
-
+```{r plot-se, echo = TRUE, eval= FALSE,   comment=''}
+# Standard error and RSE bar charts -- computed in the same plot() call above
+print(plotsEval$SE)
+print(plotsEval$RSE)
 ```
 
-### Display the results of the design optimization
-
-```{r, echo = TRUE, eval = FALSE, comment=''} 
-show( optimizationSimplex )
-
-fisherMatrix = getFisherMatrix( optimizationSimplex )
-getCorrelationMatrix( optimizationSimplex )
-getSE( optimizationSimplex )
-getRSE( optimizationSimplex )
-getShrinkage( optimizationSimplex )
-getDeterminant( optimizationSimplex )
-getDcriterion( optimizationSimplex )
-
+```{r plot-se_figures, out.width="33%", echo = FALSE, eval= TRUE,  comment='', fig.align = "center",fig.cap="Standard Errors (SE)"} 
+knitr::include_graphics("figures/vignette2_evaluation_popFim_design1_SE.png")
 ```
 
-### Create and save the report for the design optimization
-
-```{r, echo = TRUE, eval = FALSE, comment=''} 
-
-outputPath = "C:/..."
-
-outputFile = "Example02_OptimizationSimplexPopFIM.html"
-
-Report( optimizationSimplex, outputPath, outputFile, plotOptions )
-
-saveRDS( optimizationSimplex, file = paste0( outputPath, "Example02_OptimizationSimplexPopFIM.rds" ) )
-
+```{r plot-rse_figures, out.width="33%", echo = FALSE, eval= TRUE,  comment='', fig.align = "center",fig.cap="Relative Standard Errors (RSE)"} 
+knitr::include_graphics("figures/vignette2_evaluation_popFim_design1_RSE.png")
 ```
 
-# References
+---
 
-```{r global_options_end, echo = FALSE, include = FALSE}
+# Design Optimization in Continuous Space
+
+**Objective.** Find 4 optimal sampling times (instead of the original 6),
+constrained to two disjoint time windows, maximizing the D-criterion of the
+population FIM $M_{PF}$:
+
+$$\max_{t_1,\ldots,t_4} \; |M_{PF}(\xi)|^{1/p}
+\quad \text{s.t.} \quad
+t_1, t_2 \in [1,\,48], \quad t_3, t_4 \in [72,\,120], \quad |t_i - t_j| \geq 5\,\text{h}$$
+
+Three algorithms - PSO, PGBO, Simplex - are used.
+
+## Shared Optimization Setup
+
+```{r optim-shared-setup, echo = TRUE, eval = FALSE, comment=''}
+samplingTimesOptim = SamplingTimes(
+  outcome   = "RespPK",
+  samplings = c(1, 48, 72, 120)   # initial guess: window boundaries
+)
+
+samplingConstraintsRespPK = SamplingTimeConstraints(
+  outcome                = "RespPK",
+  initialSamplings       = c(1, 48, 72, 120),
+  numberOfTimesByWindows = c(2, 2),
+  samplingsWindows       = list(c(1,  48),    # Window 1: post-dose 1 to pre-dose 3
+                                c(72, 120)),  # Window 2: near-SS to post-last-dose
+  minSampling            = 5                  # min 5 h between consecutive samples
+)
+
+arm2 = Arm(
+  name                     = "arm2",
+  size                     = 150,
+  administrations          = list(administrationRespPK),
+  samplingTimes            = list(samplingTimesOptim),
+  samplingTimesConstraints = list(samplingConstraintsRespPK)
+)
+
+# numberOfArms = 150: upper bound on distinct elementary protocols
+design2 = Design(name = "design2", arms = list(arm2), numberOfArms = 150)
+```
+
+## PSO Algorithm (Particle Swarm Optimization)
+
+```{r pso-run, echo = TRUE, eval = FALSE, comment=''}
+optimizationPSO = Optimization(
+  name                = "PSO",
+  modelFromLibrary    = modelFromLibrary,
+  modelParameters     = modelParameters,
+  modelError          = modelError,
+  optimizer           = "PSOAlgorithm",
+  optimizerParameters = list(
+    maxIteration                = 100,
+    populationSize              = 50,
+    personalLearningCoefficient = 2.05,
+    globalLearningCoefficient   = 2.05,
+    seed                        = 42,
+    showProcess                 = FALSE
+  ),
+  designs  = list(design2),
+  fimType  = "population",
+  outputs  = list("RespPK")
+)
+optimizationPSO = run(optimizationPSO)
+```
+
+```{r pso-load, echo = TRUE, eval = FALSE, comment=''}
+show(optimizationPSO)
+```
+
+```{r results-pso-popFIM_from_outputs, echo = FALSE,  eval=TRUE, comment=''} 
+lines = readLines("outputs/vignette2_optimization_PSO_populationFIM_show.txt")
+cat(paste(lines, collapse = "\n"))
+```
+
+## PGBO Algorithm (Population genetic-based optimization)
+
+```{r pgbo-run, echo = TRUE, eval = FALSE, comment=''}
+optimizationPGBO = Optimization(
+  name                = "PGBO",
+  modelFromLibrary    = modelFromLibrary,
+  modelParameters     = modelParameters,
+  modelError          = modelError,
+  optimizer           = "PGBOAlgorithm",
+  optimizerParameters = list(
+    N              = 30,
+    muteEffect     = 0.65,
+    maxIteration   = 1000,
+    purgeIteration = 200,
+    seed           = 42,
+    showProcess    = FALSE
+  ),
+  designs  = list(design2),
+  fimType  = "population",
+  outputs  = list("RespPK")
+)
+optimizationPGBO = run(optimizationPGBO)
+```
+
+```{r pgbo-load, echo = TRUE, eval = FALSE, comment=''}
+show(optimizationPGBO)
+```
+
+```{r results-pgbo-popFIM_from_outputs, echo = FALSE,  eval=TRUE, comment=''} 
+lines = readLines("outputs/vignette2_optimization_PGBO_populationFIM_show.txt")
+cat(paste(lines, collapse = "\n"))
+```
+
+## Simplex Algorithm (Nelder-Mead)
+
+```{r simplex-run, echo = TRUE, eval = FALSE, comment=''}
+optimizationSimplex = Optimization(
+  name                = "Simplex",
+  modelFromLibrary    = modelFromLibrary,
+  modelParameters     = modelParameters,
+  modelError          = modelError,
+  optimizer           = "SimplexAlgorithm",
+  optimizerParameters = list(
+    pctInitialSimplexBuilding = 10,
+    maxIteration              = 1000,
+    tolerance                 = 1e-10,
+    showProcess               = FALSE
+  ),
+  designs  = list(design2),
+  fimType  = "population",
+  outputs  = list("RespPK")
+)
+optimizationSimplex = run(optimizationSimplex)
+```
+
+```{r simplex-load, echo = TRUE, eval = FALSE, comment=''}
+show(optimizationSimplex)
+```
+
+```{r results-simplex-popFIM_from_outputs, echo = FALSE,  eval=TRUE, comment=''} 
+lines = readLines("outputs/vignette2_optimization_Simplex_populationFIM_show.txt")
+cat(paste(lines, collapse = "\n"))
+```
+
+```{r teardown, echo=FALSE, include=FALSE}
 options(backup_options)
 ```
+
