@@ -65,6 +65,7 @@ Logo designed by Lucie Fayette
 
 Design evaluation and optimization examples have been implemented in PFIM 7.0. 
 Source scripts are available in the folder Design_Evaluation/ and Design_Optimization/
+
 The script used to run these files is **run_script_tests.R.**
 
 - Design_Evaluation/
@@ -96,9 +97,6 @@ The script used to run these files is **run_script_tests.R.**
     - MultiplicativeAlgorithm/
 
 The Vignettes/ folder contains the two vignettes available on CRAN.
-
-To run all the scripts, simply copy these folders to your computer and execute the run_examples_PFIM.R script.
-Within this script, you need to specify the paths to the Design_Evaluation and Design_Optimization directories.
 
 The folder documentation/ folder contains the complete documentation for all methods and classes included in the package.
 
