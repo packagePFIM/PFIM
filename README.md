@@ -61,9 +61,16 @@ License: GPL-2 \| GPL-3 \[expanded from: GPL (≥ 3)\]
 
 Logo designed by Lucie Fayette
 
-## Design evaluation and optimization
+## Repository Structure
 
-Design evaluation and optimization examples have been implemented in PFIM 7.0. 
+### S7 classes
+
+The core of the package: all S7 classes and exported functions.
+ 
+### Examples of sesign evaluation and optimization
+
+Design evaluation and optimization examples have been implemented in PFIM 7.03 
+
 Source scripts are available in the folder Design_Evaluation/ and Design_Optimization/
 
 The script used to run these files is **run_script_tests.R.**
@@ -96,9 +103,17 @@ The script used to run these files is **run_script_tests.R.**
     - FedorovWynn/
     - MultiplicativeAlgorithm/
 
+### Vignettes
+
 The Vignettes/ folder contains the two vignettes available on CRAN.
 
-The folder documentation/ folder contains the complete documentation for all methods and classes included in the package.
+### Documentation
+
+The Documentation/ folder contains the complete documentation for all methods and classes included in the package.
+
+### Unit test
+
+The tests/ folder contains the unit test suite (likely via testthat).
 
 ## Getting help
 
