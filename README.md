@@ -19,7 +19,7 @@ PFIM is an R package for evaluating and optimizing designs for nonlinear mixed e
 - **Custom Models**: support for user-defined analytical and ODE-based models
 - **Multiple optimization algorithms**: various optimization methods for discrete and continuous optimization (PGBO, PSO, Simplex, Fedorov-Wynn, multiplicative algorithm)
 
-The source code is modular, designed using a functional programming approach (via the package **purrr**) and R S7 object-oriented programming, which makes it easy to extend and customize models and algorithms.
+The source code is modular, designed using a functional programming approach (via the R package **purrr**) and R S7 object-oriented programming, which makes it easy to extend and customize models and algorithms.
 
 ---
 
@@ -107,7 +107,7 @@ Organized into two categories:
 | `model_analytic_steady_state` | User-defined analytical model at steady state |
 | `model_ode_bolus` | User-defined ODE model with bolus administration |
 | `model_ode_dose_in_equations` | User-defined ODE model where dose appears explicitly in the equations |
-| `model_ode_dose_not_in_equations` | User-defined ODE model where dose is handled as an initial condition |
+| `model_ode_dose_not_in_equations` | User-defined ODE model where the dose does not appear explicitly in the equations but is handled through one of the ODE compartment variables  |
 | `model_ode_infusion_dose_in_equations` | User-defined ODE model with infusion, dose in equations |
 
 #### `Design_Optimization/` — Design Optimization Scripts
@@ -122,12 +122,16 @@ Split by optimization type:
 | `PSO` | Particle Swarm Optimization |
 | `Simplex` | Nelder-Mead simplex method |
 
+Continuous optimization supports extensible constraints on sampling times, defined through time windows: for each window, the user can specify a minimum and maximum bound, the number of sampling times within the window, and minimum intervals between consecutive samples.
+
 **`discrete/`** — Optimization over a discrete grid of candidate times:
 
 | Algorithm | Description |
 |---|---|
 | `FedorovWynn/` | Fedorov-Wynn point-exchange algorithm |
 | `MultiplicativeAlgorithm/` | Classical multiplicative algorithm |
+
+Discrete optimization supports constraints on both sampling times and doses, allowing the user to restrict the search to a pre-specified grid of candidate values for each.
 
 ---
 
