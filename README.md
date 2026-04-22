@@ -105,7 +105,15 @@ The script used to run these files is **run_script_tests.R.**
 
 ### Vignettes
 
-The Vignettes/ folder contains the two vignettes available on CRAN.
+The Vignettes/ folder contains the vignettes available on CRAN.
+
+The vignettes published on CRAN, serving as structured tutorials for new users. They cover the two main use cases of the package:
+
++ Design evaluation — how to assess the efficiency of a given sampling design using the FIM
+
++ Design optimization in the continuous case — optimizing sampling times as continuous variables (PGBO, PSO, Simplex)
+
++ Design optimization in the discrete case — selecting optimal designs from a pre-specified grid of candidate times (Fedorov-Wynn, multiplicative algorithm)
 
 ### Documentation
 
