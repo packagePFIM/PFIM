@@ -1,8 +1,3 @@
----
-title: "PFIM"
-output: github_document
----
-
 [![CRAN Version](http://www.r-pkg.org/badges/version/PFIM)](https://cran.r-project.org/package=PFIM)
 [![Total Downloads](https://cranlogs.r-pkg.org/badges/grand-total/PFIM)](https://cran.r-project.org/package=PFIM)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
@@ -163,8 +158,6 @@ This folder is the reference entry point for developers who want to understand t
 The `tests/` folder contains the unit test suite ensuring the correctness and reliability of the package:
 
 - **Model evaluation** — verifying that the FIM computation gives the expected results for both analytical and ODE-based models
-- **Optimization algorithms** — checking that each algorithm (PGBO, PSO, Simplex, Fedorov-Wynn, multiplicative) converges to the correct optimal design
-- **S7 classes and methods** — testing the behavior of all classes and generic methods under various input configurations
 - **Regression tests** — ensuring that new developments do not break existing functionality across versions
 
 ---
