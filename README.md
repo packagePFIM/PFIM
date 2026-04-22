@@ -17,8 +17,6 @@ PFIM is an R package for evaluating and optimizing designs for nonlinear mixed e
 
 The source code is modular, designed using a functional programming approach (via the R package **purrr**) and R S7 object-oriented programming, which makes it easy to extend and customize models and algorithms.
 
----
-
 ## Installation
 
 ```{r installation, echo=TRUE, eval=FALSE}
@@ -28,8 +26,6 @@ install.packages("PFIM")
 # Load the package:
 library(PFIM)
 ```
-
----
 
 ## Methodology
 
@@ -41,8 +37,6 @@ The methods implemented in PFIM are based on established research in optimal des
 - Le Nagard H, Chao L, Tenaillon O (2011) <doi:10.1186/1471-2148-11-326>
 - Combes FP, Retout S, Frey N, Mentré F (2013) <doi:10.1007/s11095-013-1079-3>
 - Seurat J, Tang Y, Mentré F, Nguyen TT (2021) <doi:10.1016/j.cmpb.2021.106126>
-
----
 
 ## Package Information
 
@@ -62,15 +56,11 @@ The methods implemented in PFIM are based on established research in optimal des
 
 Logo designed by Lucie Fayette.
 
----
-
 ## Repository Structure
 
 ### S7 Classes — `R/`
 
 The core of the package: all S7 classes and exported functions.
-
----
 
 ### Examples of Design Evaluation and Optimization
 
@@ -129,8 +119,6 @@ Continuous optimization supports extensible constraints on sampling times, defin
 
 Discrete optimization supports constraints on both sampling times and doses, allowing the user to restrict the search to a pre-specified grid of candidate values for each.
 
----
-
 ### Vignettes — `Vignettes/`
 
 The `Vignettes/` folder contains the vignettes available on CRAN, serving as structured tutorials for new users. They cover the two main use cases of the package:
@@ -138,8 +126,6 @@ The `Vignettes/` folder contains the vignettes available on CRAN, serving as str
 - **Design evaluation** — how to assess the efficiency of a given sampling design using the FIM
 - **Design optimization in the continuous case** — optimizing sampling times as continuous variables (PGBO, PSO, Simplex)
 - **Design optimization in the discrete case** — selecting optimal designs from a pre-specified grid of candidate times (Fedorov-Wynn, multiplicative algorithm)
-
----
 
 ### Documentation — `Documentation/`
 
@@ -151,16 +137,12 @@ The `Documentation/` folder contains the complete documentation for all methods 
 
 This folder is the reference entry point for developers who want to understand the internal architecture of PFIM or extend it with new models and algorithms.
 
----
-
 ### Unit Tests — `tests/`
 
 The `tests/` folder contains the unit test suite ensuring the correctness and reliability of the package:
 
 - **Model evaluation** — verifying that the FIM computation gives the expected results for both analytical and ODE-based models
 - **Regression tests** — ensuring that new developments do not break existing functionality across versions
-
----
 
 ## Getting Help
 
