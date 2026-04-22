@@ -4,7 +4,7 @@
 
 # PFIM <img src="Logo_PFIM.png" align="right" width="120"/>
 
-## Overview
+### Overview
 
 PFIM is an R package for evaluating and optimizing designs for nonlinear mixed effects models using the Fisher Information Matrix approach. The package provides comprehensive tools for population pharmacokinetic/pharmacodynamic (PK/PD) study design optimization.
 
@@ -17,7 +17,7 @@ PFIM is an R package for evaluating and optimizing designs for nonlinear mixed e
 
 The source code is modular, designed using a functional programming approach (via the R package **purrr**) and R S7 object-oriented programming, which makes it easy to extend and customize models and algorithms.
 
-## Installation
+### Installation
 
 ```{r installation, echo=TRUE, eval=FALSE}
 # Install from CRAN:
@@ -27,7 +27,7 @@ install.packages("PFIM")
 library(PFIM)
 ```
 
-## Methodology
+### Methodology
 
 The methods implemented in PFIM are based on established research in optimal design theory:
 
@@ -38,7 +38,7 @@ The methods implemented in PFIM are based on established research in optimal des
 - Combes FP, Retout S, Frey N, Mentré F (2013) <doi:10.1007/s11095-013-1079-3>
 - Seurat J, Tang Y, Mentré F, Nguyen TT (2021) <doi:10.1016/j.cmpb.2021.106126>
 
-## Package Information
+### Package Information
 
 | Field | Details |
 |---|---|
@@ -56,7 +56,7 @@ The methods implemented in PFIM are based on established research in optimal des
 
 Logo designed by Lucie Fayette.
 
-## Repository Structure
+### Repository Structure
 
 ### S7 Classes — `R/`
 
@@ -144,7 +144,7 @@ The `tests/` folder contains the unit test suite ensuring the correctness and re
 - **Model evaluation** — verifying that the FIM computation gives the expected results for both analytical and ODE-based models
 - **Regression tests** — ensuring that new developments do not break existing functionality across versions
 
-## Getting Help
+### Getting Help
 
 If you encounter a clear bug, please file an issue with a minimal reproducible example directly in the [Issues](https://github.com/packagePFIM/PFIM/issues) section of the GitHub repository. To help diagnose the problem efficiently, a good bug report should include:
 
