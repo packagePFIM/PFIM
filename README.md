@@ -70,6 +70,9 @@ The core of the package: all S7 classes and exported functions.
 ### Examples of design evaluation and optimization
 
 Design evaluation and optimization examples have been implemented in PFIM 7.0.3. Source scripts are available in the folders Design_Evaluation/ and Design_Optimization/. To run all the scripts, simply copy these folders to your local machine and execute the run_script_tests.R script available at the root of the repository.
+
+---
+
 Design_Evaluation/ — Scripts for design evaluation, organized into two categories:
 
 library_of_models/ — Evaluation examples using pre-built PK/PD models from the library:
@@ -93,6 +96,8 @@ user_defined_model/ — Evaluation examples using custom user-defined models:
 + model_ode_dose_in_equations — user-defined ODE model where dose appears explicitly in the equations
 + model_ode_dose_not_in_equations — user-defined ODE model where dose is handled as an initial condition
 + model_ode_infusion_dose_in_equations — user-defined ODE model with infusion, dose in equations
+
+---
 
 Design_Optimization/ — Scripts for design optimization, split by optimization type:
 
