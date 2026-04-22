@@ -2,9 +2,8 @@
 [![Total Downloads](https://cranlogs.r-pkg.org/badges/grand-total/PFIM)](https://cran.r-project.org/package=PFIM)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
-<p align="right">
-  <img src="Logo_PFIM.png" alt="Structure de PFIM" width="200"/>
-</p>
+# PFIM <img src="Logo_PFIM.png" align="right" width="120"/>
+
 
 ---
 
