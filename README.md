@@ -67,7 +67,7 @@ Logo designed by Lucie Fayette
 
 The core of the package: all S7 classes and exported functions.
  
-### Examples of sesign evaluation and optimization
+### Examples of design evaluation and optimization
 
 Design evaluation and optimization examples have been implemented in PFIM 7.03 
 
