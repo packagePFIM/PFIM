@@ -410,13 +410,7 @@ method( definePKPDModel, list( ModelAnalyticInfusion, ModelAnalytic, PFIMProject
   return( equations )
 }
 
-# ==============================================================================
-#' @rdname definePKPDModel
-#' @name definePKPDModel
-#' @export
-# ==============================================================================
-
-method( definePKPDModel, list( ModelAnalyticInfusion, class_any, PFIMProject ) ) = function( pkModel, pdModel, pfimproject ) {
+method( definePKPDModel, list( ModelAnalyticInfusion, ModelODE, PFIMProject ) ) = function( pkModel, pdModel, pfimproject ) {
 
   # get the initial conditions to get variable names
   designs = prop( pfimproject, "designs" )

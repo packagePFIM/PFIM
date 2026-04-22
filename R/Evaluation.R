@@ -1,9 +1,11 @@
+# Copyright (c) 2026-present Romain Leroux. All rights reserved.
+
 #' @title Evaluation Class
 #' @name Evaluation
 #'
 #' @description
 #' The `Evaluation` class represents and stores all information required to
-#' evaluate a clinical trial design. it serves as the main interface for
+#' evaluate a clinical trial design. It serves as the main interface for
 #' calculating the Fisher Information Matrix (FIM), Standard Errors (SE),
 #' and other design criteria.
 #'
@@ -177,30 +179,6 @@ Evaluation = new_class(
 }
 
 # ==============================================================================
-# the new_generic
-# ==============================================================================
-
-# ==============================================================================
-#' @title getFim
-#' @name getFim
-#' @description
-#' Extract the Fisher Information Matrix from an \code{Evaluation} object.
-#' @param evaluation An object of class \code{Evaluation}.
-#' @param ... Additional arguments.
-#' @return A \code{list} with \code{fisherMatrix}, \code{fixedEffects},
-#'   and \code{varianceEffects}.
-#' @examples
-#' \dontrun{
-#' Fim = getFim( evaluationPopulationFIMResults )
-#' print( Fim )
-#' }
-#' @template copyright
-#' @export
-# ==============================================================================
-
-getFim = new_generic("getFim", c("evaluation"))
-
-# ==============================================================================
 # the methods
 # ==============================================================================
 
@@ -221,18 +199,6 @@ method(run, Evaluation) = function(pfimproject)
   prop(pfimproject, "fim") = prop(pluck(evaluationDesign, 1L), "fim")
 
   return(pfimproject)
-}
-
-# ==============================================================================
-
-method(getFim, Evaluation) = function(evaluation)
-{
-  fim = setEvaluationFim(prop(evaluation, "fim"), evaluation)
-  list(
-    fisherMatrix    = prop(fim, "fisherMatrix"),
-    fixedEffects    = prop(fim, "fixedEffects"),
-    varianceEffects = prop(fim, "varianceEffects")
-  )
 }
 
 # ==============================================================================

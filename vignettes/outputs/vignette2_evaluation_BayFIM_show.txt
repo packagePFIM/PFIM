@@ -21,7 +21,7 @@
 
 Determinant: 99.5003949119652 
 D-criterion: 9.9749884667585 
-Conditional number of the fixed effects: 5.89169416176677 
+Condition number of the fixed effects: 5.89169416176677 
 
 *************************************** 
  Shrinkage 

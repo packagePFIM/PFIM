@@ -5,7 +5,7 @@
 %   R/ModelODEDoseNotInEquations.R, R/ModelODEInfusionDoseInEquation.R
 \name{evaluateModel}
 \alias{evaluateModel}
-\title{evaluate the model}
+\title{Evaluate the analytic model}
 \arguments{
 \item{model}{An object of class \code{ModelAnalytic} that defines the model.}
 
@@ -15,7 +15,7 @@
 A list of dataframes that contains the results for the evaluation of the model.
 }
 \description{
-evaluate the model
+Evaluate the analytic model
 }
 \note{
 Copyright (c) 2026-present Romain Leroux. All rights reserved.

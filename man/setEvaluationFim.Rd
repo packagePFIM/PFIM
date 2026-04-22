@@ -3,7 +3,7 @@
 %   R/PopulationFim.R
 \name{setEvaluationFim}
 \alias{setEvaluationFim}
-\title{Format and set the Bayesian Fim results}
+\title{Finalize and Set Population FIM Results}
 \arguments{
 \item{fim}{An object of class \code{\link{PopulationFim}} to be updated.}
 
@@ -11,10 +11,6 @@
 outputs from the structural model and error engine.}
 }
 \value{
-The object \code{Fim} with formatted results and SE/RSE calculations.
-
-The object \code{IndividualFim} with its fisherMatrix, fixedEffects, shrinkage, condNumberFixedEffects, SEAndRSE.
-
 The updated \code{\link{PopulationFim}} object, with the following slots
 populated: \code{fisherMatrix}, \code{fixedEffects}, \code{shrinkage},
 \code{condNumberFixedEffects}, and \code{SEAndRSE}.
@@ -26,10 +22,6 @@ object. It transforms the Fisher Information Matrix into actionable
 metrics like Standard Errors (SE) and Relative Standard Errors (RSE).
 }
 \note{
-Copyright (c) 2026-present Romain Leroux. All rights reserved.
-
-Copyright (c) 2026-present Romain Leroux. All rights reserved.
-
 Copyright (c) 2026-present Romain Leroux. All rights reserved.
 }
 \author{

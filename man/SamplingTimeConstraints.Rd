@@ -8,7 +8,7 @@ SamplingTimeConstraints(
   outcome = character(0),
   initialSamplings = 0,
   fixedTimes = 0,
-  numberOfsamplingsOptimisable = 0,
+  numberOfSamplingsOptimisable = 0,
   samplingsWindows = list(),
   numberOfTimesByWindows = 0,
   minSampling = 0
@@ -24,7 +24,7 @@ starting sampling schedule before optimization.}
 \item{fixedTimes}{A \code{vector} of numeric values specifying time points
 that cannot be moved or removed by the optimizer.}
 
-\item{numberOfsamplingsOptimisable}{A \code{double} representing the number
+\item{numberOfSamplingsOptimisable}{A \code{double} representing the number
 of sampling points allowed to be modified.}
 
 \item{samplingsWindows}{A \code{list} of intervals (e.g., \code{list(c(0,2), c(4,8))})
@@ -57,7 +57,7 @@ samplingConstraintsRespPK = SamplingTimeConstraints(
   outcome                     = "RespPK",
   initialSamplings            = c(0.25, 0.75, 1, 1.5, 2, 4, 6),
   fixedTimes                  = c(0.25, 4),
-  numberOfsamplingsOptimisable = 4
+  numberOfSamplingsOptimisable = 4
 )
 
 # 2. Continuous Window Constraints (for PSO, PGBO, or Simplex algorithms)

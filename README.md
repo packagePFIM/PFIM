@@ -43,10 +43,10 @@ The methods implemented in PFIM are based on established research in optimal des
 
 ## Package Information
 
-Version: 7.0
+Version: 7.03
 
 I would like to inform you that the previous version 6.1 of the package is now deprecated and no longer maintained.  
-Please upgrade to this version 7.0 for the new features of this version, including the new user script, please consult the NEWS file.
+Please upgrade to this version 7.03 for the new features of this version, including the new user script, please consult the NEWS file.
 
 Author and creator: Romain Leroux <https://orcid.org/0009-0009-5779-5303> \[aut, cre\]
 
@@ -63,7 +63,9 @@ Logo designed by Lucie Fayette
 
 ## Design evaluation and optimization
 
-Design evaluation and optimization examples have been implemented in PFIM 7.0. Source scripts are available in the folder Design_Evaluation/ and Design_Optimization/
+Design evaluation and optimization examples have been implemented in PFIM 7.0. 
+Source scripts are available in the folder Design_Evaluation/ and Design_Optimization/
+The script used to run these files is **run_script_tests.R.**
 
 - Design_Evaluation/
   - library_of_models
@@ -98,12 +100,12 @@ The Vignettes/ folder contains the two vignettes available on CRAN.
 To run all the scripts, simply copy these folders to your computer and execute the run_examples_PFIM.R script.
 Within this script, you need to specify the paths to the Design_Evaluation and Design_Optimization directories.
 
-The Package documentation/ folder contains the complete documentation for all methods and classes included in the package.
+The folder documentation/ folder contains the complete documentation for all methods and classes included in the package.
 
 ## Getting help
 
 If you encounter a clear bug, please file the issue with a minimal
-reproducible example in the folder Issues.
+reproducible example in the folder **Issues**.
 
 For questions and other discussion, please use the PFIM group mailing
 list: <thepfimgroup@googlegroups.com>

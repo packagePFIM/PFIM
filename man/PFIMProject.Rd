@@ -30,7 +30,9 @@ PFIMProject(
 
 \item{modelError}{A list specifying the residual error model (e.g., constant, proportional, or combined).}
 
-\item{optimizer}{A string identifying the optimization algorithm to be used (e.g., "Simplex", "Fedov").}
+\item{optimizer}{A string identifying the optimization algorithm to be used.
+Must be one of: \code{"MultiplicativeAlgorithm"}, \code{"FedorovWynnAlgorithm"},
+\code{"SimplexAlgorithm"}, \code{"PSOAlgorithm"}, or \code{"PGBOAlgorithm"}.}
 
 \item{optimizerParameters}{A list of settings for the chosen optimizer (e.g., iterations, tolerance).}
 
@@ -38,7 +40,8 @@ PFIMProject(
 
 \item{designs}{A list of `Design` objects representing the experimental protocols to be evaluated.}
 
-\item{fimType}{A string specifying the FIM calculation method (e.g., "Population", "Individual", "Bayesian").}
+\item{fimType}{A string specifying the FIM calculation method.
+Must be one of: \code{"population"}, \code{"individual"}, or \code{"Bayesian"}.}
 
 \item{fim}{An object of class \code{Fim} representing the computed Fisher Information Matrix.}
 

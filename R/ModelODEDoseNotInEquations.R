@@ -128,14 +128,20 @@ method( defineModelAdministration, ModelODEDoseNotInEquations ) = function( mode
 
   list2env( mu, envir = environment() )
 
-  # initial conditions with variable admin
-  initialConditionsAdmin = doseEvent$value[ doseEvent$time ==0 ]
-  names( initialConditionsAdmin ) = unique( doseEvent$var )
+  # Compartments administered (must be in y for deSolve events to work)
+  # Initialize them to 0; the dose at t=0 is added via doseEvent (method="add")
+  initialConditionsAdmin = setNames(
+    rep(0, length(unique(doseEvent$var))),
+    unique(doseEvent$var)
+  )
 
-  if (length( initialConditions ) != 1 )
-  {
-    initialConditions = c( initialConditionsAdmin, initialConditions )
-  }
+  # User-provided initial conditions override/supplement
+  # Only keep admin compartments NOT already in user initialConditions
+  missingAdmin = initialConditionsAdmin[ !names(initialConditionsAdmin) %in% names(initialConditions) ]
+
+  initialConditions = c( missingAdmin, initialConditions )
+
+
 
   # function evaluation model
   modelODEDoseAsCmpt = function( samplingTimes, initialConditions, parameters )

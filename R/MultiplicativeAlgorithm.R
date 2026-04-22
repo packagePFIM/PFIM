@@ -334,39 +334,48 @@ method( optimizeDesign, list( .Optimization_S7, MultiplicativeAlgorithm ) ) = fu
 #' @param optimization An object of class \code{\link{Optimization}} containing
 #' the optimized weights.
 #' @param optimizationAlgorithm An object of class \code{\link{MultiplicativeAlgorithm}}
+#' @param thresholdWeights An numeric threshold for the weights
 #' used for the optimization.
 #' @return A \code{ggplot2} graphical object representing the weights per arm.
 #' @template copyright
 # ==============================================================================
 
-method( plotWeightsMultiplicativeAlgorithm, list( .Optimization_S7, MultiplicativeAlgorithm ) ) = function( optimization, optimizationAlgorithm )
+method( plotWeightsMultiplicativeAlgorithm, list( .Optimization_S7, MultiplicativeAlgorithm ) ) = function( optimization, optimizationAlgorithm, thresholdWeights = 0 )
 {
-  optimisationAlgorithmOutputs = prop( optimization, "optimisationAlgorithmOutputs" )
-  optimizationAlgorithm = optimisationAlgorithmOutputs$optimizationAlgorithm
-  multiplicativeAlgorithmOutputs = prop( optimizationAlgorithm, "multiplicativeAlgorithmOutputs")
-  weightsIndex = multiplicativeAlgorithmOutputs$weightsIndex
-  optimalWeights = multiplicativeAlgorithmOutputs$optimalWeights
-  optimalArms = data.frame( weightsIndex, optimalWeights )
+  optimisationAlgorithmOutputs   = prop( optimization, "optimisationAlgorithmOutputs" )
+  optimizationAlgorithm          = optimisationAlgorithmOutputs$optimizationAlgorithm
+  multiplicativeAlgorithmOutputs = prop( optimizationAlgorithm, "multiplicativeAlgorithmOutputs" )
 
-  weightPlot = ggplot(optimalArms, aes(x = reorder(weightsIndex, optimalWeights), y = optimalWeights)) +
-    geom_bar(stat = "identity", fill = "gray50") +
-    scale_y_continuous(limits = c(0, 1),breaks = seq(0, 1, by = 0.1),minor_breaks = seq(0, 1, by = 0.05),expand = c(0, 0)  ) +
-    scale_x_discrete(expand = c(0, 0)) +
-    labs(  x = "Arms",  y = "Weights" ) +
+  weightsIndex   = as.integer( multiplicativeAlgorithmOutputs$weightsIndex )
+  optimalWeights = as.numeric( multiplicativeAlgorithmOutputs$optimalWeights )
+
+  keep        = optimalWeights > thresholdWeights
+  optimalArms = data.frame(
+    weightsIndex   = weightsIndex[ keep ],
+    optimalWeights = optimalWeights[ keep ],
+    stringsAsFactors = FALSE
+  )
+
+  weightPlot = ggplot( optimalArms, aes( x = reorder( weightsIndex, optimalWeights ), y = optimalWeights ) ) +
+    geom_bar( stat = "identity", fill = "gray50" ) +
+    scale_y_continuous( limits = c(0, 1), breaks = seq(0, 1, by = 0.1), minor_breaks = seq(0, 1, by = 0.05), expand = c(0, 0) ) +
+    scale_x_discrete( expand = c(0, 0) ) +
+    labs( x = "Arms", y = "Weights" ) +
     coord_flip() +
-    theme_minimal(base_size = 14) +
+    theme_minimal( base_size = 14 ) +
     theme(
-      plot.title = element_text(hjust = 0.5, face = "bold"),
-      axis.title.x = element_text(color = "black", margin = margin(t = 10)),
-      axis.title.y = element_text(color = "black", margin = margin(r = 10)),
-      axis.text.x = element_text(color = "black", margin = margin(t = 5)),
-      axis.text.y = element_text(color = "black", margin = margin(r = 5)),
-      panel.grid.major.x = element_line(color = "gray90", linewidth = 0.5),
-      panel.grid.minor.x = element_line(color = "gray95", linewidth = 0.3),
+      plot.title         = element_text( hjust = 0.5, face = "bold" ),
+      axis.title.x       = element_text( color = "black", margin = margin(t = 10) ),
+      axis.title.y       = element_text( color = "black", margin = margin(r = 10) ),
+      axis.text.x        = element_text( color = "black", margin = margin(t = 5) ),
+      axis.text.y        = element_text( color = "black", margin = margin(r = 5) ),
+      panel.grid.major.x = element_line( color = "gray90", linewidth = 0.5 ),
+      panel.grid.minor.x = element_line( color = "gray95", linewidth = 0.3 ),
       panel.grid.major.y = element_blank(),
       panel.grid.minor.y = element_blank(),
-      panel.border = element_rect(color = "gray80", fill = NA, linewidth = 0.5),
-      plot.margin = margin(10, 10, 10, 10) )
+      panel.border       = element_rect( color = "gray80", fill = NA, linewidth = 0.5 ),
+      plot.margin        = margin(10, 10, 10, 10) )
+
   return( weightPlot )
 }
 

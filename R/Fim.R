@@ -1,3 +1,5 @@
+# Copyright (c) 2026-present Romain Leroux. All rights reserved.
+
 #' @title Fisher Information Matrix (FIM) Class
 #' @name Fim
 #'

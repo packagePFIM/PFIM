@@ -3,7 +3,7 @@
 %   R/PopulationFim.R
 \name{plotSEFIM}
 \alias{plotSEFIM}
-\title{Bar plot for Standard Errors (SE)}
+\title{Plot Standard Errors from the Population FIM}
 \arguments{
 \item{fim}{An object of class \code{\link{PopulationFim}} containing the
 calculated SE and RSE values.}
@@ -12,10 +12,6 @@ calculated SE and RSE values.}
 context of the model being plotted.}
 }
 \value{
-A ggplot object representing the SE bar plot.
-
-The bar plot of the SE.
-
 A \code{ggplot2} or base R plot object showing the bar plot of the
 parameter uncertainties.
 }
@@ -26,10 +22,6 @@ parameters. This visualization is crucial for comparing the precision
 between structural parameters (fixed effects) and variance components.
 }
 \note{
-Copyright (c) 2026-present Romain Leroux. All rights reserved.
-
-Copyright (c) 2026-present Romain Leroux. All rights reserved.
-
 Copyright (c) 2026-present Romain Leroux. All rights reserved.
 }
 \author{

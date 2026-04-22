@@ -3,7 +3,7 @@
 %   R/PopulationFim.R
 \name{plotRSEFIM}
 \alias{plotRSEFIM}
-\title{Bar plot for Relative Standard Errors (RSE)}
+\title{Plot Relative Standard Errors (RSE\%) for Population FIM}
 \arguments{
 \item{fim}{An object of class \code{\link{PopulationFim}} containing the
 calculated RSE values.}
@@ -12,25 +12,13 @@ calculated RSE values.}
 context and parameter names for the plot.}
 }
 \value{
-A ggplot object representing the RSE bar plot.
-
-The bar plot of the RSE.
-
 A plot object (typically \code{ggplot2} or \code{lattice}) displaying
 the RSE\% for structural and variance parameters.
 }
 \description{
-Bar plot for Relative Standard Errors (RSE)
-
-bar plot for the RSE.
-
 Plot Relative Standard Errors (RSE\%) for Population FIM
 }
 \note{
-Copyright (c) 2026-present Romain Leroux. All rights reserved.
-
-Copyright (c) 2026-present Romain Leroux. All rights reserved.
-
 Copyright (c) 2026-present Romain Leroux. All rights reserved.
 }
 \author{

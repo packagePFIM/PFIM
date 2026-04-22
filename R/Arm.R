@@ -154,8 +154,16 @@ updateSamplingTimes = new_generic("updateSamplingTimes", c("arm"),
 #' @template copyright
 #' @export
 
-processArmEvaluationResults = new_generic("processArmEvaluationResults", c("arm", "model", "fim"),
-                                          function(arm, model, fim, designName, plotOptions, ...) S7_dispatch())
+processArmEvaluationResults = function(arm, model, fim, designName, plotOptions, ...)
+{
+  outputNames     = as.list(prop(model, "outputNames"))
+  samplingData    = getSamplingData(arm)
+  arm             = updateSamplingTimes(arm, samplingData)
+  model           = defineModelAdministration(model, arm)
+  evaluationModel = evaluateModel(model, arm)
+  plots = plotEvaluationResults(arm, evaluationModel, outputNames, samplingData, designName, plotOptions)
+  return(plots)
+}
 
 # ==============================================================================
 #' @title Process arm evaluation for sensitivity index plots
@@ -173,8 +181,21 @@ processArmEvaluationResults = new_generic("processArmEvaluationResults", c("arm"
 #' @template copyright
 #' @export
 
-processArmEvaluationSI = new_generic("processArmEvaluationSI", c("arm", "model", "fim"),
-                                     function(arm, model, fim, designName, plotOptions, ...) S7_dispatch())
+processArmEvaluationSI = function(arm, model, fim, designName, plotOptions, ...)
+{
+  outputNames     = as.list(prop(model, "outputNames"))
+  samplingData    = getSamplingData(arm)
+  arm             = updateSamplingTimes(arm, samplingData)
+  model           = defineModelAdministration(model, arm)
+  parametersNames = prop(model, "modelParameters") %>% map_chr(~ prop(.x, "name"))
+  evaluationModelGradient = evaluateModelGradient(model, arm)
+  timeSeq = seq(from = 0, by = 0.05, length.out = nrow(pluck(evaluationModelGradient, 1)))
+  evaluationModelGradient = map2(outputNames, evaluationModelGradient, function(outputName, gradient) {
+    data.frame(time = timeSeq, gradient)
+  }) %>% set_names(outputNames)
+  plots = plotEvaluationSI(arm, evaluationModelGradient, parametersNames, outputNames, samplingData, designName, plotOptions)
+  return(plots)
+}
 
 # ==============================================================================
 #' @title Plot model responses for an arm
@@ -188,14 +209,51 @@ processArmEvaluationSI = new_generic("processArmEvaluationSI", c("arm", "model",
 #' @param samplingData A list from \code{getSamplingData}.
 #' @param designName A string giving the design name.
 #' @param plotOptions A list with \code{unitTime} and \code{unitOutcomes}.
-#' @param ... Additional arguments
 #' @return A named list of \code{ggplot} objects.
 #' @template copyright
 #' @export
 
-plotEvaluationResults = new_generic("plotEvaluationResults", c("arm"),
-                                    function(arm, evaluationModel, outputNames, samplingData,
-                                             designName, plotOptions, ...) S7_dispatch())
+plotEvaluationResults = function(arm, evaluationModel, outputNames, samplingData, designName, plotOptions)
+{
+  plotOptions = lapply(plotOptions, function(.opt) if (is.null(.opt)) " " else .opt)
+  unitXAxis   = plotOptions$unitTime
+  unitYAxis   = setNames(plotOptions$unitOutcomes, unlist(outputNames))
+  armName     = prop(arm, "name")
+  plotList    = list()
+  plotList[[designName]] = list()
+  plotList[[designName]][[armName]] = list()
+
+  plots = map2(outputNames, samplingData$samplings, function(outputName, sampling) {
+    data           = evaluationModel[[outputName]]
+    samplingPoints = data[data$time %in% sampling, ]
+    ggplot(data, aes(x = .data[["time"]], y = .data[[outputName]])) +
+      geom_line() +
+      geom_point(data = samplingPoints, aes(x = .data[["time"]], y = .data[[outputName]]), color = "red") +
+      labs(
+        x = paste0("Time (", unitXAxis, ")\n\nDesign: ", sub("_", " ", designName), "      Arm: ", armName),
+        y = paste0(outputName, " (", unitYAxis[[outputName]], ")\n")
+      ) +
+      scale_x_continuous(
+        breaks   = pretty_breaks(n = 10),
+        sec.axis = sec_axis(~ . * 1, breaks = round(sampling, 2), name = "Sampling times")
+      ) +
+      scale_y_continuous(breaks = pretty_breaks(n = 10)) +
+      theme(
+        legend.position      = "none",
+        axis.title.x.top     = element_text(color = "red", vjust = 2.0),
+        axis.text.x.top      = element_text(angle = 90, hjust = 0, color = "red"),
+        plot.title           = element_text(size = 16, hjust = 0.5),
+        axis.title.x         = element_text(size = 16),
+        axis.title.y         = element_text(size = 16),
+        axis.text.x          = element_text(size = 16, angle = 90, vjust = 0.5),
+        axis.text.y          = element_text(size = 16, angle = 0,  vjust = 0.5, hjust = 0.5),
+        strip.text.x         = element_text(size = 16)
+      )
+  })
+  plotList[[designName]][[armName]] = set_names(plots, outputNames)
+  return(plotList)
+}
+
 
 # ==============================================================================
 #' @title Plot sensitivity indices for an arm
@@ -210,14 +268,67 @@ plotEvaluationResults = new_generic("plotEvaluationResults", c("arm"),
 #' @param samplingData A list from \code{getSamplingData}.
 #' @param designName A string giving the design name.
 #' @param plotOptions A list with \code{unitTime} and \code{unitOutcomes}.
-#' @param ... Additional arguments
 #' @return A named list of \code{ggplot} objects per output and parameter.
 #' @template copyright
 #' @export
 
-plotEvaluationSI = new_generic("plotEvaluationSI", c("arm"),
-                               function(arm, evaluationModelGradient, parametersNames, outputNames,
-                                        samplingData, designName, plotOptions, ...) S7_dispatch())
+plotEvaluationSI = function(arm, evaluationModelGradient, parametersNames, outputNames, samplingData, designName, plotOptions)
+{
+  unitXAxis = plotOptions$unitTime
+  armName   = prop(arm, "name")
+  plotList  = list()
+  plotList[[designName]] = list()
+  plotList[[designName]][[armName]] = list()
+
+  plots = map2(outputNames, samplingData$samplings, function(outputName, sampling) {
+    gradientData = evaluationModelGradient[[outputName]]
+    minYAxis     = min(gradientData[, parametersNames], na.rm = TRUE)
+    maxYAxis     = max(gradientData[, parametersNames], na.rm = TRUE)
+
+    map(parametersNames, function(parameterName) {
+      data = as_tibble(gradientData[, c("time", parameterName)])
+      names(data)[2] = "parameterValue"
+      samplingPoints = data[data$time %in% sampling, ]
+
+      ggplot(data, aes(x = .data[["time"]], y = .data[["parameterValue"]])) +
+        geom_line() +
+        geom_point(data = samplingPoints, color = "red") +
+        labs(
+          y = paste0("df/d", parameterName),
+          x = paste0(
+            "Time (", unitXAxis, ")\n\n",
+            "Design: ", gsub("_", " ", designName), "   ",
+            "Arm: ", armName, "   ",
+            "Output: ", outputName, "   ",
+            "Parameter: ", parameterName
+          )
+        ) +
+        scale_x_continuous(
+          breaks   = pretty_breaks(n = 10),
+          sec.axis = sec_axis(~., breaks = round(sampling, 2), name = "Sampling times")
+        ) +
+        scale_y_continuous(
+          breaks = pretty_breaks(n = 10),
+          limits = c(minYAxis, maxYAxis)
+        ) +
+        theme(
+          legend.position  = "none",
+          axis.title.x.top = element_text(color = "red", vjust = 2.0),
+          axis.text.x.top  = element_text(angle = 90, hjust = 0, color = "red"),
+          plot.title       = element_text(size = 16, hjust = 0.5),
+          axis.title.x     = element_text(size = 16),
+          axis.title.y     = element_text(size = 16),
+          axis.text.x      = element_text(size = 16, angle = 90, vjust = 0.5),
+          axis.text.y      = element_text(size = 16),
+          strip.text.x     = element_text(size = 16)
+        )
+    })
+  })
+  plotList[[designName]][[armName]] = map2(outputNames, plots, ~ setNames(.y, parametersNames)) %>%
+    set_names(outputNames)
+  return(plotList)
+}
+
 
 # ==============================================================================
 #' @title Extract arm data for reporting
@@ -288,7 +399,7 @@ armAdministration = new_generic("armAdministration", c("arm"))
       "Outcome"                         = outcome,
       "Initial samplings"               = paste0("(", paste(prop(sc, "initialSamplings"), collapse = ", "), ")"),
       "Fixed times"                     = paste0("(", paste(prop(sc, "fixedTimes"),       collapse = ", "), ")"),
-      "Number of samplings optimisable" = as.character(prop(sc, "numberOfsamplingsOptimisable")),
+      "Number of samplings optimisable" = as.character(prop(sc, "numberOfSamplingsOptimisable")),
       "Dose constraints"                = doseConstr
     )
   })
@@ -401,129 +512,4 @@ method(updateSamplingTimes, Arm) = function(arm, samplingData)
     return(samplingsPlot)
   })
   arm
-}
-
-method(processArmEvaluationResults, list(Arm, Model, Fim)) = function(arm, model, fim, designName, plotOptions)
-{
-  outputNames     = as.list(prop(model, "outputNames"))
-  samplingData    = getSamplingData(arm)
-  arm             = updateSamplingTimes(arm, samplingData)
-  model           = defineModelAdministration(model, arm)
-  evaluationModel = evaluateModel(model, arm)
-  plots = plotEvaluationResults(arm, evaluationModel, outputNames, samplingData, designName, plotOptions)
-  return(plots)
-}
-
-method(processArmEvaluationSI, list(Arm, Model, Fim)) = function(arm, model, fim, designName, plotOptions)
-{
-  outputNames     = as.list(prop(model, "outputNames"))
-  samplingData    = getSamplingData(arm)
-  arm             = updateSamplingTimes(arm, samplingData)
-  model           = defineModelAdministration(model, arm)
-  parametersNames = prop(model, "modelParameters") %>% map_chr(~ prop(.x, "name"))
-  evaluationModelGradient = evaluateModelGradient(model, arm)
-  timeSeq = seq(from = 0, by = 0.05, length.out = nrow(pluck(evaluationModelGradient, 1)))
-  evaluationModelGradient = map2(outputNames, evaluationModelGradient, function(outputName, gradient) {
-    data.frame(time = timeSeq, gradient)
-  }) %>% set_names(outputNames)
-  plots = plotEvaluationSI(arm, evaluationModelGradient, parametersNames, outputNames, samplingData, designName, plotOptions)
-  return(plots)
-}
-
-method(plotEvaluationResults, Arm) = function(arm, evaluationModel, outputNames, samplingData, designName, plotOptions)
-{
-  plotOptions = lapply(plotOptions, function(x) if (is.null(x)) " " else x)
-  unitXAxis   = plotOptions$unitTime
-  unitYAxis   = setNames(plotOptions$unitOutcomes, unlist(outputNames))
-  armName     = prop(arm, "name")
-  plotList    = list()
-  plotList[[designName]] = list()
-  plotList[[designName]][[armName]] = list()
-
-  plots = map2(outputNames, samplingData$samplings, function(outputName, sampling) {
-    data           = evaluationModel[[outputName]]
-    samplingPoints = data[data$time %in% sampling, ]
-    ggplot(data, aes(x = time, y = .data[[outputName]])) +
-      geom_line() +
-      geom_point(data = samplingPoints, aes(x = time, y = .data[[outputName]]), color = "red") +
-      labs(
-        x = paste0("Time (", unitXAxis, ")\n\nDesign: ", sub("_", " ", designName), "      Arm: ", armName),
-        y = paste0(outputName, " (", unitYAxis[[outputName]], ")\n")
-      ) +
-      scale_x_continuous(
-        breaks   = pretty_breaks(n = 10),
-        sec.axis = sec_axis(~ . * 1, breaks = round(sampling, 2), name = "Sampling times")
-      ) +
-      scale_y_continuous(breaks = pretty_breaks(n = 10)) +
-      theme(
-        legend.position      = "none",
-        axis.title.x.top     = element_text(color = "red", vjust = 2.0),
-        axis.text.x.top      = element_text(angle = 90, hjust = 0, color = "red"),
-        plot.title           = element_text(size = 16, hjust = 0.5),
-        axis.title.x         = element_text(size = 16),
-        axis.title.y         = element_text(size = 16),
-        axis.text.x          = element_text(size = 16, angle = 90, vjust = 0.5),
-        axis.text.y          = element_text(size = 16, angle = 0,  vjust = 0.5, hjust = 0.5),
-        strip.text.x         = element_text(size = 16)
-      )
-  })
-  plotList[[designName]][[armName]] = set_names(plots, outputNames)
-  return(plotList)
-}
-
-method(plotEvaluationSI, Arm) = function(arm, evaluationModelGradient, parametersNames, outputNames, samplingData, designName, plotOptions)
-{
-  unitXAxis = plotOptions$unitTime
-  armName   = prop(arm, "name")
-  plotList  = list()
-  plotList[[designName]] = list()
-  plotList[[designName]][[armName]] = list()
-
-  plots = map2(outputNames, samplingData$samplings, function(outputName, sampling) {
-    gradientData = evaluationModelGradient[[outputName]]
-    minYAxis     = min(gradientData[, parametersNames], na.rm = TRUE)
-    maxYAxis     = max(gradientData[, parametersNames], na.rm = TRUE)
-
-    map(parametersNames, function(parameterName) {
-      data = as_tibble(gradientData[, c("time", parameterName)])
-      names(data)[2] = "parameterValue"
-      samplingPoints = data[data$time %in% sampling, ]
-
-      ggplot(data, aes(x = time, y = parameterValue)) +
-        geom_line() +
-        geom_point(data = samplingPoints, color = "red") +
-        labs(
-          y = paste0("df/d", parameterName),
-          x = paste0(
-            "Time (", unitXAxis, ")\n\n",
-            "Design: ", gsub("_", " ", designName), "   ",
-            "Arm: ", armName, "   ",
-            "Output: ", outputName, "   ",
-            "Parameter: ", parameterName
-          )
-        ) +
-        scale_x_continuous(
-          breaks   = pretty_breaks(n = 10),
-          sec.axis = sec_axis(~., breaks = round(sampling, 2), name = "Sampling times")
-        ) +
-        scale_y_continuous(
-          breaks = pretty_breaks(n = 10),
-          limits = c(minYAxis, maxYAxis)
-        ) +
-        theme(
-          legend.position  = "none",
-          axis.title.x.top = element_text(color = "red", vjust = 2.0),
-          axis.text.x.top  = element_text(angle = 90, hjust = 0, color = "red"),
-          plot.title       = element_text(size = 16, hjust = 0.5),
-          axis.title.x     = element_text(size = 16),
-          axis.title.y     = element_text(size = 16),
-          axis.text.x      = element_text(size = 16, angle = 90, vjust = 0.5),
-          axis.text.y      = element_text(size = 16),
-          strip.text.x     = element_text(size = 16)
-        )
-    })
-  })
-  plotList[[designName]][[armName]] = map2(outputNames, plots, ~ setNames(.y, parametersNames)) %>%
-    set_names(outputNames)
-  return(plotList)
 }

@@ -10,11 +10,14 @@
 #' @param modelFromLibrary A list specifying the pre-defined model selected from the PFIM library.
 #' @param modelParameters A list defining the fixed effects and random effects (variances) of the model.
 #' @param modelError A list specifying the residual error model (e.g., constant, proportional, or combined).
-#' @param optimizer A string identifying the optimization algorithm to be used (e.g., "Simplex", "Fedov").
+#' @param optimizer A string identifying the optimization algorithm to be used.
+#'   Must be one of: \code{"MultiplicativeAlgorithm"}, \code{"FedorovWynnAlgorithm"},
+#'   \code{"SimplexAlgorithm"}, \code{"PSOAlgorithm"}, or \code{"PGBOAlgorithm"}.
 #' @param optimizerParameters A list of settings for the chosen optimizer (e.g., iterations, tolerance).
 #' @param outputs A list defining the observation variables or responses of the model.
 #' @param designs A list of `Design` objects representing the experimental protocols to be evaluated.
-#' @param fimType A string specifying the FIM calculation method (e.g., "Population", "Individual", "Bayesian").
+#' @param fimType A string specifying the FIM calculation method.
+#'   Must be one of: \code{"population"}, \code{"individual"}, or \code{"Bayesian"}.
 #' @param fim An object of class \code{Fim} representing the computed Fisher Information Matrix.
 #' @param odeSolverParameters A list containing technical settings for the ODE solver, such as \code{atol} and \code{rtol}.
 #' @slot name \code{character}
@@ -194,17 +197,6 @@ plotSE = new_generic( "plotSE", c( "pfimproject" ) )
 # ==============================================================================
 
 plotRSE = new_generic( "plotRSE", c( "pfimproject" ) )
-
-
-
-
-
-
-
-
-
-
-
 
 
 

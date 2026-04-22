@@ -1,6 +1,5 @@
-# ==============================================================================
-# ==============================================================================
-# ==============================================================================
+# Copyright (c) 2026-present Romain Leroux. All rights reserved.
+
 #' @title ModelAnalyticSteadyState Class
 #' @name ModelAnalyticSteadyState
 #' @description The class \code{ModelAnalyticSteadyState} is used to defined an analytic model in steady state.
@@ -90,7 +89,7 @@ method( defineModelWrapper, ModelAnalyticSteadyState ) = function( model, evalua
   # wrapper for function outcome without administration
 
   # args for function without admin
-  functionArgumentsWithNoAdmin = unique( c( outcomesWithAdministration, parameterNames, timeNames,tauName ) )
+  functionArgumentsWithNoAdmin = unique( c( outcomesWithAdministration, parameterNames, timeNames, tauName ) )
   functionArgumentsSymbolWithNoAdmin = map( functionArgumentsWithNoAdmin, ~ as.symbol(.x) )
 
   # create function without admin
@@ -300,7 +299,7 @@ method( definePKPDModel, list( ModelAnalyticSteadyState, class_any, PFIMProject 
   equations = c( pkModelEquations, pdModelEquations )
 
   # get the initial conditions to get variable names
-  designs = prop( evaluation, "designs" )
+  designs = prop( pfimproject, "designs" )   # fix: was prop( evaluation, "designs" )
   variablesNames = designs %>% map(~ map( prop(.x,"arms"), ~ prop(.x,"initialConditions"))) %>% unlist() %>% names() %>% unique()
   variablesNamesToChange =  c("RespPK", "E")
 

@@ -42,8 +42,8 @@
 
 Determinant: 41386277548.9818 
 D-criterion: 58.8133694373923 
-Conditional number of the fixed effects: 95.6713072499344 
-Conditional number of the random effects: 18.4576745614613 
+Condition number of the fixed effects: 95.6713072499344 
+Condition number of the random effects: 18.4576745614613 
 
 *************************************** 
  Parameters estimation 
@@ -100,8 +100,8 @@ Conditional number of the random effects: 18.4576745614613
 
 Determinant: 190655846414.95 
 D-criterion: 75.8650394322679 
-Conditional number of the fixed effects: 76.6486671491829 
-Conditional number of the random effects: 7.78335282832985 
+Condition number of the fixed effects: 76.6486671491829 
+Condition number of the random effects: 7.78335282832985 
 
 *************************************** 
  Parameters estimation 

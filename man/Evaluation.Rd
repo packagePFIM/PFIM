@@ -34,7 +34,8 @@ Evaluation(
 
 \item{outputs}{A list defining the observation variables or responses of the model.}
 
-\item{fimType}{A string specifying the FIM calculation method (e.g., "Population", "Individual", "Bayesian").}
+\item{fimType}{A string specifying the FIM calculation method.
+Must be one of: \code{"population"}, \code{"individual"}, or \code{"Bayesian"}.}
 
 \item{odeSolverParameters}{A list containing technical settings for the ODE solver, such as \code{atol} and \code{rtol}.}
 }
@@ -43,7 +44,7 @@ An object of class \code{Evaluation}.
 }
 \description{
 The `Evaluation` class represents and stores all information required to
-evaluate a clinical trial design. it serves as the main interface for
+evaluate a clinical trial design. It serves as the main interface for
 calculating the Fisher Information Matrix (FIM), Standard Errors (SE),
 and other design criteria.
 }

@@ -5,7 +5,7 @@
 %   R/ModelODEDoseNotInEquations.R, R/ModelODEInfusionDoseInEquation.R
 \name{defineModelAdministration}
 \alias{defineModelAdministration}
-\title{define the administration}
+\title{Define the administration for an analytic model}
 \arguments{
 \item{model}{An object of class \code{ModelAnalytic} that defines the model.}
 
@@ -15,7 +15,7 @@
 The model with samplings, solverInputs
 }
 \description{
-define the administration
+Define the administration for an analytic model
 }
 \note{
 Copyright (c) 2026-present Romain Leroux. All rights reserved.

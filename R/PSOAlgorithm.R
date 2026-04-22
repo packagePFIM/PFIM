@@ -59,8 +59,8 @@ PSOAlgorithm = new_class(
   package = "PFIM",
   parent  = .Optimization_S7,
   properties = list(
-    maxIteration                = new_property( class_double,  default = 100 ),
-    populationSize              = new_property( class_double,  default = 50 ),
+    maxIteration                = new_property( class_double ,  default = 100 ),
+    populationSize              = new_property( class_double ,  default = 50 ),
     seed                        = new_property( class_double,  default = 42 ),
     personalLearningCoefficient = new_property( class_double,  default = 2.05 ),
     globalLearningCoefficient   = new_property( class_double,  default = 2.05 ),
@@ -477,17 +477,17 @@ method( constraintsTableForReport, PSOAlgorithm ) = function( optimizationAlgori
   armsConstraints = map(pluck(arms, 1), ~ getArmConstraints(.x, optimizationAlgorithm))
   armsConstraints = map_dfr(armsConstraints, ~ map_dfr(.x, ~ as.data.frame(.x, stringsAsFactors = FALSE)))
 
-  # Renommer les colonnes
+  # Rename columns
   colnames(armsConstraints) = c("Arms name", "Number of subjects", "Outcome",
                                 "Initial samplings", "Samplings windows",
                                 "Number of times by windows", "Min sampling")
 
-  # Nettoyer la colonne "Min sampling"
+  # Clean column "Min sampling"
   armsConstraints$`Min sampling` = gsub("[()]", "", armsConstraints$`Min sampling`)          # supprime les parenthèses
   armsConstraints$`Min sampling` = as.numeric(armsConstraints$`Min sampling`)                 # convertit en numérique
   armsConstraints$`Min sampling` = round(armsConstraints$`Min sampling`, 1)                   # arrondit à 0.1
 
-  # Création du tableau
+  # Create Table
   armsConstraintsTable = kbl(armsConstraints,
                              align = c("l", "c", "c", "c", "c", "c", "c")) %>%
     kable_styling(bootstrap_options = c("hover"),

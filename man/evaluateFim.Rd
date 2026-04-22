@@ -3,45 +3,23 @@
 %   R/PopulationFim.R
 \name{evaluateFim}
 \alias{evaluateFim}
-\title{Evaluation of the Bayesian Fim}
+\title{Evaluate the Fim.}
 \arguments{
-\item{fim}{An object of class \code{\link{PopulationFim}} to be populated with results.}
+\item{fim}{An object of class \code{IndividualFim}.}
 
-\item{model}{An object of class \code{Model} containing the structural equations
-and parameter values.}
+\item{model}{An object of class \code{Model} containing the structural and error parameters.}
 
-\item{arm}{An object of class \code{Arm} representing the sampling schedule and
-dose levels for a specific group.}
+\item{arm}{An object of class \code{Arm} representing the individual's design (doses and samplings).}
 }
 \value{
-The object \code{Fim} updated with the calculated fisherMatrix and shrinkage.
-
 The \code{IndividualFim} object populated with the calculated \code{fisherMatrix}.
-
-An object of class \code{PopulationFim} (updated with the \code{fisherMatrix}
-and calculated \code{shrinkage} values).
 }
 \description{
 Computes the Fisher Information Matrix for an individual design. This method
 calculates the structural information (fixed effects) and the variance
 information (residual error components) to assemble the final FIM.
-
-The \code{evaluateFim} method computes the numerical values of the Fisher Information
-Matrix (FIM) for a given experimental design (arm). It integrates the structural
-model, the parameter variances, and the residual error model to quantify the
-expected precision of parameter estimates.
-This method specifically computes:
-\itemize{
-  \item \bold{The Fisher Matrix:} The expected information content for fixed and random effects.
-  \item \bold{Shrinkage:} An estimation of the "shrinkage" towards the population mean,
-  providing insight into how well the design informs individual parameters.
-}
 }
 \note{
-Copyright (c) 2026-present Romain Leroux. All rights reserved.
-
-Copyright (c) 2026-present Romain Leroux. All rights reserved.
-
 Copyright (c) 2026-present Romain Leroux. All rights reserved.
 }
 \author{

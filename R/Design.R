@@ -161,7 +161,7 @@ method( generateSamplingTimesCombination, Design ) = function( design ) {
     samplingTimesCombinations = map( samplingTimesConstraints, function( samplingTimesConstraint ) {
       initialSamplings = prop( samplingTimesConstraint, "initialSamplings" )
       fixedTimes = prop( samplingTimesConstraint, "fixedTimes" )
-      numberOfSamplingsOptimisable = prop( samplingTimesConstraint, "numberOfsamplingsOptimisable" )
+      numberOfSamplingsOptimisable = prop( samplingTimesConstraint, "numberOfSamplingsOptimisable" )
       availableSamplings = setdiff( initialSamplings, fixedTimes )
       combinations = combn( availableSamplings, numberOfSamplingsOptimisable - length( fixedTimes ), simplify = FALSE )
 

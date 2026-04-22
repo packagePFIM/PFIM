@@ -1,3 +1,5 @@
+# Copyright (c) 2026-present Romain Leroux. All rights reserved.
+
 # ==============================================================================
 # ==============================================================================
 # ==============================================================================
@@ -92,12 +94,8 @@ method( evaluateVarianceFIM, list( IndividualFim, Model, Arm ) ) = function( fim
 }
 
 # ==============================================================================
-#' @title Set the optimal arms of an optimization algorithm.
+#' @rdname setOptimalArms
 #' @name setOptimalArms
-#' @param fim An object \code{IndividualFim} giving the Fim.
-#' @param optimizationAlgorithm An object \code{MultiplicativeAlgorithm,FedorovWynnAlgorithm} giving the optimization algorithm.
-#' @return The list optimalArms.
-#' @template copyright
 #' @export
 # ==============================================================================
 
@@ -154,12 +152,8 @@ method( setOptimalArms, list( IndividualFim, FedorovWynnAlgorithm ) ) = function
 }
 
 # ==============================================================================
-#' @title Set the Fim results.
+#' @rdname setEvaluationFim
 #' @name setEvaluationFim
-#' @param fim An object \code{IndividualFim} giving the Fim.
-#' @param evaluation An object \code{Evaluation} giving the evaluation of the model.
-#' @return The object \code{IndividualFim} with its fisherMatrix, fixedEffects, shrinkage, condNumberFixedEffects, SEAndRSE.
-#' @template copyright
 #' @export
 # ==============================================================================
 
@@ -171,22 +165,22 @@ method( setEvaluationFim, IndividualFim ) = function( fim, evaluation ) {
   modelError = prop( evaluation, "modelError" )
 
   # Greek letter for column names
-  greeksLetterForCOnsole = c( mu = "\u03bc_", omega = "\u03c9\u00B2_", sigma = "\u03c3" )
+  greeksLetterForConsole  = c( mu = "\u03bc_", omega = "\u03c9\u00B2_", sigma = "\u03c3" )
 
   # define the name for the columns and rows for mu, omega and sigma
   columnNamesMu = parameters %>%
     keep( ~ prop( .x, "fixedMu" ) == FALSE) %>%
     keep( ~ .x@distribution@mu != 0 ) %>%
     map_chr( "name" ) %>%
-    map_chr(~ paste0( greeksLetterForCOnsole['mu'], .x ) )
+    map_chr(~ paste0( greeksLetterForConsole ['mu'], .x ) )
 
   columnNamesSigma = map( modelError, ~{
     sigma = character()
     if ( prop( .x, "sigmaInter" ) != 0 && prop( .x, "sigmaInterFixed" ) == FALSE )
-      sigma = c( sigma, paste0( greeksLetterForCOnsole["sigma"], "_inter_", prop( .x ,"output" ) ) )
+      sigma = c( sigma, paste0( greeksLetterForConsole ["sigma"], "_inter_", prop( .x ,"output" ) ) )
 
     if ( prop( .x, "sigmaSlope" ) != 0 && prop( .x, "sigmaSlopeFixed" ) == FALSE )
-      sigma = c( sigma, paste0( greeksLetterForCOnsole["sigma"], "_slope_", prop( .x ,"output" ) ) )
+      sigma = c( sigma, paste0( greeksLetterForConsole ["sigma"], "_slope_", prop( .x ,"output" ) ) )
 
     return( sigma )
   }) %>% unlist()  %>% unname()
@@ -239,11 +233,8 @@ method( setEvaluationFim, IndividualFim ) = function( fim, evaluation ) {
 }
 
 # ==============================================================================
-#' @title Show the Fim in the R console.
+#' @rdname showFIM
 #' @name showFIM
-#' @param fim An object \code{IndividualFim} giving the Fim.
-#' @return The fisherMatrix, fixedEffects, Determinant, condition numbers and D-criterion, Shrinkage and Parameters estimation
-#' @template copyright
 #' @export
 # ==============================================================================
 
@@ -278,8 +269,8 @@ method( showFIM, IndividualFim ) = function( fim ) {
   cat("*********************************************** \n\n")
   cat( c( "Determinant:", as.numeric(det(fisherMatrix)) ), "\n")
   cat( c( "D-criterion:", as.numeric(Dcriterion) ), "\n")
-  cat( c("Conditional number of the fixed effects:", as.numeric(condNumberFixedEffects) , "\n") )
-  cat( c("Conditional number of the variance effects:", as.numeric(condNumberVarianceEffects) , "\n") )
+  cat( c("Condition number of the fixed effects:", as.numeric(condNumberFixedEffects) , "\n") )
+  cat( c("Condition number of the variance effects:", as.numeric(condNumberVarianceEffects) , "\n") )
   cat("\n*************************************** \n")
   cat(" Parameters estimation \n" )
   cat("*************************************** \n\n")
@@ -287,12 +278,8 @@ method( showFIM, IndividualFim ) = function( fim ) {
 }
 
 # ==============================================================================
-#' plotSEFIM: barplot for the SE.
+#' @rdname plotSEFIM
 #' @name plotSEFIM
-#' @param fim An object \code{IndividualFim} giving the Fim.
-#' @param evaluation An object \code{Evaluation} giving the evaluation of the model.
-#' @return The bar plot of the SE.
-#' @template copyright
 #' @export
 # ==============================================================================
 
@@ -308,7 +295,7 @@ method( plotSEFIM, list( IndividualFim, PFIMProject ) ) = function( fim, evaluat
   standardErrors = prop( fim, "SEAndRSE" )
 
   # Greek letter for column names
-  greeksLetterForCOnsole = c( mu = "\u03bc", omega = "\u03c9\u00B2", sigma = "\u03c3" )
+  greeksLetterForConsole  = c( mu = "\u03bc", omega = "\u03c9\u00B2", sigma = "\u03c3" )
 
   parametersMu =  parameters %>%
     keep( ~ prop( .x, "fixedMu" ) == FALSE) %>%
@@ -317,13 +304,13 @@ method( plotSEFIM, list( IndividualFim, PFIMProject ) ) = function( fim, evaluat
 
   parametersSigma = map( modelError, ~{
     sigma = character()
-    if ( prop( .x, "sigmaInter" ) != 0 && prop( .x, "sigmaInterFixed" ) == FALSE ) sigma = c( sigma, paste0( greeksLetterForCOnsole["sigma"], "_inter_", prop( .x ,"output" ) ) )
-    if ( prop( .x, "sigmaSlope" ) != 0 && prop( .x, "sigmaSlopeFixed" ) == FALSE ) sigma = c( sigma, paste0( greeksLetterForCOnsole["sigma"], "_slope_", prop( .x ,"output" ) ) )
+    if ( prop( .x, "sigmaInter" ) != 0 && prop( .x, "sigmaInterFixed" ) == FALSE ) sigma = c( sigma, paste0( greeksLetterForConsole ["sigma"], "_inter_", prop( .x ,"output" ) ) )
+    if ( prop( .x, "sigmaSlope" ) != 0 && prop( .x, "sigmaSlopeFixed" ) == FALSE ) sigma = c( sigma, paste0( greeksLetterForConsole ["sigma"], "_slope_", prop( .x ,"output" ) ) )
     return( sigma )
   }) %>% unlist()  %>% unname()
 
-  columnNamesMu = parametersMu %>% map_chr(~  greeksLetterForCOnsole['mu'] )
-  columnNamesSigma = parametersSigma %>% map_chr( ~  greeksLetterForCOnsole['sigma']  )
+  columnNamesMu = parametersMu %>% map_chr(~  greeksLetterForConsole ['mu'] )
+  columnNamesSigma = parametersSigma %>% map_chr( ~  greeksLetterForConsole ['sigma']  )
 
   # data for plot
   data = data.frame( Parameter = c( parametersMu,  parametersSigma ),
@@ -336,7 +323,7 @@ method( plotSEFIM, list( IndividualFim, PFIMProject ) ) = function( fim, evaluat
   # bar plot of the plot SE
   plotSE = ggplot( data, aes( x = Parameter, y = SE ) ) +
     geom_bar( stat = "identity", position = "dodge", show.legend = FALSE ) +
-    facet_wrap( ~factor( cat, levels =  paste0( "SE ", c( greeksLetterForCOnsole['mu'],  greeksLetterForCOnsole['omega'], greeksLetterForCOnsole["sigma"] ) ) ), scales = "free_x" ) +
+    facet_wrap( ~factor( cat, levels =  paste0( "SE ", c( greeksLetterForConsole ['mu'],  greeksLetterForConsole ['omega'], greeksLetterForConsole ["sigma"] ) ) ), scales = "free_x" ) +
     theme(legend.position = "none",
           plot.title = element_text(size=16, hjust = 0.5),
           axis.title.x = element_text(size=16),
@@ -348,12 +335,8 @@ method( plotSEFIM, list( IndividualFim, PFIMProject ) ) = function( fim, evaluat
 }
 
 # ==============================================================================
-#' @title bar plot for the RSE.
+#' @rdname plotRSEFIM
 #' @name plotRSEFIM
-#' @param fim An object \code{IndividualFim} giving the Fim.
-#' @param evaluation An object \code{Evaluation} giving the evaluation of the model.
-#' @return The bar plot of the RSE.
-#' @template copyright
 #' @export
 # ==============================================================================
 
@@ -369,7 +352,7 @@ method( plotRSEFIM, list( IndividualFim, PFIMProject ) ) = function( fim, evalua
   standardErrors = prop( fim, "SEAndRSE" )
 
   # Greek letter for column names
-  greeksLetterForCOnsole = c( mu = "\u03bc", omega = "\u03c9\u00B2", sigma = "\u03c3" )
+  greeksLetterForConsole  = c( mu = "\u03bc", omega = "\u03c9\u00B2", sigma = "\u03c3" )
 
   parametersMu =  parameters %>%
     keep( ~ prop( .x, "fixedMu" ) == FALSE) %>%
@@ -378,13 +361,13 @@ method( plotRSEFIM, list( IndividualFim, PFIMProject ) ) = function( fim, evalua
 
   parametersSigma = map( modelError, ~{
     sigma = character()
-    if ( prop( .x, "sigmaInter" ) != 0 && prop( .x, "sigmaInterFixed" ) == FALSE ) sigma = c( sigma, paste0( greeksLetterForCOnsole["sigma"], "_inter_", prop( .x ,"output" ) ) )
-    if ( prop( .x, "sigmaSlope" ) != 0 && prop( .x, "sigmaSlopeFixed" ) == FALSE ) sigma = c( sigma, paste0( greeksLetterForCOnsole["sigma"], "_slope_", prop( .x ,"output" ) ) )
+    if ( prop( .x, "sigmaInter" ) != 0 && prop( .x, "sigmaInterFixed" ) == FALSE ) sigma = c( sigma, paste0( greeksLetterForConsole ["sigma"], "_inter_", prop( .x ,"output" ) ) )
+    if ( prop( .x, "sigmaSlope" ) != 0 && prop( .x, "sigmaSlopeFixed" ) == FALSE ) sigma = c( sigma, paste0( greeksLetterForConsole ["sigma"], "_slope_", prop( .x ,"output" ) ) )
     return( sigma )
   }) %>% unlist()  %>% unname()
 
-  columnNamesMu = parametersMu %>% map_chr(~  greeksLetterForCOnsole['mu'] )
-  columnNamesSigma = parametersSigma %>% map_chr( ~  greeksLetterForCOnsole['sigma']  )
+  columnNamesMu = parametersMu %>% map_chr(~  greeksLetterForConsole ['mu'] )
+  columnNamesSigma = parametersSigma %>% map_chr( ~  greeksLetterForConsole ['sigma']  )
 
   # data for plot
   data = data.frame( Parameter = c( parametersMu, parametersSigma ),
@@ -397,7 +380,7 @@ method( plotRSEFIM, list( IndividualFim, PFIMProject ) ) = function( fim, evalua
   # bar plot of the plot SE
   plotRSE = ggplot( data, aes( x = Parameter, y = RSE ) ) +
     geom_bar( stat = "identity", position = "dodge", show.legend = FALSE ) +
-    facet_wrap( ~factor( cat, levels =  paste0( "RSE ", c( greeksLetterForCOnsole['mu'],  greeksLetterForCOnsole["sigma"] ) ) ), scales = "free_x" ) +
+    facet_wrap( ~factor( cat, levels =  paste0( "RSE ", c( greeksLetterForConsole ['mu'],  greeksLetterForConsole ["sigma"] ) ) ), scales = "free_x" ) +
     theme(legend.position = "none",
           plot.title = element_text(size=16, hjust = 0.5),
           axis.title.x = element_text(size=16),
@@ -410,12 +393,8 @@ method( plotRSEFIM, list( IndividualFim, PFIMProject ) ) = function( fim, evalua
 }
 
 # ==============================================================================
-#' @title Generate the table for the report.
+#' @rdname tablesForReport
 #' @name tablesForReport
-#' @param fim An object \code{IndividualFim} giving the Fim.
-#' @param evaluation An object \code{Evaluation} giving the evaluation of the model.
-#' @return fixedEffectsTable, FIMCriteriaTable, SEAndRSETable.
-#' @template copyright
 #' @export
 # ==============================================================================
 
@@ -434,22 +413,22 @@ method( tablesForReport, list( IndividualFim, PFIMProject ) ) = function( fim, e
   modelError = prop( evaluation, "modelError" )
 
   # Greek letter for column names
-  greeksLetterForCOnsole = c( mu = "$\\mu_{", omega = "$\\omega^2_{", sigma = "${\\sigma_" )
+  greeksLetterForConsole  = c( mu = "$\\mu_{", omega = "$\\omega^2_{", sigma = "${\\sigma_" )
 
   # define the name for the columns and rows for mu, omega and sigma
   columnNamesMu = parameters %>%
     keep( ~ prop( .x, "fixedMu" ) == FALSE) %>%
     keep( ~  prop( prop(.x,"distribution"), "mu" ) != 0 ) %>%
     map_chr( "name" ) %>%
-    map_chr(~ paste0( greeksLetterForCOnsole['mu'], .x,"}$" ) )
+    map_chr(~ paste0( greeksLetterForConsole ['mu'], .x,"}$" ) )
 
   columnNamesSigma = map( modelError, ~{
     sigma = character()
     if ( prop( .x, "sigmaInter" ) != 0 && prop( .x, "sigmaInterFixed" ) == FALSE )
-      sigma = c( sigma, paste0( greeksLetterForCOnsole["sigma"], "{inter}}_{", prop( .x ,"output" ),"}$" ) )
+      sigma = c( sigma, paste0( greeksLetterForConsole ["sigma"], "{inter}}_{", prop( .x ,"output" ),"}$" ) )
 
     if ( prop( .x, "sigmaSlope" ) != 0 && prop( .x, "sigmaSlopeFixed" ) == FALSE )
-      sigma = c( sigma, paste0( greeksLetterForCOnsole["sigma"], "{slope}}_{", prop( .x ,"output" ),"}$" ) )
+      sigma = c( sigma, paste0( greeksLetterForConsole ["sigma"], "{slope}}_{", prop( .x ,"output" ),"}$" ) )
 
     return( sigma )
   }) %>% unlist() %>% unname()
@@ -548,7 +527,7 @@ method( generateReportOptimization, list( IndividualFim, PSOAlgorithm ) ) = func
   rmarkdown::render( input = nameInputFile, output_file = outputFile, output_dir = outputPath, params = list( tablesForReport = tablesForReport ) )
 }
 
-method( generateReportOptimization, list( BayesianFim, PGBOAlgorithm ) ) = function( fim, optimizationAlgorithm, tablesForReport, outputPath, outputFile ) {
+method( generateReportOptimization, list( IndividualFim, PGBOAlgorithm ) ) = function( fim, optimizationAlgorithm, tablesForReport, outputPath, outputFile ) {
 
   path = system.file(package = "PFIM")
   path = paste0( path, "/rmarkdown/templates/skeleton/" )

@@ -1,3 +1,5 @@
+# Copyright (c) 2026-present Romain Leroux. All rights reserved.
+
 #' @title BayesianFim Class
 #' @name BayesianFim
 #'
@@ -43,16 +45,10 @@ BayesianFim = new_class( "BayesianFim",
                          ))
 
 # ==============================================================================
-#' @title Evaluation of the Bayesian Fim
+#' @rdname evaluateFim
 #' @name evaluateFim
-#' @param fim An object \code{BayesianFim} giving the Fim.
-#' @param model An object \code{Model} giving the model.
-#' @param arm An object \code{Arm} giving the arm.
-#' @return The object \code{Fim} updated with the calculated fisherMatrix and shrinkage.
-#' @template copyright
 #' @export
 # ==============================================================================
-t
 
 method( evaluateFim, list( BayesianFim, Model, Arm ) ) = function( fim, model, arm ) {
 
@@ -114,12 +110,8 @@ method( evaluateVarianceFIM, list( BayesianFim, Model, Arm ) ) = function( fim, 
 }
 
 # ==============================================================================
-#' @title Set the optimal arms for Multiplicative Algorithm
+#' @rdname setOptimalArms
 #' @name setOptimalArms
-#' @param fim An object \code{BayesianFim} giving the Fim.
-#' @param optimizationAlgorithm An object \code{MultiplicativeAlgorithm}.
-#' @return A list of the optimal arms.
-#' @template copyright
 #' @export
 # ==============================================================================
 
@@ -157,12 +149,8 @@ method( setOptimalArms, list( BayesianFim, MultiplicativeAlgorithm ) ) = functio
 }
 
 # ==============================================================================
-#' @title Set the optimal arms for Fedorov-Wynn Algorithm
+#' @rdname setOptimalArms
 #' @name setOptimalArms
-#' @param fim An object \code{BayesianFim} giving the Fim.
-#' @param optimizationAlgorithm An object \code{FedorovWynnAlgorithm}.
-#' @return A list of the optimal arms.
-#' @template copyright
 #' @export
 # ==============================================================================
 
@@ -185,12 +173,8 @@ method( setOptimalArms, list( BayesianFim, FedorovWynnAlgorithm ) ) = function( 
 }
 
 # ==============================================================================
-#' @title Format and set the Bayesian Fim results
+#' @rdname setEvaluationFim
 #' @name setEvaluationFim
-#' @param fim An object \code{BayesianFim} giving the Fim.
-#' @param evaluation An object \code{Evaluation} giving the evaluation of the model.
-#' @return The object \code{Fim} with formatted results and SE/RSE calculations.
-#' @template copyright
 #' @export
 # ==============================================================================
 
@@ -202,7 +186,7 @@ method( setEvaluationFim, BayesianFim ) = function( fim, evaluation ) {
   modelError = prop( evaluation, "modelError" )
 
   # Greek letter for column names
-  greeksLetterForCOnsole = c( mu = "\u03bc_", omega = "\u03c9\u00B2_", sigma = "\u03c3" )
+  greeksLetterForConsole  = c( mu = "\u03bc_", omega = "\u03c9\u00B2_", sigma = "\u03c3" )
 
   # define the name for the columns and rows for mu, omega and sigma
   columnNamesMu = parameters %>%
@@ -211,7 +195,7 @@ method( setEvaluationFim, BayesianFim ) = function( fim, evaluation ) {
     discard(~ prop(.x, "fixedOmega") == TRUE) %>%       # Remove fixed omega parameters
     keep(~ pluck(.x, "distribution", "omega") != 0) %>%              # Keep non-zero omega
     map_chr("name") %>%                                 # Extract names
-    map_chr(~ paste0(greeksLetterForCOnsole['mu'], .x)) # Add mu symbol
+    map_chr(~ paste0(greeksLetterForConsole ['mu'], .x)) # Add mu symbol
 
   # Get mu values
   muValues = parameters %>%
@@ -249,11 +233,8 @@ method( setEvaluationFim, BayesianFim ) = function( fim, evaluation ) {
 }
 
 # ==============================================================================
-#' @title Display the Bayesian Fim in the console
+#' @rdname showFIM
 #' @name showFIM
-#' @param fim An object \code{BayesianFim}.
-#' @return Prints the FIM, fixed effects, criteria, and shrinkage to the console.
-#' @template copyright
 #' @export
 # ==============================================================================
 
@@ -282,7 +263,7 @@ method( showFIM, BayesianFim ) = function( fim ) {
   cat("*********************************************** \n\n")
   cat( c( "Determinant:", as.numeric(det(fisherMatrix)) ), "\n")
   cat( c( "D-criterion:", as.numeric(Dcriterion) ), "\n")
-  cat( c("Conditional number of the fixed effects:", as.numeric(condNumberFixedEffects) , "\n") )
+  cat( c("Condition number of the fixed effects:", as.numeric(condNumberFixedEffects) , "\n") )
   cat("\n*************************************** \n")
   cat(" Shrinkage \n" )
   cat("*************************************** \n\n")
@@ -294,12 +275,8 @@ method( showFIM, BayesianFim ) = function( fim ) {
 }
 
 # ==============================================================================
-#' @title Bar plot for Standard Errors (SE)
+#' @rdname plotSEFIM
 #' @name plotSEFIM
-#' @param fim An object \code{BayesianFim}.
-#' @param evaluation An object \code{PFIMProject}.
-#' @return A ggplot object representing the SE bar plot.
-#' @template copyright
 #' @export
 # ==============================================================================
 
@@ -315,7 +292,7 @@ method( plotSEFIM, list( BayesianFim, PFIMProject ) ) = function( fim, evaluatio
   standardErrors = prop( fim, "SEAndRSE" )
 
   # Greek letter for column names
-  greeksLetterForCOnsole = c( mu = "\u03bc", omega = "\u03c9\u00B2", sigma = "\u03c3" )
+  greeksLetterForConsole  = c( mu = "\u03bc", omega = "\u03c9\u00B2", sigma = "\u03c3" )
 
   parametersMu = parameters %>%
     discard(~ prop(.x, "fixedMu") == TRUE) %>%          # Remove fixed mu parameters
@@ -324,7 +301,7 @@ method( plotSEFIM, list( BayesianFim, PFIMProject ) ) = function( fim, evaluatio
     keep(~ pluck(.x, "distribution", "omega") != 0) %>%              # Keep non-zero omega
     map_chr("name")                               # Extract names
 
-  columnNamesMu = parametersMu %>% map_chr(~  greeksLetterForCOnsole['mu'] )
+  columnNamesMu = parametersMu %>% map_chr(~  greeksLetterForConsole ['mu'] )
 
   # data for plot
   data = data.frame( Parameter = c( parametersMu ),
@@ -337,7 +314,7 @@ method( plotSEFIM, list( BayesianFim, PFIMProject ) ) = function( fim, evaluatio
   # bar plot of the plot SE
   plotSE = ggplot( data, aes( x = Parameter, y = SE ) ) +
     geom_bar( stat = "identity", position = "dodge", show.legend = FALSE ) +
-    facet_wrap( ~factor( cat, levels =  paste0( "SE ", c( greeksLetterForCOnsole['mu'] ) ) ), scales = "free_x" ) +
+    facet_wrap( ~factor( cat, levels =  paste0( "SE ", c( greeksLetterForConsole ['mu'] ) ) ), scales = "free_x" ) +
     theme(legend.position = "none",
           plot.title = element_text(size=16, hjust = 0.5),
           axis.title.x = element_text(size=16),
@@ -350,12 +327,8 @@ method( plotSEFIM, list( BayesianFim, PFIMProject ) ) = function( fim, evaluatio
 }
 
 # ==============================================================================
-#' @title Bar plot for Relative Standard Errors (RSE)
+#' @rdname plotRSEFIM
 #' @name plotRSEFIM
-#' @param fim An object \code{BayesianFim}.
-#' @param evaluation An object \code{PFIMProject}.
-#' @return A ggplot object representing the RSE bar plot.
-#' @template copyright
 #' @export
 # ==============================================================================
 
@@ -370,7 +343,7 @@ method( plotRSEFIM, list( BayesianFim, PFIMProject ) ) = function( fim, evaluati
   standardErrors = prop( fim, "SEAndRSE" )
 
   # Greek letter for column names
-  greeksLetterForCOnsole = c( mu = "\u03bc" )
+  greeksLetterForConsole  = c( mu = "\u03bc" )
 
   parametersMu = parameters %>%
     discard(~ prop(.x, "fixedMu") == TRUE) %>%          # Remove fixed mu parameters
@@ -378,7 +351,7 @@ method( plotRSEFIM, list( BayesianFim, PFIMProject ) ) = function( fim, evaluati
     discard(~ prop(.x, "fixedOmega") == TRUE) %>%       # Remove fixed omega parameters
     keep(~ pluck(.x, "distribution", "omega") != 0) %>%              # Keep non-zero omega
     map_chr("name")                               # Extract names
-  columnNamesMu = parametersMu %>% map_chr(~  greeksLetterForCOnsole['mu'] )
+  columnNamesMu = parametersMu %>% map_chr(~  greeksLetterForConsole ['mu'] )
 
   # data for plot
   data = data.frame( Parameter = c( parametersMu ),
@@ -391,7 +364,7 @@ method( plotRSEFIM, list( BayesianFim, PFIMProject ) ) = function( fim, evaluati
   # bar plot of the plot SE
   plotRSE = ggplot( data, aes( x = Parameter, y = RSE ) ) +
     geom_bar( stat = "identity", position = "dodge", show.legend = FALSE ) +
-    facet_wrap( ~factor( cat, levels =  paste0( "RSE ", c( greeksLetterForCOnsole['mu'] ) ) ), scales = "free_x" ) +
+    facet_wrap( ~factor( cat, levels =  paste0( "RSE ", c( greeksLetterForConsole ['mu'] ) ) ), scales = "free_x" ) +
     theme(legend.position = "none",
           plot.title = element_text(size=16, hjust = 0.5),
           axis.title.x = element_text(size=16),
@@ -404,11 +377,11 @@ method( plotRSEFIM, list( BayesianFim, PFIMProject ) ) = function( fim, evaluati
 }
 
 # ==============================================================================
-#' @title plotShrinkage: Bar plot for Bayesian Shrinkage
+#' @title Bar plot of the Bayesian shrinkage
 #' @name plotShrinkage
-#' @param fim An object \code{BayesianFim}.
-#' @param evaluation An object \code{PFIMProject}.
-#' @return A ggplot object representing the shrinkage values.
+#' @param fim An object of class \code{BayesianFim} giving the Fim.
+#' @param evaluation An object of class \code{PFIMProject} giving the evaluation.
+#' @return A \code{ggplot2} object representing the shrinkage bar plot.
 #' @template copyright
 #' @export
 # ==============================================================================
@@ -422,7 +395,7 @@ method( plotShrinkage, list( BayesianFim, PFIMProject ) ) = function(  fim, eval
   shrinkage = prop( fim, "shrinkage" )
 
   # Greek letter for column names
-  greeksLetterForCOnsole = c( mu = "\u03bc", omega = "\u03c9\u00B2", sigma = "\u03c3" )
+  greeksLetterForConsole  = c( mu = "\u03bc", omega = "\u03c9\u00B2", sigma = "\u03c3" )
 
   parametersMu = parameters %>%
     discard(~ prop(.x, "fixedMu") == TRUE) %>%          # Remove fixed mu parameters
@@ -431,7 +404,7 @@ method( plotShrinkage, list( BayesianFim, PFIMProject ) ) = function(  fim, eval
     keep(~ pluck(.x, "distribution", "omega") != 0) %>%              # Keep non-zero omega
     map_chr("name")                               # Extract names
 
-  columnNamesMu = parametersMu %>% map_chr(~  greeksLetterForCOnsole['mu'] )
+  columnNamesMu = parametersMu %>% map_chr(~  greeksLetterForConsole ['mu'] )
 
   # data for plot
   data = data.frame( Parameter = c( parametersMu ), shrinkage = shrinkage )
@@ -452,12 +425,8 @@ method( plotShrinkage, list( BayesianFim, PFIMProject ) ) = function(  fim, eval
 }
 
 # ==============================================================================
-#' @title Generate tables for the Bayesian Fim report
+#' @rdname tablesForReport
 #' @name tablesForReport
-#' @param fim An object \code{BayesianFim}.
-#' @param evaluation An object \code{PFIMProject}.
-#' @return A list of kable tables (Fixed Effects, Criteria, SE/RSE/Shrinkage).
-#' @template copyright
 #' @export
 # ==============================================================================
 
@@ -475,7 +444,7 @@ method( tablesForReport, list( BayesianFim, PFIMProject ) ) = function( fim, eva
   modelError = prop( evaluation, "modelError" )
 
   # Greek letter for column names
-  greeksLetterForCOnsole = c( mu = "$\\mu_{", omega = "$\\omega^2_{", sigma = "${\\sigma_" )
+  greeksLetterForConsole  = c( mu = "$\\mu_{", omega = "$\\omega^2_{", sigma = "${\\sigma_" )
 
   # define the name for the columns and rows for mu, omega and sigma
   columnNamesMu = parameters %>%
@@ -484,7 +453,7 @@ method( tablesForReport, list( BayesianFim, PFIMProject ) ) = function( fim, eva
     discard(~ prop(.x, "fixedOmega") == TRUE) %>%       # Remove fixed omega parameters
     keep(~ pluck(.x, "distribution", "omega") != 0) %>%              # Keep non-zero omega
     map_chr("name") %>%                                 # Extract names
-    map_chr(~ paste0(greeksLetterForCOnsole['mu'], .x,"}$")) # Add mu symbol
+    map_chr(~ paste0(greeksLetterForConsole ['mu'], .x,"}$")) # Add mu symbol
 
   fixedEffects = as.matrix( fixedEffects )
   colnames( fixedEffects ) = columnNamesMu

@@ -2,7 +2,7 @@ Package: PFIM
 Type: Package
 Title: Population Fisher Information Matrix
 Version: 7.0.3
-Date: 2026-01-30
+Date: 2026-04-09
 Authors@R: c(
     person(given = "Romain",
            family = "Leroux",

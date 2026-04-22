@@ -10,8 +10,7 @@ plotEvaluationResults(
   outputNames,
   samplingData,
   designName,
-  plotOptions,
-  ...
+  plotOptions
 )
 }
 \arguments{
@@ -26,8 +25,6 @@ plotEvaluationResults(
 \item{designName}{A string giving the design name.}
 
 \item{plotOptions}{A list with \code{unitTime} and \code{unitOutcomes}.}
-
-\item{...}{Additional arguments}
 }
 \value{
 A named list of \code{ggplot} objects.

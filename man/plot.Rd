@@ -9,17 +9,22 @@
 An object of class \code{character} of length 4.
 }
 \usage{
-plot(x, plotOptions = list(), which = NULL, ...)
+plot(pfimobject, plotOptions = list(), which = NULL,
+     thresholdWeights = 0, thresholdFrequencies = 0, ...)
 }
 \arguments{
-\item{x}{An object of class \code{Evaluation} or \code{Optimization}.}
+\item{pfimobject}{An object of class \code{Evaluation} or \code{Optimization}.}
 
 \item{plotOptions}{A \code{list} of graphical options forwarded to
 \code{plotEvaluation} and \code{plotSensitivityIndices}.
 Defaults to \code{list()}.}
 
-\item{which}{\code{character}. Subset of plots to compute.
-Partial matching supported (like \code{plot.lm}).
+\item{which}{\code{character} or \code{NULL}. Subset of plots to compute.
+Partial matching supported (like \code{plot.lm}).}
+
+\item{thresholdWeights}{A numeric value for thresholding the weigth for the multiplicative algorithm.}
+
+\item{thresholdFrequencies}{A numeric value for thresholding the weigth for the FedorovWynn algorithm.
 \itemize{
   \item \code{Evaluation}: any subset of
     \code{c("evaluation", "sensitivityIndices", "SE", "RSE")}.
@@ -27,18 +32,20 @@ Partial matching supported (like \code{plot.lm}).
     \code{c("evaluation", "sensitivityIndices", "SE", "RSE",
             "weights", "frequencies")}.
 }
-Default: all plots for the given class.}
+\code{NULL} (default): all plots for the given class.}
 
-\item{\dots}{Additional arguments (ignored).}
+\item{\dots}{Forwarded to \code{graphics::plot} for non-PFIM objects.}
 }
 \value{
-A named \code{list} of \code{ggplot2} objects.
+For PFIM objects: a named \code{list} of \code{ggplot2} objects.
+  For other objects: the return value of \code{graphics::plot}.
 }
 \description{
 Generates plots for \code{Evaluation} or \code{Optimization} objects and
-returns them as a named list. S7 dispatches automatically on the object
-class -- the user never needs to know which specific plot function to call.
+returns them as a named list. Dispatches automatically on the object class --
+the user never needs to know which specific plot function to call.
 Follows the same OO convention as \code{plot.lm} in base R.
+For any other object type, falls through to \code{graphics::plot}.
 }
 \note{
 Copyright (c) 2026-present Romain Leroux. All rights reserved.

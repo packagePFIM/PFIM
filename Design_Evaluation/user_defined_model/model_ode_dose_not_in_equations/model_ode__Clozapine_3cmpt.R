@@ -17,7 +17,7 @@ modelError = list( errorModelRespPK, errorModelRespPD )
 
 #==============================================================================================
 # administration
-administrationC1 = Administration( outcome = "C1", timeDose = c(0), dose = c(200) )
+administrationC1 = Administration( outcome = "C1", timeDose = c(0), dose = c(200,100) )
 
 # sampling times
 samplingTimesC2 = SamplingTimes( outcome = "C2", samplings = c( 0.5, 170, 172, 175, 180, 192 ) )

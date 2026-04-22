@@ -3,16 +3,12 @@
 %   R/PopulationFim.R
 \name{showFIM}
 \alias{showFIM}
-\title{Display the Bayesian Fim in the console}
+\title{Display FIM Results in the R Console}
 \arguments{
 \item{fim}{An object of class \code{IndividualFim} (or \code{PopulationFim})
 containing the computed results.}
 }
 \value{
-Prints the FIM, fixed effects, criteria, and shrinkage to the console.
-
-The fisherMatrix, fixedEffects, Determinant, condition numbers and D-criterion, Shrinkage and Parameters estimation
-
 This function returns a formatted summary to the console. It invisibly
 returns a list containing the \code{fisherMatrix}, \code{fixedEffects},
 \code{Determinant}, \code{conditionNumbers}, \code{D-criterion}, and \code{Shrinkage}.
@@ -24,10 +20,6 @@ allowing the user to evaluate parameter precision, numerical stability, and
 optimization criteria for a specific design.
 }
 \note{
-Copyright (c) 2026-present Romain Leroux. All rights reserved.
-
-Copyright (c) 2026-present Romain Leroux. All rights reserved.
-
 Copyright (c) 2026-present Romain Leroux. All rights reserved.
 }
 \author{

@@ -3,7 +3,7 @@
 %   R/PopulationFim.R
 \name{tablesForReport}
 \alias{tablesForReport}
-\title{Generate tables for the Bayesian Fim report}
+\title{Generate Statistical Tables for Evaluation Reports}
 \arguments{
 \item{fim}{An object of class \code{\link{PopulationFim}} containing the
 calculated Fisher Information Matrix and derived statistics.}
@@ -12,10 +12,6 @@ calculated Fisher Information Matrix and derived statistics.}
 structural model context and output definitions.}
 }
 \value{
-A list of kable tables (Fixed Effects, Criteria, SE/RSE/Shrinkage).
-
-fixedEffectsTable, FIMCriteriaTable, SEAndRSETable.
-
 A \code{list} containing three data frames:
 \describe{
   \item{\code{fixedEffectsTable}}{Table of parameter names and values.}
@@ -30,10 +26,6 @@ estimates, global design criteria, and the precision of the estimation
 (Standard Errors and Relative Standard Errors).
 }
 \note{
-Copyright (c) 2026-present Romain Leroux. All rights reserved.
-
-Copyright (c) 2026-present Romain Leroux. All rights reserved.
-
 Copyright (c) 2026-present Romain Leroux. All rights reserved.
 }
 \author{

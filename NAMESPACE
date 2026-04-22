@@ -16,6 +16,8 @@ importFrom("scales", "pretty_breaks")
 importFrom("kableExtra", "kable_styling", "kbl", "add_header_above")
 importFrom("stats", "setNames")
 importFrom("graphics","plot")
+importFrom("stats", "time")
+
 export(plot)
 
 
@@ -68,7 +70,6 @@ export(Dcriterion)
 export(getDcriterion)
 export(getCorrelationMatrix)
 export(getFisherMatrix)
-export(getFim)
 export(getListLastName)
 export(getModelParametersData)
 export(getSamplingData)

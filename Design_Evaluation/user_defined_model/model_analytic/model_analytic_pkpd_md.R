@@ -41,7 +41,7 @@ arm2 = Arm( name = "BrasTest",
 design1 = Design( name = "design1", arms = list( arm1 ) )
 
 # Evaluation
-# Evaluations
+
 evaluationPopFim = Evaluation( name = "",
                                modelParameters = modelParameters,
                                modelEquations = modelEquations,

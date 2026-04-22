@@ -1,3 +1,5 @@
+# Copyright (c) 2026-present Romain Leroux. All rights reserved.
+
 #' @title Optimization Class
 #' @name Optimization
 #' @description
@@ -302,7 +304,7 @@ Optimization = function(
 #' @export
 # ==============================================================================
 
-defineOptimizationAlgorithm = new_generic( "defineOptimizationAlgorithm", c( "optimization" ) )
+defineOptimizationAlgorithm = new_generic("defineOptimizationAlgorithm", c("optimization"))
 
 # ==============================================================================
 #' @title Generate Fisher Information Matrices (FIM) from Design Constraints
@@ -322,7 +324,7 @@ defineOptimizationAlgorithm = new_generic( "defineOptimizationAlgorithm", c( "op
 #' @export
 # ==============================================================================
 
-generateFimsFromConstraints = new_generic( "generateFimsFromConstraints", c( "optimization" ) )
+generateFimsFromConstraints = new_generic("generateFimsFromConstraints", c("optimization"))
 
 # ==============================================================================
 #' @title Visualize the distribution of optimal design weights
@@ -344,7 +346,7 @@ generateFimsFromConstraints = new_generic( "generateFimsFromConstraints", c( "op
 #' @export
 # ==============================================================================
 
-plotWeights = new_generic( "plotWeights", c( "optimization" ) )
+plotWeights = new_generic("plotWeights", c("optimization"))
 
 # ==============================================================================
 #' @title plotFrequencies: visualize optimal frequencies for the Fedorov-Wynn algorithm
@@ -367,7 +369,7 @@ plotWeights = new_generic( "plotWeights", c( "optimization" ) )
 #' @export
 # ==============================================================================
 
-plotFrequencies = new_generic( "plotFrequencies", c( "optimization" ) )
+plotFrequencies = new_generic("plotFrequencies", c("optimization"))
 
 # ==============================================================================
 #' @title Optimize Study Design
@@ -389,7 +391,7 @@ plotFrequencies = new_generic( "plotFrequencies", c( "optimization" ) )
 #' @export
 # ==============================================================================
 
-optimizeDesign = new_generic( "optimizeDesign", c("optimizationObject", "optimizationAlgorithm" ) )
+optimizeDesign = new_generic("optimizeDesign", c("optimizationObject", "optimizationAlgorithm"))
 
 # ==============================================================================
 #' @title Generate Algorithm Constraints Table for Reporting
@@ -410,13 +412,13 @@ optimizeDesign = new_generic( "optimizeDesign", c("optimizationObject", "optimiz
 #' @export
 # ==============================================================================
 
-constraintsTableForReport = new_generic( "constraintsTableForReport", c( "optimizationAlgorithm" ) )
+constraintsTableForReport = new_generic("constraintsTableForReport", c("optimizationAlgorithm"))
 
 # ==============================================================================
 # the methods
 # ==============================================================================
 
-method( generateFimsFromConstraints, .Optimization_S7 ) = function( optimization ) {
+method(generateFimsFromConstraints, .Optimization_S7) = function(optimization) {
 
   listArms = list()
   listFimsAlgoFW = list()
@@ -425,113 +427,113 @@ method( generateFimsFromConstraints, .Optimization_S7 ) = function( optimization
   samplingsForFedorovWynnAlgo = list()
 
   # set the evaluation parameters from the optimization object
-  evaluation = Evaluation( name = "internalFimEvaluation",
-                           modelEquations = prop( optimization, "modelEquations" ),
-                           modelParameters = prop( optimization, "modelParameters" ),
-                           modelError = prop( optimization, "modelError" ),
-                           designs =  prop( optimization, "designs" ),
-                           fimType = prop( optimization, "fimType" ),
-                           outputs = prop( optimization, "outputs" ),
-                           odeSolverParameters = prop( optimization, "odeSolverParameters" ) )
+  evaluation = Evaluation(name = "internalFimEvaluation",
+                          modelEquations = prop(optimization, "modelEquations"),
+                          modelParameters = prop(optimization, "modelParameters"),
+                          modelError = prop(optimization, "modelError"),
+                          designs =  prop(optimization, "designs"),
+                          fimType = prop(optimization, "fimType"),
+                          outputs = prop(optimization, "outputs"),
+                          odeSolverParameters = prop(optimization, "odeSolverParameters"))
 
   # Extract the designs from the optimization object
-  designs = prop( optimization, "designs" )
-  designNames = map( designs, ~ prop( .x, "name" ) )
+  designs = prop(optimization, "designs")
+  designNames = map(designs, ~ prop(.x, "name"))
 
   # All combinations for administration times constraints
-  dosesForFIMs = map( designs, ~ generateDosesCombination( .x ) ) %>% set_names( designNames )
+  dosesForFIMs = map(designs, ~ generateDosesCombination(.x)) %>% set_names(designNames)
 
   # All combinations for sampling times constraints
-  samplingsForFIMs = map( designs, ~ generateSamplingTimesCombination( .x ) ) %>% set_names( designNames )
+  samplingsForFIMs = map(designs, ~ generateSamplingTimesCombination(.x)) %>% set_names(designNames)
 
   # evaluate the FIMs
   # for each dose combination associate each sampling time combination
-  for ( design in designs )
+  for (design in designs)
   {
     numberOfFims = 1
 
-    designName = prop( design, "name" )
-    arms = prop( design, "arms" )
+    designName = prop(design, "name")
+    arms = prop(design, "arms")
 
     dosesForFIMs = dosesForFIMs[[designName]]
     numberOfDoses = dosesForFIMs$numberOfDoses
 
-    for ( iterDose in seq( numberOfDoses ) )
+    for (iterDose in seq(numberOfDoses))
     {
       # assign the new doses for each arm
-      arms = map( arms, function( arm )
+      arms = map(arms, function(arm)
       {
-        armName = prop( arm, "name")
-        administrations = prop( arm, "administrations" )
-        administrations = map( administrations, function( administration )
+        armName = prop(arm, "name")
+        administrations = prop(arm, "administrations")
+        administrations = map(administrations, function(administration)
         {
-          outcome = prop( administration, "outcome")
-          prop( administration, "dose") = dosesForFIMs[[armName]][[outcome]][iterDose]
-          return(administration )
+          outcome = prop(administration, "outcome")
+          prop(administration, "dose") = dosesForFIMs[[armName]][[outcome]][iterDose]
+          return(administration)
         })
-        prop( arm, "administrations" ) = administrations
-        return( arm )
+        prop(arm, "administrations") = administrations
+        return(arm)
       })
 
       # Create combination indices for the sampling times
-      combinationIndicesSamplingTimes = expand.grid( map( samplingsForFIMs[[designName]], ~ seq_along(.x) ) )
-      numberOfCombinationIndicesSamplingTimes = nrow( combinationIndicesSamplingTimes )
+      combinationIndicesSamplingTimes = expand.grid(map(samplingsForFIMs[[designName]], ~ seq_along(.x)))
+      numberOfCombinationIndicesSamplingTimes = nrow(combinationIndicesSamplingTimes)
 
-      for ( iterCombinationIndicesSamplingTimes in 1:numberOfCombinationIndicesSamplingTimes )
+      for (iterCombinationIndicesSamplingTimes in 1:numberOfCombinationIndicesSamplingTimes)
       {
         # Update arms with new sampling times for the current combination
         armsWithNewSamplingTimes = map(arms, function(arm) {
-          armName = prop( arm, 'name' )
+          armName = prop(arm, 'name')
           indexSamplingsForFims = combinationIndicesSamplingTimes[iterCombinationIndicesSamplingTimes, armName]
 
-          samplingsForFedorovWynnAlgoTmp = pluck( samplingsForFIMs, designName, armName, indexSamplingsForFims ) %>%
-            map(~ prop( .x, "samplings" ) ) %>%
-            flatten_dbl()
+          samplingsForFedorovWynnAlgoTmp = pluck(samplingsForFIMs, designName, armName, indexSamplingsForFims) %>%
+            map(~ prop(.x, "samplings")) %>%
+            list_c()  # replaces deprecated flatten_dbl() (purrr >= 1.0)
 
-          prop( arm, "samplingTimes" ) = pluck( samplingsForFIMs, designName, armName, indexSamplingsForFims )
-          list( arm = arm,  samplingsForFedorovWynnAlgoTmp = samplingsForFedorovWynnAlgoTmp )
+          prop(arm, "samplingTimes") = pluck(samplingsForFIMs, designName, armName, indexSamplingsForFims)
+          list(arm = arm,  samplingsForFedorovWynnAlgoTmp = samplingsForFedorovWynnAlgoTmp)
         })
 
-        armsWithNewSamplingTimes = pluck( armsWithNewSamplingTimes, 1 )
+        armsWithNewSamplingTimes = pluck(armsWithNewSamplingTimes, 1)
 
         # samplings for FW method
         samplingsForFedorovWynnAlgo[[designName]][[numberOfFims]] = armsWithNewSamplingTimes$samplingsForFedorovWynnAlgoTmp
 
         # Update the design with the new arms
-        prop( design, "arms" ) = list( armsWithNewSamplingTimes$arm )
-        prop( evaluation, "designs" ) = list( design )
+        prop(design, "arms") = list(armsWithNewSamplingTimes$arm)
+        prop(evaluation, "designs") = list(design)
 
         # design evaluation and get the FIM
-        evaluationFIM = run( evaluation )
-        fim = getFim( evaluationFIM )
+        evaluationFIM = run(evaluation)
+        fim = getFisherMatrix(evaluationFIM)
         fisherMatrix = fim$fisherMatrix
 
         # reshape the fims
         dimFim = nrow(fisherMatrix)
         dimVectorTriangularInfWithDiagFisherMatrices = dimFim*(dimFim+1)/2
-        fisherMatrixForAlgoFW = fisherMatrix[ rev( lower.tri( t( fisherMatrix ), diag = TRUE ) ) ]
-        fisherMatrixForAlgoFW = matrix( fisherMatrixForAlgoFW , ncol = dimVectorTriangularInfWithDiagFisherMatrices, byrow = TRUE )
+        fisherMatrixForAlgoFW = fisherMatrix[ rev(lower.tri(t(fisherMatrix), diag = TRUE)) ]
+        fisherMatrixForAlgoFW = matrix(fisherMatrixForAlgoFW , ncol = dimVectorTriangularInfWithDiagFisherMatrices, byrow = TRUE)
 
         listArms[[designName]][[numberOfFims]] = armsWithNewSamplingTimes
         listFimsAlgoFW[[designName]][[numberOfFims]] = fisherMatrixForAlgoFW
         listFimsAlgoMult[[designName]][[numberOfFims]] = fisherMatrix
         # Print the iteration for progress tracking
-        message( paste0( "Evaluation of the FIMs: ",  numberOfFims, "/", numberOfCombinationIndicesSamplingTimes*numberOfDoses ) )
+        message(paste0("Evaluation of the FIMs: ",  numberOfFims, "/", numberOfCombinationIndicesSamplingTimes*numberOfDoses))
         numberOfFims = numberOfFims + 1
       } # end samplingTimes
     } #end doses
   } # end designs
-  return( list( listArms = listArms, dimFim = dimFim, listFimsAlgoFW = listFimsAlgoFW ,
-                listFimsAlgoMult = listFimsAlgoMult, samplingsForFedorovWynnAlgo = samplingsForFedorovWynnAlgo ) ) }
+  return(list(listArms = listArms, dimFim = dimFim, listFimsAlgoFW = listFimsAlgoFW ,
+              listFimsAlgoMult = listFimsAlgoMult, samplingsForFedorovWynnAlgo = samplingsForFedorovWynnAlgo)) }
 
 # ==============================================================================
 
-method( defineOptimizationAlgorithm, .Optimization_S7 ) = function( optimization )
+method(defineOptimizationAlgorithm, .Optimization_S7) = function(optimization)
 {
   # Read the optimizer name stored in the dedicated slot.
   # Since Optimization() always returns a plain Optimization object (not a
   # subclass), we read the "optimizer" slot, not class()[1].
-  optimizerName = prop( optimization, "optimizer" )
+  optimizerName = prop(optimization, "optimizer")
 
   if (length(optimizerName) == 0L || !nzchar(optimizerName))
     stop("@optimizer is empty. Use Optimization(optimizer = 'AlgorithmName', ...).")
@@ -548,313 +550,315 @@ method( defineOptimizationAlgorithm, .Optimization_S7 ) = function( optimization
     stop(sprintf("Unknown optimizer: '%s'.", optimizerName))
   )
 
-  return( optimizationAlgorithm )
+  return(optimizationAlgorithm)
 }
 
 # ==============================================================================
 
-method( run, .Optimization_S7 ) = function( pfimproject )
+method(run, .Optimization_S7) = function(pfimproject)
 {
   # set the optimization parameters
-  optimizationAlgorithm = defineOptimizationAlgorithm( pfimproject )
+  optimizationAlgorithm = defineOptimizationAlgorithm(pfimproject)
 
   # define the type of the Fim
-  prop( pfimproject, "fim" ) = defineFim( pfimproject )
+  prop(pfimproject, "fim") = defineFim(pfimproject)
 
   # define model equations
-  modelFromLibraryOfModel = prop( pfimproject, "modelFromLibrary" )
-  if ( length( modelFromLibraryOfModel ) != 0 ) { prop( pfimproject, "modelEquations" ) = defineModelEquationsFromLibraryOfModel( pfimproject ) }
+  modelFromLibraryOfModel = prop(pfimproject, "modelFromLibrary")
+  if (length(modelFromLibraryOfModel) != 0) { prop(pfimproject, "modelEquations") = defineModelEquationsFromLibraryOfModel(pfimproject) }
 
   # Run the optimization process
-  optimizationDesign = optimizeDesign( pfimproject, optimizationAlgorithm  )
+  optimizationDesign = optimizeDesign(pfimproject, optimizationAlgorithm )
 
-  return( optimizationDesign )
+  return(optimizationDesign)
 }
 
 # ==============================================================================
 
-method( show, .Optimization_S7 ) = function( pfimproject )
+method(show, .Optimization_S7) = function(pfimproject)
 {
-  optimisationDesign = prop( pfimproject, "optimisationDesign" )
+  optimisationDesign = prop(pfimproject, "optimisationDesign")
   evaluationOptimalDesign = optimisationDesign$evaluationOptimalDesign
   evaluationInitialDesign = optimisationDesign$evaluationInitialDesign
 
   # initial design
-  designs = prop( evaluationInitialDesign, "designs" )
-  arms = map( designs, ~ prop( .x, "arms" ))
-  armsData = flatten(map( pluck( arms,1), getArmData ) )
-  initialDesignData = map_dfr( armsData, ~ as.data.frame( .x, stringsAsFactors = FALSE ) )
-  colnames( initialDesignData ) = c( "Arms name" , "Number of subjects", "Outcome", "Dose","Sampling times" )
+  designs = prop(evaluationInitialDesign, "designs")
+  arms = map(designs, ~ prop(.x, "arms"))
+  armsData = list_flatten(map(pluck(arms,1), getArmData))
+  initialDesignData = map_dfr(armsData, ~ as.data.frame(.x, stringsAsFactors = FALSE))
+  colnames(initialDesignData) = c("Arms name" , "Number of subjects", "Outcome", "Dose","Sampling times")
 
   # optimal design
-  designs = prop( evaluationOptimalDesign, "designs" )
-  arms = map( designs, ~ prop( .x, "arms" ))
-  armsData = flatten(map( pluck( arms,1), getArmData ) )
-  optimalDesignData = map_dfr( armsData, ~ as.data.frame( .x, stringsAsFactors = FALSE ) )
-  colnames( optimalDesignData ) = c( "Arms name" , "Number of subjects", "Outcome", "Dose","Sampling times" )
+  designs = prop(evaluationOptimalDesign, "designs")
+  arms = map(designs, ~ prop(.x, "arms"))
+  armsData = list_flatten(map(pluck(arms,1), getArmData))
+  optimalDesignData = map_dfr(armsData, ~ as.data.frame(.x, stringsAsFactors = FALSE))
+  colnames(optimalDesignData) = c("Arms name" , "Number of subjects", "Outcome", "Dose","Sampling times")
 
   # Fisher matrix and SE
-  fim = prop( evaluationInitialDesign, "fim" )
-  fimInitialDesign = setEvaluationFim( fim, evaluationInitialDesign )
-  fim = prop( evaluationOptimalDesign, "fim" )
-  fimOptimalDesign = setEvaluationFim( fim, evaluationOptimalDesign )
+  fim = prop(evaluationInitialDesign, "fim")
+  fimInitialDesign = setEvaluationFim(fim, evaluationInitialDesign)
+  fim = prop(evaluationOptimalDesign, "fim")
+  fimOptimalDesign = setEvaluationFim(fim, evaluationOptimalDesign)
 
   cat("\n===================================== \n")
-  cat("  Initial design \n" )
+  cat("  Initial design \n")
   cat("===================================== \n\n")
-  print( initialDesignData )
-  showFIM( fimInitialDesign )
+  print(initialDesignData)
+  showFIM(fimInitialDesign)
   cat("\n===================================== \n")
-  cat("  Optimal design \n" )
+  cat("  Optimal design \n")
   cat("===================================== \n\n")
-  print( optimalDesignData )
-  showFIM( fimOptimalDesign )
+  print(optimalDesignData)
+  showFIM(fimOptimalDesign)
 }
 
 # ==============================================================================
 
-method( getFisherMatrix, .Optimization_S7 ) = function( pfimproject )
+method(getFisherMatrix, .Optimization_S7) = function(pfimproject)
 {
-  optimisationDesign = prop( pfimproject, "optimisationDesign" )
+  optimisationDesign = prop(pfimproject, "optimisationDesign")
   evaluationOptimalDesign = optimisationDesign$evaluationOptimalDesign
-  fim = prop( evaluationOptimalDesign, "fim" )
-  fim = setEvaluationFim( fim, evaluationOptimalDesign )
-  fisherMatrix = prop( fim, "fisherMatrix" )
-  fixedEffects = prop( fim, "fixedEffects" )
-  varianceEffects = prop( fim, "varianceEffects" )
-  return( list( fisherMatrix = fisherMatrix, fixedEffects = fixedEffects, varianceEffects = varianceEffects ) )
+  fim = prop(evaluationOptimalDesign, "fim")
+  fim = setEvaluationFim(fim, evaluationOptimalDesign)
+  fisherMatrix = prop(fim, "fisherMatrix")
+  fixedEffects = prop(fim, "fixedEffects")
+  varianceEffects = prop(fim, "varianceEffects")
+  return(list(fisherMatrix = fisherMatrix, fixedEffects = fixedEffects, varianceEffects = varianceEffects))
 }
 
 # ==============================================================================
 
-method( getSE, .Optimization_S7 ) = function( pfimproject )
+method(getSE, .Optimization_S7) = function(pfimproject)
 {
-  optimisationDesign = prop( pfimproject, "optimisationDesign" )
+  optimisationDesign = prop(pfimproject, "optimisationDesign")
   evaluationOptimalDesign = optimisationDesign$evaluationOptimalDesign
-  fim = prop( evaluationOptimalDesign, "fim" )
-  fim = setEvaluationFim( fim, evaluationOptimalDesign )
-  SEAndRSE = prop( fim, "SEAndRSE" )
+  fim = prop(evaluationOptimalDesign, "fim")
+  fim = setEvaluationFim(fim, evaluationOptimalDesign)
+  SEAndRSE = prop(fim, "SEAndRSE")
   SE = SEAndRSE$SE
-  return( SE )
+  return(SE)
 }
 
 # ==============================================================================
 
-method( getRSE, .Optimization_S7 ) = function( pfimproject )
+method(getRSE, .Optimization_S7) = function(pfimproject)
 {
-  optimisationDesign = prop( pfimproject, "optimisationDesign" )
+  optimisationDesign = prop(pfimproject, "optimisationDesign")
   evaluationOptimalDesign = optimisationDesign$evaluationOptimalDesign
-  fim = prop( evaluationOptimalDesign, "fim" )
-  fim = setEvaluationFim( fim, evaluationOptimalDesign )
-  SEAndRSE = prop( fim, "SEAndRSE" )
+  fim = prop(evaluationOptimalDesign, "fim")
+  fim = setEvaluationFim(fim, evaluationOptimalDesign)
+  SEAndRSE = prop(fim, "SEAndRSE")
   RSE = SEAndRSE$RSE
-  return( RSE )
+  return(RSE)
 }
 
 # ==============================================================================
 
-method( getShrinkage, .Optimization_S7 ) = function( pfimproject )
+method(getShrinkage, .Optimization_S7) = function(pfimproject)
 {
-  optimisationDesign = prop( pfimproject, "optimisationDesign" )
+  optimisationDesign = prop(pfimproject, "optimisationDesign")
   evaluationOptimalDesign = optimisationDesign$evaluationOptimalDesign
-  fim = prop( evaluationOptimalDesign, "fim" )
-  fim = setEvaluationFim( fim, evaluationOptimalDesign )
-  shrinkage = prop( fim, "shrinkage" )
-  return( shrinkage )
+  fim = prop(evaluationOptimalDesign, "fim")
+  fim = setEvaluationFim(fim, evaluationOptimalDesign)
+  shrinkage = prop(fim, "shrinkage")
+  return(shrinkage)
 }
 
 # ==============================================================================
 
-method( getDeterminant, .Optimization_S7 ) = function( pfimproject )
+method(getDeterminant, .Optimization_S7) = function(pfimproject)
 {
-  optimisationDesign = prop( pfimproject, "optimisationDesign" )
+  optimisationDesign = prop(pfimproject, "optimisationDesign")
   evaluationOptimalDesign = optimisationDesign$evaluationOptimalDesign
-  fisherMatrix = getFisherMatrix( evaluationOptimalDesign )
-  return( det( fisherMatrix$fisherMatrix ) )
+  fisherMatrix = getFisherMatrix(evaluationOptimalDesign)
+  return(det(fisherMatrix$fisherMatrix))
 }
 
 # ==============================================================================
 
-method( getCorrelationMatrix, .Optimization_S7 ) = function( pfimproject )
+method(getCorrelationMatrix, .Optimization_S7) = function(pfimproject)
 {
-  optimisationDesign = prop( pfimproject, "optimisationDesign" )
+  # The asymptotic correlation matrix of the estimators is cov2cor(FIM^{-1}),
+  # NOT cor(FIM). cor() would treat the FIM columns as data vectors — wrong.
+  # Correct: Var(theta_hat) ~ FIM^{-1}  =>  R = cov2cor(FIM^{-1}).
+  optimisationDesign      = prop(pfimproject, "optimisationDesign")
   evaluationOptimalDesign = optimisationDesign$evaluationOptimalDesign
-  fisherMatrix = getFisherMatrix( evaluationOptimalDesign )
-  fisherMatrix = fisherMatrix$fisherMatrix
-  return( cor( fisherMatrix ) )
+  fisherMatrix            = getFisherMatrix(evaluationOptimalDesign)$fisherMatrix
+  return(cov2cor(solve(fisherMatrix)))
 }
 
 # ==============================================================================
 
-method( getDcriterion, .Optimization_S7 ) = function( pfimproject )
+method(getDcriterion, .Optimization_S7) = function(pfimproject)
 {
-  optimisationDesign = prop( pfimproject, "optimisationDesign" )
+  optimisationDesign = prop(pfimproject, "optimisationDesign")
   evaluationOptimalDesign = optimisationDesign$evaluationOptimalDesign
-  fim = prop( evaluationOptimalDesign, "fim" )
-  fim = setEvaluationFim( fim, evaluationOptimalDesign )
-  return( Dcriterion( fim ) )
+  fim = prop(evaluationOptimalDesign, "fim")
+  fim = setEvaluationFim(fim, evaluationOptimalDesign)
+  return(Dcriterion(fim))
 }
 
 # ==============================================================================
 
-method( plotSensitivityIndices, .Optimization_S7 ) = function( pfimproject )
+method(plotSensitivityIndices, .Optimization_S7) = function(pfimproject)
 {
-  optimisationDesign = prop( pfimproject, "optimisationDesign" )
+  optimisationDesign = prop(pfimproject, "optimisationDesign")
   evaluationOptimalDesign = optimisationDesign$evaluationOptimalDesign
-  plotSensitivityIndicesOptimalDesign = plotSensitivityIndices( evaluationOptimalDesign )
-  return( plotSensitivityIndicesOptimalDesign )
+  plotSensitivityIndicesOptimalDesign = plotSensitivityIndices(evaluationOptimalDesign)
+  return(plotSensitivityIndicesOptimalDesign)
 }
 
 # ==============================================================================
 
-method( plotSE, .Optimization_S7 ) = function( pfimproject )
+method(plotSE, .Optimization_S7) = function(pfimproject)
 {
-  optimisationDesign      = prop( pfimproject, "optimisationDesign" )
+  optimisationDesign      = prop(pfimproject, "optimisationDesign")
   evaluationOptimalDesign = optimisationDesign$evaluationOptimalDesign
-  fim                     = prop( evaluationOptimalDesign, "fim" )
-  fim                     = setEvaluationFim( fim, evaluationOptimalDesign )
-  plotSEResult            = plotSEFIM( fim, evaluationOptimalDesign )
-  return( plotSEResult )
+  fim                     = prop(evaluationOptimalDesign, "fim")
+  fim                     = setEvaluationFim(fim, evaluationOptimalDesign)
+  plotSEResult            = plotSEFIM(fim, evaluationOptimalDesign)
+  return(plotSEResult)
 }
 
 # ==============================================================================
 
-method( plotRSE, .Optimization_S7 ) = function( pfimproject )
+method(plotRSE, .Optimization_S7) = function(pfimproject)
 {
-  optimisationDesign      = prop( pfimproject, "optimisationDesign" )
+  optimisationDesign      = prop(pfimproject, "optimisationDesign")
   evaluationOptimalDesign = optimisationDesign$evaluationOptimalDesign
-  fim                     = prop( evaluationOptimalDesign, "fim" )
-  fim                     = setEvaluationFim( fim, evaluationOptimalDesign )
-  plotRSEResult           = plotRSEFIM( fim, evaluationOptimalDesign )
-  return( plotRSEResult )
+  fim                     = prop(evaluationOptimalDesign, "fim")
+  fim                     = setEvaluationFim(fim, evaluationOptimalDesign)
+  plotRSEResult           = plotRSEFIM(fim, evaluationOptimalDesign)
+  return(plotRSEResult)
 }
 
 # ==============================================================================
-# ==============================================================================
 
-method( plotWeights, .Optimization_S7 ) = function( optimization )
+method(plotWeights, .Optimization_S7) = function(optimization, thresholdWeights = 0)
 {
-  optimisationAlgorithmOutputs = prop( optimization, "optimisationAlgorithmOutputs" )
-  optimizationAlgorithm = optimisationAlgorithmOutputs$optimizationAlgorithm
-  plotWeightsMultiplicativeAlgorithm( optimization, optimizationAlgorithm )
+  optimisationAlgorithmOutputs = prop(optimization, "optimisationAlgorithmOutputs")
+  optimizationAlgorithm        = optimisationAlgorithmOutputs$optimizationAlgorithm
+  plotWeightsMultiplicativeAlgorithm(optimization, optimizationAlgorithm, thresholdWeights)
 }
 
 # ==============================================================================
 
-method( plotFrequencies, .Optimization_S7 ) = function( optimization )
+method(plotFrequencies, .Optimization_S7) = function(optimization, thresholdFrequencies = 0)
 {
-  optimisationAlgorithmOutputs = prop( optimization, "optimisationAlgorithmOutputs" )
-  optimizationAlgorithm = optimisationAlgorithmOutputs$optimizationAlgorithm
-  plotFrequenciesFedorovWynnAlgorithm( optimization, optimizationAlgorithm )
+  optimisationAlgorithmOutputs = prop(optimization, "optimisationAlgorithmOutputs")
+  optimizationAlgorithm        = optimisationAlgorithmOutputs$optimizationAlgorithm
+  plotFrequenciesFedorovWynnAlgorithm(optimization, optimizationAlgorithm, thresholdFrequencies)
 }
 
 # ==============================================================================
 
-method( Report, .Optimization_S7 ) = function( pfimproject, outputPath, outputFile, plotOptions  )
+method(Report, .Optimization_S7) = function(pfimproject, outputPath, outputFile, plotOptions )
 {
   # projectName
-  projectName = prop( pfimproject, "name" )
+  projectName = prop(pfimproject, "name")
 
   # slots optimization
-  optimisationDesign = prop( pfimproject, "optimisationDesign" )
+  optimisationDesign = prop(pfimproject, "optimisationDesign")
   evaluationOptimalDesign = optimisationDesign$evaluationOptimalDesign
   evaluationInitialDesign = optimisationDesign$evaluationInitialDesign
 
   # outputs
-  evaluationOutputs = prop( pfimproject , "outputs" )
+  evaluationOutputs = prop(pfimproject , "outputs")
 
   # model
-  model = defineModelType( evaluationInitialDesign  )
-  modelEquations = prop( model, "modelEquations" )
+  model = defineModelType(evaluationInitialDesign )
+  modelEquations = prop(model, "modelEquations")
 
   # model error table
-  modelError = prop( evaluationInitialDesign, "modelError" )
-  modelError = map( modelError, getModelErrorData )
-  modelErrorData = map_dfr( modelError, ~ as.data.frame(.x, stringsAsFactors = FALSE ) )
-  colnames( modelErrorData ) = c( "Output", "Type", "$\\sigma_{slope}$", "$\\sigma_{inter}$" )
+  modelError = prop(evaluationInitialDesign, "modelError")
+  modelError = map(modelError, getModelErrorData)
+  modelErrorData = map_dfr(modelError, ~ as.data.frame(.x, stringsAsFactors = FALSE))
+  colnames(modelErrorData) = c("Output", "Type", "$\\sigma_{slope}$", "$\\sigma_{inter}$")
 
-  modelErrorTable = kbl( modelErrorData, align = c( "c","c","c","c" ) ) %>%
-    kable_styling( bootstrap_options = c(  "hover" ), full_width = FALSE, position = "center", font_size = 13 )
+  modelErrorTable = kbl(modelErrorData, align = c("c","c","c","c")) %>%
+    kable_styling(bootstrap_options = c( "hover"), full_width = FALSE, position = "center", font_size = 13)
 
   # model parameters table
-  modelParameters = prop( evaluationInitialDesign, "modelParameters" )
-  modelParameters = map( modelParameters, getModelParametersData )
-  modelParametersData = map_dfr( modelParameters, ~ as.data.frame(.x, stringsAsFactors = FALSE ) )
-  colnames( modelParametersData ) = c("Parameter","$\\mu$","$\\omega$","Distribution", paste0("$\\mu$"," fixed"), paste0("$\\omega$"," fixed"))
+  modelParameters = prop(evaluationInitialDesign, "modelParameters")
+  modelParameters = map(modelParameters, getModelParametersData)
+  modelParametersData = map_dfr(modelParameters, ~ as.data.frame(.x, stringsAsFactors = FALSE))
+  colnames(modelParametersData) = c("Parameter","$\\mu$","$\\omega$","Distribution", paste0("$\\mu$"," fixed"), paste0("$\\omega$"," fixed"))
 
-  modelParametersTable = kbl( modelParametersData, align = c( "l","l","l","c","c","c" ) ) %>%
-    kable_styling( bootstrap_options = c(  "hover" ), full_width = FALSE, position = "center", font_size = 13 )
+  modelParametersTable = kbl(modelParametersData, align = c("l","l","l","c","c","c")) %>%
+    kable_styling(bootstrap_options = c( "hover"), full_width = FALSE, position = "center", font_size = 13)
 
   # arms
-  designs = prop( evaluationInitialDesign, "designs" )
-  arms = map( designs, ~ prop( .x, "arms" ))
-  armsData = flatten( map( pluck(arms,1), getArmData ) )
+  designs = prop(evaluationInitialDesign, "designs")
+  arms = map(designs, ~ prop(.x, "arms"))
+  armsData = list_flatten(map(pluck(arms,1), getArmData))
 
   # administration table
-  administration = flatten( map( pluck(arms, 1), armAdministration ) )
-  administrationData = map_dfr( administration, ~ as.data.frame(.x, stringsAsFactors = FALSE ) )
-  colnames( administrationData ) = c( "Design name","Arms name" , "Number of subject ", "Outcome", "Dose","Time dose", "$\\tau$", "$T_{inf}$" )
+  administration = list_flatten(map(pluck(arms, 1), armAdministration))
+  administrationData = map_dfr(administration, ~ as.data.frame(.x, stringsAsFactors = FALSE))
+  colnames(administrationData) = c("Design name","Arms name" , "Number of subject ", "Outcome", "Dose","Time dose", "$\\tau$", "$T_{inf}$")
 
-  administrationTable = kbl( administrationData, align = c( "l","l","l","c","c","c","c" ) ) %>%
-    kable_styling( bootstrap_options = c(  "hover" ), full_width = FALSE, position = "center", font_size = 13 )
+  administrationTable = kbl(administrationData, align = c("l","l","l","c","c","c","c")) %>%
+    kable_styling(bootstrap_options = c( "hover"), full_width = FALSE, position = "center", font_size = 13)
 
   # initial design
-  initialDesignData = map_dfr( armsData, ~ as.data.frame( .x, stringsAsFactors = FALSE ) )
-  colnames( initialDesignData ) = c( "Arms name" , "Number of subjects", "Outcome", "Dose","Sampling times" )
+  initialDesignData = map_dfr(armsData, ~ as.data.frame(.x, stringsAsFactors = FALSE))
+  colnames(initialDesignData) = c("Arms name" , "Number of subjects", "Outcome", "Dose","Sampling times")
 
-  initialDesignTable = kbl( initialDesignData, align = c( "l","c","c","c") ) %>%
-    kable_styling( bootstrap_options = c(  "hover" ), full_width = FALSE, position = "center", font_size = 13 )
+  initialDesignTable = kbl(initialDesignData, align = c("l","c","c","c")) %>%
+    kable_styling(bootstrap_options = c( "hover"), full_width = FALSE, position = "center", font_size = 13)
 
   # Fisher matrix and SE
-  fim = prop( evaluationInitialDesign, "fim" )
-  fim = setEvaluationFim( fim, evaluationInitialDesign )
-  fimInitialDesignTable = tablesForReport( fim, evaluationInitialDesign )
+  fim = prop(evaluationInitialDesign, "fim")
+  fim = setEvaluationFim(fim, evaluationInitialDesign)
+  fimInitialDesignTable = tablesForReport(fim, evaluationInitialDesign)
 
   # design constraints
-  optimisationAlgorithmOutputs = prop( pfimproject, "optimisationAlgorithmOutputs" )
+  optimisationAlgorithmOutputs = prop(pfimproject, "optimisationAlgorithmOutputs")
   optimizationAlgorithm = optimisationAlgorithmOutputs$optimizationAlgorithm
-  constraintsTable = constraintsTableForReport( optimizationAlgorithm, arms )
+  constraintsTable = constraintsTableForReport(optimizationAlgorithm, arms)
 
   # optimal design table
-  designs = prop( evaluationOptimalDesign, "designs" )
-  arms = map( designs, ~ prop( .x, "arms" ) )
-  armsData = flatten(map( pluck( arms,1), getArmData ) )
-  optimalDesignData = map_dfr(armsData, ~ as.data.frame(.x, stringsAsFactors = FALSE ) )
-  colnames( optimalDesignData ) = c( "Arms name" , "Number of subjects", "Outcome", "Dose","Sampling times" )
+  designs = prop(evaluationOptimalDesign, "designs")
+  arms = map(designs, ~ prop(.x, "arms"))
+  armsData = list_flatten(map(pluck(arms,1), getArmData))
+  optimalDesignData = map_dfr(armsData, ~ as.data.frame(.x, stringsAsFactors = FALSE))
+  colnames(optimalDesignData) = c("Arms name" , "Number of subjects", "Outcome", "Dose","Sampling times")
 
-  optimalDesignTable = kbl( optimalDesignData, align = c( "l","c","c","c","c","c") ) %>%
-    kable_styling( bootstrap_options = c(  "hover" ), full_width = FALSE, position = "center", font_size = 13 )
+  optimalDesignTable = kbl(optimalDesignData, align = c("l","c","c","c","c","c")) %>%
+    kable_styling(bootstrap_options = c( "hover"), full_width = FALSE, position = "center", font_size = 13)
 
   # Fisher matrix and SE
-  fim = prop( evaluationOptimalDesign, "fim" )
-  fim = setEvaluationFim( fim, evaluationOptimalDesign )
-  fimOptimalTable = tablesForReport( fim, evaluationOptimalDesign )
+  fim = prop(evaluationOptimalDesign, "fim")
+  fim = setEvaluationFim(fim, evaluationOptimalDesign)
+  fimOptimalTable = tablesForReport(fim, evaluationOptimalDesign)
 
   # plotsEvaluation & plotSensitivityIndices
-  plotsEvaluation = plotEvaluation( evaluationOptimalDesign, plotOptions )
-  sensitivityPlot = plotSensitivityIndices( evaluationOptimalDesign, plotOptions )
-  sePlot          = plotSE( evaluationOptimalDesign )
-  rsePlot         = plotRSE( evaluationOptimalDesign )
+  plotsEvaluation = plotEvaluation(evaluationOptimalDesign, plotOptions)
+  sensitivityPlot = plotSensitivityIndices(evaluationOptimalDesign, plotOptions)
+  sePlot          = plotSE(evaluationOptimalDesign)
+  rsePlot         = plotRSE(evaluationOptimalDesign)
 
-  # tablesForReport
-  tablesForReport = list( evaluationOutputs = evaluationOutputs,
-                          modelEquations = modelEquations,
-                          modelErrorTable = modelErrorTable,
-                          modelParametersTable = modelParametersTable,
-                          administrationTable = administrationTable,
-                          initialDesignTable = initialDesignTable,
-                          constraintsTableForReport = constraintsTable,
-                          fimInitialDesignTable = fimInitialDesignTable,
-                          optimalDesignTable = optimalDesignTable,
-                          fimOptimalTable = fimOptimalTable,
-                          plotsEvaluation = plotsEvaluation,
-                          plotSensitivityIndices = sensitivityPlot,
-                          plotSE = sePlot,
-                          plotRSE = rsePlot,
-                          fim = fim,
-                          pfimproject = pfimproject,
-                          projectName = projectName )
+  reportData = list(
+    evaluationOutputs        = evaluationOutputs,
+    modelEquations           = modelEquations,
+    modelErrorTable          = modelErrorTable,
+    modelParametersTable     = modelParametersTable,
+    administrationTable      = administrationTable,
+    initialDesignTable       = initialDesignTable,
+    constraintsTableForReport = constraintsTable,
+    fimInitialDesignTable    = fimInitialDesignTable,
+    optimalDesignTable       = optimalDesignTable,
+    fimOptimalTable          = fimOptimalTable,
+    plotsEvaluation          = plotsEvaluation,
+    plotSensitivityIndices   = sensitivityPlot,
+    plotSE                   = sePlot,
+    plotRSE                  = rsePlot,
+    fim                      = fim,
+    pfimproject               = pfimproject,
+    projectName              = projectName
+  )
 
-  generateReportOptimization(fim, optimizationAlgorithm, tablesForReport, outputPath = outputPath, outputFile = outputFile)
+  generateReportOptimization(fim, optimizationAlgorithm, reportData, outputPath = outputPath, outputFile = outputFile)
 
 }

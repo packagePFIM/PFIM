@@ -1304,34 +1304,41 @@ method( optimizeDesign, list( .Optimization_S7, FedorovWynnAlgorithm ) ) = funct
 #' @export
 # ==============================================================================
 
-method( plotFrequenciesFedorovWynnAlgorithm, list( .Optimization_S7, FedorovWynnAlgorithm ) ) = function( optimization, optimizationAlgorithm )
+method( plotFrequenciesFedorovWynnAlgorithm, list( .Optimization_S7, FedorovWynnAlgorithm ) ) = function( optimization, optimizationAlgorithm, thresholdFrequencies = 0 )
 {
   optimisationAlgorithmOutputs = prop( optimization, "optimisationAlgorithmOutputs" )
-  frequencies = optimisationAlgorithmOutputs$frequencies
-  optimalArms = optimisationAlgorithmOutputs$optimalArms
+  frequencies     = as.numeric( optimisationAlgorithmOutputs$frequencies )
+  optimalArms     = optimisationAlgorithmOutputs$optimalArms
+  optimalArmsName = map( optimalArms, ~ prop(.x$arm, "name") ) %>% unlist() %>% as.character()
 
-  optimalArmsName = map( optimalArms, ~ prop(.x$arm,"name" ) ) %>% unlist()
-  optimalArms = data.frame( optimalArmsName, frequencies )
+  keep        = frequencies > thresholdFrequencies
+  optimalArms = data.frame(
+    optimalArmsName = optimalArmsName[ keep ],
+    frequencies     = frequencies[ keep ],
+    stringsAsFactors = FALSE
+  )
 
-  frequenciesPlot = ggplot(optimalArms, aes(x = reorder(optimalArmsName, frequencies), y = frequencies)) +
-    geom_bar(stat = "identity", fill = "gray50") +
-    scale_y_continuous(limits = c(0, 1),breaks = seq(0, 1, by = 0.1),minor_breaks = seq(0, 1, by = 0.05),expand = c(0, 0)  ) +
-    scale_x_discrete(expand = c(0, 0)) +
-    labs(  x = "Arm",  y = "Frequency" ) +
+  print( optimalArms)
+  frequenciesPlot = ggplot( optimalArms, aes( x = reorder( optimalArmsName, frequencies ), y = frequencies ) ) +
+    geom_bar( stat = "identity", fill = "gray50" ) +
+    scale_y_continuous( limits = c(0, 1), breaks = seq(0, 1, by = 0.1), minor_breaks = seq(0, 1, by = 0.05), expand = c(0, 0) ) +
+    scale_x_discrete( expand = c(0, 0) ) +
+    labs( x = "Arm", y = "Frequency" ) +
     coord_flip() +
-    theme_minimal(base_size = 14) +
+    theme_minimal( base_size = 14 ) +
     theme(
-      plot.title = element_text(hjust = 0.5, face = "bold"),
-      axis.title.x = element_text(color = "black", margin = margin(t = 10)),
-      axis.title.y = element_text(color = "black", margin = margin(r = 10)),
-      axis.text.x = element_text(color = "black", margin = margin(t = 5)),
-      axis.text.y = element_text(color = "black", margin = margin(r = 5)),
-      panel.grid.major.x = element_line(color = "gray90", linewidth = 0.5),
-      panel.grid.minor.x = element_line(color = "gray95", linewidth = 0.3),
+      plot.title         = element_text( hjust = 0.5, face = "bold" ),
+      axis.title.x       = element_text( color = "black", margin = margin(t = 10) ),
+      axis.title.y       = element_text( color = "black", margin = margin(r = 10) ),
+      axis.text.x        = element_text( color = "black", margin = margin(t = 5) ),
+      axis.text.y        = element_text( color = "black", margin = margin(r = 5) ),
+      panel.grid.major.x = element_line( color = "gray90", linewidth = 0.5 ),
+      panel.grid.minor.x = element_line( color = "gray95", linewidth = 0.3 ),
       panel.grid.major.y = element_blank(),
       panel.grid.minor.y = element_blank(),
-      panel.border = element_rect(color = "gray80", fill = NA, linewidth = 0.5),
-      plot.margin = margin(10, 10, 10, 10) )
+      panel.border       = element_rect( color = "gray80", fill = NA, linewidth = 0.5 ),
+      plot.margin        = margin(10, 10, 10, 10) )
+
   return( frequenciesPlot )
 }
 

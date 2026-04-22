@@ -7,7 +7,9 @@
 \item{optimization}{An object of class \code{\link{Optimization}} containing
 the optimized weights.}
 
-\item{optimizationAlgorithm}{An object of class \code{\link{MultiplicativeAlgorithm}}
+\item{optimizationAlgorithm}{An object of class \code{\link{MultiplicativeAlgorithm}}}
+
+\item{thresholdWeights}{An numeric threshold for the weights
 used for the optimization.}
 }
 \value{

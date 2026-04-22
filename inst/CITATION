@@ -7,14 +7,13 @@ bibentry(
     person("Romain", "Leroux"),
     person("France", "Mentré")
   ),
-  year = "2025",
-  note = paste("R package version", meta$Version, ", https://github.com/packagePFIM/PFIM"),
-  url = "http://www.pfim.biostat.fr/",
+  year = "2026",
+  note = paste("R package version", meta$Version),
+  url = "https://CRAN.R-project.org/package=PFIM",
   textVersion = paste(
-    "Leroux R, Mentré F (2025).",
+    "Leroux R, Mentré F (2026).",
     "PFIM: Population Fisher Information Matrix.",
-    paste("R package version", meta$Version, ","),
-    "https://github.com/packagePFIM/PFIM,",
-    "<http://www.pfim.biostat.fr/>."
+    paste0("R package version ", meta$Version, "."),
+    "URL: https://CRAN.R-project.org/package=PFIM"
   )
 )

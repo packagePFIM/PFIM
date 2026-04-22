@@ -5,14 +5,14 @@
 %   R/ModelODEDoseNotInEquations.R, R/ModelODEInfusionDoseInEquation.R
 \name{definePKModel}
 \alias{definePKModel}
-\title{define a PK model from library of model}
+\title{Define a PK model from library of model}
 \arguments{
 \item{pkModel}{An object of class \code{ModelAnalytic} that defines the PK model.}
 
 \item{pfimproject}{An object of class \code{PFIMProject} that defines the pfimproject.}
 }
 \description{
-define a PK model from library of model
+Define a PK model from library of model
 }
 \note{
 Copyright (c) 2026-present Romain Leroux. All rights reserved.

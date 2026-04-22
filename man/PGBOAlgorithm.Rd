@@ -63,7 +63,8 @@ algorithm-specific outputs produced during the optimization process.}
 
 \item{outputs}{A list defining the observation variables or responses of the model.}
 
-\item{fimType}{A string specifying the FIM calculation method (e.g., "Population", "Individual", "Bayesian").}
+\item{fimType}{A string specifying the FIM calculation method.
+Must be one of: \code{"population"}, \code{"individual"}, or \code{"Bayesian"}.}
 
 \item{odeSolverParameters}{A list containing technical settings for the ODE solver, such as \code{atol} and \code{rtol}.}
 }

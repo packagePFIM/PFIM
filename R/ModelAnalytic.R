@@ -1,3 +1,5 @@
+# Copyright (c) 2026-present Romain Leroux. All rights reserved.
+
 #' @title ModelAnalytic Class
 #' @name ModelAnalytic
 #' @description The class \code{ModelAnalytic} is used to defined an analytic model.
@@ -125,7 +127,7 @@ method( defineModelWrapper, ModelAnalytic ) = function( model, evaluation ) {
 }
 
 # ==============================================================================
-#' @title define the administration
+#' @title Define the administration for an analytic model
 #' @name defineModelAdministration
 #' @param model An object of class \code{ModelAnalytic} that defines the model.
 #' @param arm An object of class \code{Arm} that defines the arm.
@@ -182,7 +184,7 @@ method( defineModelAdministration, ModelAnalytic ) = function( model, arm ) {
 }
 
 # ==============================================================================
-#' @title evaluate the model
+#' @title Evaluate the analytic model
 #' @name evaluateModel
 #' @param model An object of class \code{ModelAnalytic} that defines the model.
 #' @param arm An object of class \code{Arm} that defines the arm.
@@ -280,9 +282,10 @@ method( evaluateModel, ModelAnalytic ) = function( model, arm ) {
 }
 
 # ==============================================================================
-#' @title conversion from analytic to ode
+#' @title Conversion from analytic PK model to ODE PK model
 #' @name convertPKModelAnalyticToPKModelODE
 #' @param pkModel An object of class \code{ModelAnalytic} that defines the model.
+#' @return A character string containing the ODE equation derived from the analytic expression.
 #' @template copyright
 #' @export
 # ==============================================================================
@@ -307,7 +310,7 @@ method( convertPKModelAnalyticToPKModelODE, ModelAnalytic ) = function( pkModel 
 }
 
 # ==============================================================================
-#' @title define a PK model from library of model
+#' @title Define a PK model from library of model
 #' @name definePKModel
 #' @param pkModel An object of class \code{ModelAnalytic} that defines the PK model.
 #' @param pfimproject An object of class \code{PFIMProject} that defines the pfimproject.
@@ -321,7 +324,7 @@ method( definePKModel, list( ModelAnalytic, PFIMProject ) ) = function( pkModel,
 }
 
 # ==============================================================================
-#' @title define a PKPD model from library of model
+#' @title Define a PKPD model from library of model
 #' @name definePKPDModel
 #' @param pkModel An object of class \code{ModelAnalytic} that defines the PK model.
 #' @param pdModel An object of class \code{ModelAnalytic} that defines the PD model.

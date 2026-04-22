@@ -10,7 +10,7 @@
 #' starting sampling schedule before optimization.
 #' @param fixedTimes A \code{vector} of numeric values specifying time points
 #' that cannot be moved or removed by the optimizer.
-#' @param numberOfsamplingsOptimisable A \code{double} representing the number
+#' @param numberOfSamplingsOptimisable A \code{double} representing the number
 #' of sampling points allowed to be modified.
 #' @param samplingsWindows A \code{list} of intervals (e.g., \code{list(c(0,2), c(4,8))})
 #' defining the search boundaries for the optimizer.
@@ -31,7 +31,7 @@
 #'   outcome                     = "RespPK",
 #'   initialSamplings            = c(0.25, 0.75, 1, 1.5, 2, 4, 6),
 #'   fixedTimes                  = c(0.25, 4),
-#'   numberOfsamplingsOptimisable = 4
+#'   numberOfSamplingsOptimisable = 4
 #' )
 #'
 #' # 2. Continuous Window Constraints (for PSO, PGBO, or Simplex algorithms)
@@ -52,7 +52,7 @@ SamplingTimeConstraints = new_class( "SamplingTimeConstraints", package = "PFIM"
                                      properties = list( outcome = new_property(class_character, default = character(0)),
                                                         initialSamplings = new_property(class_vector, default = c(0.0)),
                                                         fixedTimes = new_property(class_vector, default = c(0.0)),
-                                                        numberOfsamplingsOptimisable = new_property(class_double, default = 0.0),
+                                                        numberOfSamplingsOptimisable = new_property(class_double, default = 0.0),
                                                         samplingsWindows = new_property(class_list, default = list()),
                                                         numberOfTimesByWindows = new_property(class_vector, default = c(0.0)),
                                                         minSampling = new_property(class_vector, default = c(0.0))))
