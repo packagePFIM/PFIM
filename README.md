@@ -110,23 +110,30 @@ The Vignettes/ folder contains the vignettes available on CRAN.
 The vignettes published on CRAN, serving as structured tutorials for new users. They cover the two main use cases of the package:
 
 + Design evaluation — how to assess the efficiency of a given sampling design using the FIM
-
 + Design optimization in the continuous case — optimizing sampling times as continuous variables (PGBO, PSO, Simplex)
-
 + Design optimization in the discrete case — selecting optimal designs from a pre-specified grid of candidate times (Fedorov-Wynn, multiplicative algorithm)
 
 ### Documentation
 
-The Documentation/ folder contains the complete documentation for all methods and classes included in the package.
+The Documentation/ folder contains the complete documentation for all methods and classes included in the package. This covers:
+
++ S7 classes — definition and structure of all objects used in the package (models, designs, algorithms, results, etc.)
++ Generic methods — description of all methods implemented for each class, including evaluation and optimization routines
++ Function references — detailed documentation of all exported functions, their arguments, return values, and usage examples
 
 ### Unit test
 
-The tests/ folder contains the unit test suite (likely via testthat).
+The tests/ folder contains the unit test suite (likely via testthat). The tests cover:
+
++ Model evaluation — verifying that the FIM computation gives the expected results for both analytical and ODE-based models
++ Regression tests — ensuring that new developments do not break existing functionality across versions
 
 ## Getting help
 
-If you encounter a clear bug, please file the issue with a minimal
-reproducible example in the folder **Issues**.
+If you encounter a clear bug, please file an issue with a minimal reproducible example directly in the Issues section of the GitHub repository. To help diagnose the problem efficiently, a good bug report should include
 
-For questions and other discussion, please use the PFIM group mailing
-list: <thepfimgroup@googlegroups.com>
++ The version of PFIM and R being used
++ A minimal, self-contained script that reproduces the issue
++ The error message or unexpected output obtained
+
+For questions, methodological discussions, or feature requests, please use the PFIM group mailing list: <thepfimgroup@googlegroups.com>
