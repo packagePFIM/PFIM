@@ -33,7 +33,7 @@ The source code is modular, designed using a functional programming approach (vi
 > | `README.pdf` | Documentation for this beta release (PDF format) |
 >
 > **New features in this beta:**
-> - **Covariate evaluation and optimisation** — fixed and occasion covariates with IOV in discrete designs, including Simplex and Multiplicative algorithm support
+> - **Covariate evaluation and optimisation** — fixed and occasion covariates with IOV in discrete designs, including Simplex and Multiplicative algorithm 
 > - **Clinical relevance of covariate effects** — statistical significance test, a relevance test and a non-relevance test 
 >
 > These features are illustrated in a poster presented at the PAGE 2026 congress:
