@@ -17,14 +17,23 @@ PFIM is an R package for evaluating and optimizing designs for nonlinear mixed e
 
 The source code is modular, designed using a functional programming approach (via the R package **purrr**) and R S7 object-oriented programming, which makes it easy to extend and customize models and algorithms.
 
-> ### Beta release — PFIM 7.1
+> ### Breaking News ! Beta release — PFIM 7.1
 >
 > A beta version of PFIM 7.1 is available in the
 > [PFIM_7.1_beta_Version](https://github.com/packagePFIM/PFIM/tree/main/PFIM_7.1_beta_Version)
 > folder of this repository.
 >
-> This beta introduces new features for:
-> - **Covariate evaluation and optimisation** — fixed and occasion covariates with IOV in discrete designs, including Simplex and Multiplicative algorithm 
+> **Folder contents:**
+>
+> | File / Folder | Description |
+> |---|---|
+> | `PFIM_7.1.tar.gz` | Source package — install with `install.packages("PFIM_7.1.tar.gz", repos = NULL, type = "source")` |
+> | `PFIM_7.1_beta_version_tests_cov_iov/` | R scripts illustrating evaluation and optimisation with discrete covariates and IOV |
+> | `README.html` | Documentation for this beta release (HTML format) |
+> | `README.pdf` | Documentation for this beta release (PDF format) |
+>
+> **New features in this beta:**
+> - **Covariate evaluation and optimisation** — fixed and occasion covariates with IOV in discrete designs, including Simplex and Multiplicative algorithm support
 > - **Clinical relevance of covariate effects** — statistical significance test, a relevance test and a non-relevance test 
 >
 > These features are illustrated in a poster presented at the PAGE 2026 congress:
@@ -33,7 +42,6 @@ The source code is modular, designed using a functional programming approach (vi
 > This is an unofficial pre-release intended for evaluation and feedback.
 > Any feedback is welcome — please open an issue in the
 > [Issues](https://github.com/packagePFIM/PFIM/issues) section of this repository.
-
 ### Installation
 
 ```{r installation, echo=TRUE, eval=FALSE}
