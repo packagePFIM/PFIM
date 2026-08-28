@@ -75,7 +75,7 @@ The methods implemented in PFIM are based on established research in optimal des
 
 **Authors**
 
-- Romain Leroux — [ORCID 0009-0009-5779-5303](https://orcid.org/0009-0009-5779-5303) `[aut, cre]`
+- Romain Leroux — [ORCID 0009-0009-5779-5303](https://orcid.org/0009-0009-5779-5303) `[aut, cre]` - Maintainer:	Romain Leroux <romainlerouxPFIM at gmail.com>
 - France Mentré — [ORCID 0000-0002-7045-1275](https://orcid.org/0000-0002-7045-1275) `[aut]`
 - Jérémy Seurat `[ctb]`
 
